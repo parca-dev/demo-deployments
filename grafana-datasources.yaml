@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  labels:
+    app.kubernetes.io/component: observability
+    app.kubernetes.io/name: grafana
+  name: grafana-datasources
+  namespace: parca
+type: Opaque
+stringData:
+  datasources.yaml: |-
+    {
+      "apiVersion": 1,
+      "datasources": [
+        {
+          "access": "proxy",
+          "editable": false,
+          "name": "Parca",
+          "orgId": 1,
+          "type": "parca-datasource",
+          "version": 1,
+          "jsonData": {APIEndpoint: "https://demo.parca.dev"}
+        }
+      ]
+    }

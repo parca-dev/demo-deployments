@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  labels:
+    app.kubernetes.io/component: observability
+    app.kubernetes.io/name: grafana
+  name: grafana-config
+  namespace: parca
+type: Opaque
+stringData:
+  grafana.ini: |-
+    app_mode = development
+    [analytics]
+    check_for_updates = false
+    reporting_enabled = false
+    [auth]
+    disable_login_form = true
+    [auth.anonymous]
+    enabled = true
+    [auth.basic]
+    enabled = false
+    [security]
+    admin_user = do_not_use_this_user
+    cookie_secure = true
+    [server]
+    domain = demo.parca.dev
+    root_url = https://demo.parca.dev/grafana/
+    serve_from_sub_path = true

@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboards
+  namespace: parca
+  labels:
+    app.kubernetes.io/component: observability
+    app.kubernetes.io/name: grafana
+data:
+  dashboards.yaml: |-
+    {
+      "apiVersion": 1,
+      "providers": [
+        {
+          "folder": "Default",
+          "folderUid": "",
+          "name": "0",
+          "options": {
+            "path": "/grafana-dashboard-definitions/0"
+          },
+          "orgId": 1,
+          "type": "file"
+        }
+      ]
+    }
