@@ -17,6 +17,7 @@ stringData:
     disable_login_form = true
     [auth.anonymous]
     enabled = true
+    org_role = Editor
     [auth.basic]
     enabled = false
     [security]
@@ -26,3 +27,5 @@ stringData:
     domain = demo.parca.dev
     root_url = https://demo.parca.dev/grafana/
     serve_from_sub_path = true
+    [feature_toggles]
+    enable = flameGraph
