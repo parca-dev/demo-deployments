@@ -15,11 +15,17 @@ stringData:
         {
           "access": "proxy",
           "editable": false,
-          "name": "Parca",
+          "name": "Parca - PolarSignals",
           "orgId": 1,
           "type": "parca-datasource",
           "version": 1,
           "jsonData": {APIEndpoint: "https://demo.parca.dev"}
+        },
+        {
+          "name": "Parca - Grafana",
+          "type": "parca",
+          "url": "https://demo.parca.dev",
+          "editable": false
         }
       ]
     }
