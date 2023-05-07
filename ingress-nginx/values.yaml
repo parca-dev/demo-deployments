@@ -1,0 +1,18 @@
+ingress-nginx:
+  # Scaleway
+  controller:
+    service:
+      type: LoadBalancer
+      externalTrafficPolicy: Local
+      annotations:
+        service.beta.kubernetes.io/scw-loadbalancer-proxy-protocol-v2: "true"
+        service.beta.kubernetes.io/scw-loadbalancer-use-hostname: "true"
+        service.beta.kubernetes.io/scw-loadbalancer-zone: "nl-ams-2"
+    config:
+      use-proxy-protocol: "true"
+    resources:
+      limits:
+        memory: 256Mi
+      requests:
+        cpu: 100m
+        memory: 256Mi

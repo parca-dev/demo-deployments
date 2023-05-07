@@ -1,0 +1,35 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["github>parca-dev/.github"],
+  "packageRules": [
+    {
+      "description": "Highlight build dependencies updates",
+      "matchManagers": [
+        "helmv3",
+        "helm-values",
+        "jsonnet-bundler",
+        "kustomize"
+      ],
+      "automerge": false,
+      "semanticCommitType": "build"
+    },
+    {
+      "description": "Highlight build dependencies updates",
+      "matchPaths": [".+\\.(?:j|lib)sonnet"],
+      "automerge": false,
+      "semanticCommitType": "build"
+    }
+  ],
+  "regexManagers": [
+    {
+      "description": "Update versions in Jsonnet files",
+      "fileMatch": [
+        "grafana/lib/grafana\\.libsonnet",
+        "monitoring/lib/prometheus\\.libsonnet"
+      ],
+      "matchStrings": [
+        "// renovate: datasource=(?<datasource>.+?) depName=(?<depName>.+?)(?: (?:packageName)=(?<packageName>.+?))?(?: lookupName=(?<lookupName>.+?))?(?: versioning=(?<versioning>.+?))?(?: extractVersion=(?<extractVersion>.+?))?\\s+.+:\\s'(?<currentValue>.+?)',\\s"
+      ]
+    }
+  ]
+}

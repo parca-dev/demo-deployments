@@ -1,0 +1,409 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  schedule:
+    # At 00:00 on Monday
+    - cron: '0 0 * * 1'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  # renovate: datasource=github-releases depName=helm/helm
+  HELM_VERSION: v3.11.3
+  # renovate: datasource=github-releases depName=jsonnet-bundler/jsonnet-bundler
+  JB_VERSION: v0.5.1
+  # renovate: datasource=github-releases depName=google/go-jsonnet
+  JSONNET_VERSION: v0.20.0
+  # renovate: datasoure=github-releases depName=yannh/kubeconform
+  KUBECONFORM_VERSION: v0.6.1
+  # Must match target Kubernetes cluster minor version
+  # https://github.com/parca-dev/demo-infrastructure/blob/main/scaleway/main.tf
+  KUBERNETES_VERSION: 1.24.11
+  # renovate: datasource=github-releases depName=kubernetes-sigs/kustomize versioning=regex:^(?<compatibility>.+)/v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$
+  KUSTOMIZE_VERSION: kustomize/v5.0.2
+
+jobs:
+  pre-job:
+    name: Pre Job
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      should_skip: ${{ steps.skip-check.outputs.should_skip }}
+      kustomize-apps: ${{ steps.apps.outputs.kustomize }}
+      jsonnet-apps: ${{ steps.apps.outputs.jsonnet }}
+      helm-apps: ${{ steps.apps.outputs.helm }}
+    permissions:
+      actions: write
+      contents: read
+    steps:
+      - name: Check if should skip
+        uses: fkirc/skip-duplicate-actions@12aca0a884f6137d619d6a8a09fcc3406ced5281 # v5.3.0
+        id: skip-check
+        continue-on-error: true
+        with:
+          do_not_skip: '["schedule", "workflow_dispatch"]'
+          paths_filter: |-
+            kustomize:
+              paths:
+                - '*/base/**'
+                - '*/components/**'
+                - '*/overlays/**'
+            jsonnet:
+              paths:
+                - '*/environments/**'
+                - '*/jsonnetfile.json'
+                - '*/jsonnetfile.lock.json'
+                - '*/lib/**'
+                - '*/vendor/**'
+            helm:
+              paths:
+                - '*/Chart.lock'
+                - '*/Chart.yaml'
+                - '*/templates/**'
+                - '*/values.yaml'
+                - '*/values/**'
+            workflow:
+              paths:
+                - .schemas/*.json
+                - .github/workflows/build.yml
+          skip_after_successful_duplicate: false
+
+      - name: Checkout
+        if: steps.skip-check.outputs.should_skip != 'true'
+        uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3 # v3.5.0
+
+      - name: Create applications lists
+        if: steps.skip-check.outputs.should_skip != 'true'
+        id: apps
+        run: |
+          KUSTOMIZE_APPS=()
+          for app in */; do
+            [[ -d "${app}/overlays" ]] && KUSTOMIZE_APPS+=( "${app}" )
+          done
+          KUSTOMIZE_APPS="$(
+            printf '%s\n' "${KUSTOMIZE_APPS[@]%/}" \
+              | jq -csrR '[split("\n")[:-1][]|select(.!="")]'
+          )"
+
+          JSONNET_APPS=()
+          for app in */; do
+            [[ -d "${app}/environments" ]] && JSONNET_APPS+=( "${app}" )
+          done
+          JSONNET_APPS="$(
+            printf '%s\n' "${JSONNET_APPS[@]%/}" \
+              | jq -csrR '[split("\n")[:-1][]|select(.!="")]'
+          )"
+
+          HELM_APPS=()
+          for app in */; do
+            [[ -f "${app}/Chart.yaml" ]] && HELM_APPS+=( "${app}" )
+          done
+          HELM_APPS="$(
+            printf '%s\n' "${HELM_APPS[@]%/}" \
+              | jq -csrR '[split("\n")[:-1][]|select(.!="")]'
+          )"
+
+          if [[ "${REASON}" == 'paths' ]]; then
+            JQ_SCRIPT='
+              if .workflow.should_skip|not then
+                $apps|fromjson
+              elif .[$type].should_skip|not then
+                [.[$type].matched_files[]|split("/")[0]]|unique
+              else
+                []
+              end
+              | "\($type)=\(.)"
+            '
+            jq --raw-output \
+              --arg type kustomize \
+              --arg apps "${KUSTOMIZE_APPS}" \
+              "${JQ_SCRIPT}" >>"${GITHUB_OUTPUT}" <<<"${PATH_RESULT}"
+            jq --raw-output \
+              --arg type jsonnet \
+              --arg apps "${JSONNET_APPS}" \
+              "${JQ_SCRIPT}" >>"${GITHUB_OUTPUT}" <<<"${PATH_RESULT}"
+            jq --raw-output \
+              --arg type helm \
+              --arg apps "${HELM_APPS}" \
+              "${JQ_SCRIPT}" >>"${GITHUB_OUTPUT}" <<<"${PATH_RESULT}"
+          else
+            printf 'kustomize=%s' "${KUSTOMIZE_APPS}" >>"${GITHUB_OUTPUT}"
+            printf 'jsonnet=%s' "${JSONNET_APPS}" >>"${GITHUB_OUTPUT}"
+            printf 'helm=%s' "${HELM_APPS}" >>"${GITHUB_OUTPUT}"
+          fi
+          cat "${GITHUB_OUTPUT}"
+        env:
+          REASON: ${{ steps.skip-check.outputs.reason }}
+          PATH_RESULT: ${{ steps.skip-check.outputs.paths_result }}
+
+  kustomize:
+    name: Kustomize
+    needs: pre-job
+    runs-on: ubuntu-latest
+    if: >
+      needs.pre-job.outputs.should_skip != 'true' &&
+      needs.pre-job.outputs.kustomize-apps != '[]'
+    timeout-minutes: 60
+
+    strategy:
+      fail-fast: false
+      matrix:
+        app: ${{ fromJSON(needs.pre-job.outputs.kustomize-apps) }}
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ matrix.app }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+
+      - name: Set up Kustomize
+        run: |
+          mkdir -p "${HOME}/.local/bin"
+          echo "${HOME}/.local/bin" >>"${GITHUB_PATH}"
+          gh --repo=kubernetes-sigs/kustomize release download "${KUSTOMIZE_VERSION}" \
+            --output=- --pattern='kustomize_*_linux_amd64.tar.gz' \
+            | tar -zxvf - -C "${HOME}/.local/bin" kustomize
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Kustomize overlays
+        run: |
+          mkdir ../.manifests
+          for overlay in overlays/*; do
+            echo ">>> Building overlay ${overlay}"
+            kustomize build "${overlay}" >"../.manifests/kustomize_${APP}_${overlay#*/}.yaml"
+          done
+        env:
+          APP: ${{ matrix.app }}
+
+      - name: Archive manifests
+        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
+        with:
+          name: manifests
+          path: .manifests/
+
+  jsonnet:
+    name: Jsonnet
+    needs: pre-job
+    runs-on: ubuntu-latest
+    if: >
+      needs.pre-job.outputs.should_skip != 'true' &&
+      needs.pre-job.outputs.jsonnet-apps != '[]'
+    timeout-minutes: 60
+
+    strategy:
+      fail-fast: false
+      matrix:
+        app: ${{ fromJSON(needs.pre-job.outputs.jsonnet-apps) }}
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ matrix.app }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+
+      - name: Set up Jsonnet
+        run: |
+          mkdir -p "${HOME}/.local/bin"
+          echo "${HOME}/.local/bin" >>"${GITHUB_PATH}"
+          gh --repo=google/go-jsonnet release download "${JSONNET_VERSION}" \
+            --output=- --pattern='go-jsonnet_*_Linux_x86_64.tar.gz' \
+            | tar -zxvf - -C "${HOME}/.local/bin" jsonnet jsonnet-lint jsonnetfmt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Jsonnet Bundler
+        run: |
+          gh --repo=jsonnet-bundler/jsonnet-bundler release download "${JB_VERSION}" \
+            --output="${HOME}/.local/bin/jb" --pattern=jb-linux-amd64
+          chmod +x "${HOME}/.local/bin/jb"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check formatting
+        run: |
+          find . -name 'vendor' -prune -o -name '*.jsonnet' -print -o -name '*.libsonnet' -print | while read -r file; do
+            printf ">>> %s" "${file}"
+            if ! jsonnetfmt --test -- "${file}"; then
+              printf " <<< jsonnetfmt failed!"
+              exit 1
+            else
+              printf '\n'
+            fi
+          done
+
+      - name: Check vendor directory
+        run: |
+          if [[ ! -f jsonnetfile.lock.json ]]; then
+            echo "no dependencies"
+          else
+            jb install
+            if [[ -n "$(git status . -s)" ]]; then
+              echo "error: jsonnetfile.lock.json and the checked-in vendor directory are out-of-sync!"
+              exit 1
+            else
+              echo "in-sync"
+            fi
+          fi
+
+      - name: Lint Jsonnet environments
+        run: |
+          for environment in environments/*; do
+            printf '>>> Linting %s\n' "${environment}"
+            jsonnet-lint \
+              --jpath "${environment}/../../vendor" \
+              --jpath "${environment}/../../lib" \
+              "${environment}/main.jsonnet"
+          done
+
+      - name: Generate Jsonnet environments
+        run: |
+          mkdir ../.manifests
+          for environment in environments/*; do
+            printf '>>> Building %s\n' "${environment}"
+            jsonnet \
+              --jpath "${environment}/../../vendor" \
+              --jpath "${environment}/../../lib" \
+              "${environment}/main.jsonnet" >"../.manifests/jsonnet_${APP}_${environment#*/}.json"
+          done
+        env:
+          APP: ${{ matrix.app }}
+
+      - name: Archive manifests
+        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
+        with:
+          name: manifests
+          path: .manifests/
+
+  helm:
+    name: Helm
+    needs: pre-job
+    runs-on: ubuntu-latest
+    if: >
+      needs.pre-job.outputs.should_skip != 'true' &&
+      needs.pre-job.outputs.helm-apps != '[]'
+    timeout-minutes: 60
+
+    strategy:
+      fail-fast: false
+      matrix:
+        app: ${{ fromJSON(needs.pre-job.outputs.helm-apps) }}
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ matrix.app }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+
+      - name: Set up Helm
+        run: |
+          mkdir -p "${HOME}/.local/bin"
+          echo "${HOME}/.local/bin" >>"${GITHUB_PATH}"
+          curl -sSfL "https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz" \
+            | tar -zxvf - -C /usr/local/bin --strip-component=1 linux-amd64/helm
+
+      - name: Check dependencies
+        run: |
+          if grep -q 'dependencies' Chart.yaml && [[ ! -f Chart.lock ]]; then
+            echo 'Error: Missing Chart.lock'
+            exit 1
+          fi
+
+      - name: Add Helm repositories
+        run: |
+          # Based on https://github.com/argoproj/argo-cd/blob/v2.7.1/reposerver/repository/repository.go#L939-L963
+          awk '/  repository:/{print $2}' Chart.yaml | uniq | while read -r repo; do
+            if [[ "${repo}" == 'https://'* || "${repo}" == 'oci://'* ]]; then
+              helm repo add "${repo//\//-}" "${repo}"
+            fi
+          done
+
+      - name: Build Helm chart dependencies
+        run: helm dependency build
+
+      - name: Lint Helm chart with values
+        run: |
+          for value in values/*; do
+            printf '>>> Linting with %s\n' "${value}"
+            helm lint . --values="${value}"
+          done
+
+      - name: Template Helm chart with values
+        run: |
+          mkdir ../.manifests
+          for value in values/*; do
+            printf '>>> Templating with %s\n' "${value}"
+            helm template "${APP}" . --values="${value}" >"../.manifests/helm_${APP}_${value#*/}"
+          done
+        env:
+          APP: ${{ matrix.app }}
+
+      - name: Archive manifests
+        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
+        with:
+          name: manifests
+          path: .manifests/
+
+  kubeconform:
+    name: Kubeconform
+    needs: [kustomize, jsonnet, helm]
+    if: >
+      always() && (
+        needs.pre-job.outputs.kustomize-apps != '[]' ||
+        needs.pre-job.outputs.jsonnet-apps != '[]' ||
+        needs.pre-job.outputs.helm-apps != '[]'
+      )
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+
+      - name: Set up Kubeconform
+        run: |
+          mkdir -p "${HOME}/.local/bin"
+          echo "${HOME}/.local/bin" >>"${GITHUB_PATH}"
+          gh --repo=yannh/kubeconform release download "${KUBECONFORM_VERSION}" \
+            --output=- --pattern='kubeconform-linux-amd64.tar.gz' \
+            | tar -zxvf - -C "${HOME}/.local/bin" kubeconform
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Download manifests
+        uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3.0.2
+        with:
+          name: manifests
+          path: .manifests/
+
+      - name: Validate manifests
+        run: |
+          mkdir -p "${HOME}/.cache/kubeconform"
+          cd .manifests # for shorter filenames in output
+          for manifest in *; do
+            printf '>>> Validating %s\n' "${manifest}"
+            kubeconform
+              -cache "${HOME}/.cache/kubeconform" \
+              -kubernetes-version "${KUBERNETES_VERSION}" \
+              -output tap \
+              -schema-location '../.schemas/{{ .ResourceKind }}{{ .KindSuffix }}.json' \
+              -schema-location 'https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master' \
+              -skip CustomResourceDefinition \
+              -strict \
+              "${manifest}"
+          done
