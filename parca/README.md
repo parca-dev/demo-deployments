@@ -2,5 +2,5 @@
 
 See:
 
-* github.com/parca-dev/parca
-* github.com/parca-dev/parca-agent
+* https://github.com/parca-dev/parca
+* https://github.com/parca-dev/parca-agent

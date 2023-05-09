@@ -1,0 +1,23 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- github.com/fluxcd/source-controller/config/default?ref=5887114d3cf2eda8774b9b62540f245851f514d8 # v1.0.0-rc.2
+- serviceaccount.yaml
+- networkpolicy.yaml
+
+labels:
+- pairs:
+    app.kubernetes.io/component: source-controller
+  includeSelectors: true
+
+images:
+- name: fluxcd/source-controller
+  newName: ghcr.io/fluxcd/source-controller
+
+# Ignoring deprecation for now
+# https://github.com/kubernetes-sigs/kustomize/issues/5049
+patchesStrategicMerge:
+- patches/delete_namespace.yaml
+- patches/use_serviceaccount.yaml
+- patches/set_resources_limits_requests.yaml

@@ -3,6 +3,12 @@
   "extends": ["github>parca-dev/.github"],
   "packageRules": [
     {
+      "description": "Group Flux CD packages and update them even if they are pre-releases",
+      "matchPackagePatterns": ["^fluxcd/.+"],
+      "ignoreUnstable": false,
+      "groupName": "fluxcd"
+    },
+    {
       "description": "Highlight build dependencies updates",
       "matchManagers": [
         "helmv3",
@@ -15,7 +21,10 @@
     },
     {
       "description": "Highlight build dependencies updates",
-      "matchPaths": [".+\\.(?:j|lib)sonnet"],
+      "matchPaths": [
+        "(^|/)kustomization.yaml$",
+        ".+\\.(?:j|lib)sonnet"
+      ],
       "automerge": false,
       "semanticCommitType": "build"
     }
@@ -30,6 +39,14 @@
       "matchStrings": [
         "// renovate: datasource=(?<datasource>.+?) depName=(?<depName>.+?)(?: (?:packageName)=(?<packageName>.+?))?(?: lookupName=(?<lookupName>.+?))?(?: versioning=(?<versioning>.+?))?(?: extractVersion=(?<extractVersion>.+?))?\\s+.+:\\s'(?<currentValue>.+?)',\\s"
       ]
+    },
+    {
+      "description": "Pin Kustomize bases digests - https://github.com/renovatebot/renovate/issues/7915",
+      "fileMatch": ["(^|/)kustomization.yaml$"],
+      "matchStrings": [
+          "- github\\.com\\/(?<depName>[^/]+?\\/[^/]*?)\\/.*\\?ref=(?<currentDigest>[a-f0-9]{40}) # (?<currentValue>.+)"
+      ],
+      "datasourceTemplate": "github-tags"
     }
   ]
 }

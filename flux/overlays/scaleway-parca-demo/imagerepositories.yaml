@@ -1,0 +1,16 @@
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: parca
+spec:
+  interval: 1m0s
+  image: ghcr.io/parca-dev/parca
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: parca-agent
+spec:
+  interval: 1m0s
+  image: ghcr.io/parca-dev/parca-agent
