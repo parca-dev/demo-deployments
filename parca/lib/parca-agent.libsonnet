@@ -2,7 +2,7 @@ local pa = import 'github.com/parca-dev/parca-agent/deploy/lib/parca-agent/parca
 
 local defaults = {
   namespace: 'parca',
-  version: 'main-8a7afb11',
+  version: 'v0.19.0-62-ga25185e',
   image: 'ghcr.io/parca-dev/parca-agent:' + self.version,
   stores: ['parca.%s.svc.cluster.local:7070' % self.namespace],
   insecure: true,

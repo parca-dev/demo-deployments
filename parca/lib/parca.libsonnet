@@ -2,7 +2,7 @@ local p = import 'github.com/parca-dev/parca/deploy/lib/parca/parca.libsonnet';
 
 local defaults = {
   namespace: 'parca',
-  version: 'v0.17.0',
+  version: 'main-d88b069f',
   image: 'ghcr.io/parca-dev/parca:' + self.version,
   replicas: 1,
   ingress: {
@@ -29,6 +29,11 @@ function(params)
   p(config) {
     deployment+: {
       spec+: {
+        strategy: {
+          // The demo cluster does not have enough memory
+          // for running 2 Parca instances.
+          type: 'Recreate',
+        },
         template+: {
           spec+: {
             containers: [
