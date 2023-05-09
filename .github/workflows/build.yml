@@ -397,7 +397,7 @@ jobs:
           cd .manifests # for shorter filenames in output
           for manifest in *; do
             printf '>>> Validating %s\n' "${manifest}"
-            kubeconform
+            kubeconform \
               -cache "${HOME}/.cache/kubeconform" \
               -kubernetes-version "${KUBERNETES_VERSION}" \
               -output tap \

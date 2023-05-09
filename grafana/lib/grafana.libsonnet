@@ -4,7 +4,7 @@ local defaults = {
   local cfg = self,
   plugins: [
     'parca-datasource 0.0.36',
-    'parca-panel 0.0.35',
+    'parca-panel 0.0.36',
   ],
   namespace: 'grafana',
   // renovate: datasource=docker depName=docker.io/grafana/grafana
