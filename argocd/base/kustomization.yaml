@@ -1,0 +1,36 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: argocd
+
+resources:
+- github.com/argoproj/argo-cd/manifests/cluster-install?ref=5e543518dbdb5384fa61c938ce3e045b4c5be325 # v2.7.1
+
+# Ignoring deprecation for now
+# https://github.com/kubernetes-sigs/kustomize/issues/5049
+patchesStrategicMerge:
+- patches/configure_argocd-cm.yaml
+- patches/set_liveness_and_readiness_probes.yaml
+- patches/set_resource_limits_and_requests.yaml
+
+patches:
+- target:
+    group: apps
+    version: v1
+    kind: Deployment
+    name: argocd-redis
+  patch: |-
+    # set max memory to 65% of requested memory
+    - op: add
+      path: /spec/template/spec/containers/0/args/-
+      value: --maxmemory 84mb
+
+configMapGenerator:
+- name: argocd-cmd-params-cm
+  behavior: replace
+  literals:
+  - reposerver.parallelism.limit=1
+  - server.insecure=true
+- name: argocd-rbac-cm
+  behavior: replace
+  literals:
+  - policy.default=role:readonly

@@ -1,0 +1,18 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-dex-server
+spec:
+  template:
+    spec:
+      containers:
+      - name: dex
+        livenessProbe:
+          httpGet:
+            path: /healthz/live
+            port: 5558
+        readinessProbe:
+          httpGet:
+            path: /healthz/ready
+            port: 5558
