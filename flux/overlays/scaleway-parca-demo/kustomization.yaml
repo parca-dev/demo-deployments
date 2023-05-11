@@ -8,3 +8,4 @@ resources:
 - imagepolicies.yaml
 - imagerepositories.yaml
 - imageupdateautomation.yaml
+- ssh-credentials-secret.yaml

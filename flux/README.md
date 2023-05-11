@@ -19,12 +19,16 @@ Based on [Git Repositories - SSH authentication | Flux](https://fluxcd.io/flux/c
 2. Create a new secret in the cluster:
 
    ```bash
-   KNOWN_HOSTS="$(ssh-keyscan github.com)"
-   kubectl create secret generic \
+   PATCH="$(jq --null-input --arg identity "$(<fluxcdbot)" '[{
+     "op": "replace",
+     "path": "/data/identity",
+     "value": "\($identity|@base64)"
+   }]')"
+   kubectl patch secret \
      --namespace=flux-system \
      flux-ssh-credentials \
-     --from-literal=identity="$(<fluxcdbot)" \
-     --from-literal=known_hosts="${KNOWN_HOSTS}"
+     --type=json \
+     --patch="${PATCH}"
    ```
 
 3. Add the `fluxcdbot.pub` public key to the repository's [deploy keys](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/managing-deploy-keys#deploy-keys) with **write access**.
