@@ -1,0 +1,63 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- github.com/fluxcd/image-automation-controller/config/default?ref=0ef6f98a1e5ce3ec0141f84b0189445e68342718 # v0.33.0
+- serviceaccount.yaml
+- networkpolicy.yaml
+
+labels:
+- pairs:
+    app.kubernetes.io/component: image-automation-controller
+  includeSelectors: true
+
+images:
+- name: fluxcd/image-automation-controller
+  newName: ghcr.io/fluxcd/image-automation-controller
+
+# Ignoring deprecation for now
+# https://github.com/kubernetes-sigs/kustomize/issues/5049
+patchesStrategicMerge:
+- patches/delete_namespace.yaml
+- patches/use_serviceaccount.yaml
+- patches/set_resources_limits_requests.yaml
+
+patches:
+- target:
+    group: rbac.authorization.k8s.io
+    version: v1
+    kind: ClusterRole
+    name: image-automation-manager-role
+  patch: |-
+    - op: add
+      path: /rules/-
+      value:
+        apiGroups:
+        - ""
+        resources:
+        - secrets
+        verbs:
+        - get
+        - list
+        - watch
+    - op: add
+      path: /rules/-
+      value:
+        apiGroups:
+        - image.toolkit.fluxcd.io
+        resources:
+        - imagepolicies
+        verbs:
+        - get
+        - list
+        - watch
+- target:
+    group: rbac.authorization.k8s.io
+    version: v1
+    kind: Role
+    name: image-automation-leader-election-role
+  patch: |-
+    # allow patching events
+    - op: add
+      path: /rules/2/verbs/-
+      value: patch

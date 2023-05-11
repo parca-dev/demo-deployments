@@ -1,0 +1,52 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- github.com/fluxcd/image-reflector-controller/config/default?ref=82ff74a054c6a67d3f0798907e573668e91ed2f9 # v0.27.1
+- serviceaccount.yaml
+- networkpolicy.yaml
+
+labels:
+- pairs:
+    app.kubernetes.io/component: image-reflector-controller
+  includeSelectors: true
+
+images:
+- name: fluxcd/image-reflector-controller
+  newName: ghcr.io/fluxcd/image-reflector-controller
+
+# Ignoring deprecation for now
+# https://github.com/kubernetes-sigs/kustomize/issues/5049
+patchesStrategicMerge:
+- patches/delete_namespace.yaml
+- patches/use_serviceaccount.yaml
+- patches/set_resources_limits_requests.yaml
+
+patches:
+- target:
+    group: rbac.authorization.k8s.io
+    version: v1
+    kind: ClusterRole
+    name: image-reflector-manager-role
+  patch: |-
+    - op: add
+      path: /rules/-
+      value:
+        apiGroups:
+        - ""
+        resources:
+        - secrets
+        verbs:
+        - get
+        - list
+        - watch
+- target:
+    group: rbac.authorization.k8s.io
+    version: v1
+    kind: Role
+    name: image-reflector-leader-election-role
+  patch: |-
+    # allow patching events
+    - op: add
+      path: /rules/2/verbs/-
+      value: patch

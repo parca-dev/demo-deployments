@@ -1,8 +1,9 @@
 local pa = import 'github.com/parca-dev/parca-agent/deploy/lib/parca-agent/parca-agent.libsonnet';
+local versions = std.parseYaml(importstr './versions.yaml');
 
 local defaults = {
   namespace: 'parca',
-  version: 'v0.19.0-62-ga25185e',
+  version: versions.parcaAgent,
   image: 'ghcr.io/parca-dev/parca-agent:' + self.version,
   stores: ['parca.%s.svc.cluster.local:7070' % self.namespace],
   insecure: true,

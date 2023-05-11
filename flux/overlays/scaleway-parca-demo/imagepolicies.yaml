@@ -1,0 +1,28 @@
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: parca
+spec:
+  filterTags:
+    extract: $ts
+    pattern: '^main-(?P<ts>[1-9][0-9]*)-[a-fA-F0-9]+'
+  policy:
+    numerical:
+      order: asc
+  imageRepositoryRef:
+    name: parca
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: parca-agent
+spec:
+  filterTags:
+    extract: $ts
+    pattern: '^main-(?P<ts>[1-9][0-9]*)-[a-fA-F0-9]+'
+  policy:
+    numerical:
+      order: asc
+  imageRepositoryRef:
+    name: parca-agent

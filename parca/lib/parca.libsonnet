@@ -1,8 +1,9 @@
 local p = import 'github.com/parca-dev/parca/deploy/lib/parca/parca.libsonnet';
+local versions = std.parseYaml(importstr './versions.yaml');
 
 local defaults = {
   namespace: 'parca',
-  version: 'main-d88b069f',
+  version: versions.parca,
   image: 'ghcr.io/parca-dev/parca:' + self.version,
   replicas: 1,
   ingress: {

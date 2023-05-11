@@ -126,7 +126,7 @@ Edit `.schemas/Makefile` to update them and use `make -C .schemas` to re-generat
 Validation can be performed by passing the manifest output to `kubeconform`:
 
 ```shell
-${COMMAND} | kubeconform
+${COMMAND} | kubeconform \
   -schema-location '.schemas/{{ .ResourceKind }}{{ .KindSuffix }}.json' \
   -schema-location 'https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master' \
   -skip CustomResourceDefinition \
