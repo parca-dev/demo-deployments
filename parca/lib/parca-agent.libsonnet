@@ -60,7 +60,7 @@ function(params={})
             {
               namespaceSelector: {
                 matchLabels: {
-                  name: 'monitoring',
+                  'kubernetes.io/metadata.name': 'monitoring',
                 },
               },
               podSelector: {

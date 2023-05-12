@@ -9,19 +9,6 @@ metadata:
 spec:
   egress:
   - {}
-  ingress:
-  - from:
-    - namespaceSelector:
-        matchLabels:
-          name: monitoring
-      podSelector:
-        matchExpressions:
-        - key: app.kubernetes.io/name
-          operator: In
-          values:
-          - prometheus
-    ports:
-    - port: 9402
   podSelector:
     matchLabels:
       app.kubernetes.io/name: cert-manager
@@ -29,4 +16,3 @@ spec:
       app.kubernetes.io/component: controller
   policyTypes:
   - Egress
-  - Ingress
