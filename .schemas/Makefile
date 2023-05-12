@@ -1,6 +1,6 @@
 PYTHON := python3
 
-# renovate: datasoure=github-releases depName=yannh/kubeconform
+# renovate: datasource=github-releases depName=yannh/kubeconform
 KUBECONFORM_VERSION := v0.6.1
 
 CRDS := \
