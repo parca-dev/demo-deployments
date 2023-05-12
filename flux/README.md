@@ -6,12 +6,32 @@ See [Automate image updates to Git | Flux](https://fluxcd.io/flux/guides/image-u
 > but it is very specific to Argo CD and supports Helm and Kustomize only.
 > Flux supports any YAML file and is agnostic regarding the deployment solution.
 
-## Suspend and resume reconciliation of Git repository
+## Suspend and resume an Image Repository
 
 ### Suspend
 
 ```bash
-kubectl patch GitRepository \
+kubectl patch ImageRepository \
+  --namespace=flux-system "${IMAGE_REPOSITORY}" \
+  --type=json --patch='[{ "op": "add", "path": "/spec/suspend", "value": true }]'
+```
+
+### Resume
+
+```bash
+kubectl patch ImageRepository \
+  --namespace=flux-system "${IMAGE_REPOSITORY}" \
+  --type=json --patch='[{ "op": "remove", "path": "/spec/suspend" }]'
+```
+
+See also [Image Repositories | Flux - Suspending and resuming](https://fluxcd.io/flux/components/image/imagerepositories/#suspending-and-resuming)
+
+## Suspend and resume Image Update Automation
+
+### Suspend
+
+```bash
+kubectl patch ImageUpdateAutomation \
   --namespace=flux-system parca-dev-demo-deployments \
   --type=json --patch='[{ "op": "add", "path": "/spec/suspend", "value": true }]'
 ```
@@ -19,12 +39,12 @@ kubectl patch GitRepository \
 ### Resume
 
 ```bash
-kubectl patch GitRepository \
+kubectl patch ImageUpdateAutomation \
   --namespace=flux-system parca-dev-demo-deployments \
   --type=json --patch='[{ "op": "remove", "path": "/spec/suspend" }]'
 ```
 
-See also [Git Repositories - Suspending and resuming | Flux](https://fluxcd.io/flux/components/source/gitrepositories/#suspending-and-resuming).
+See also [Image Update Automations | Flux](https://fluxcd.io/flux/components/image/imageupdateautomations/)
 
 ## Configure SSH key
 
