@@ -16,7 +16,7 @@
       "description": "Specification of desired Pod selection for target discovery by Prometheus.",
       "properties": {
         "attachMetadata": {
-          "description": "Attaches node metadata to discovered targets. Only valid for role: pod. Only valid in Prometheus versions 2.35.0 and newer.",
+          "description": "Attaches node metadata to discovered targets. Requires Prometheus v2.35.0 and above.",
           "properties": {
             "node": {
               "description": "When set to true, Prometheus must have permissions to get Nodes.",
@@ -91,6 +91,7 @@
                       "key"
                     ],
                     "type": "object",
+                    "x-kubernetes-map-type": "atomic",
                     "additionalProperties": false
                   },
                   "type": {
@@ -124,6 +125,7 @@
                       "key"
                     ],
                     "type": "object",
+                    "x-kubernetes-map-type": "atomic",
                     "additionalProperties": false
                   },
                   "username": {
@@ -146,6 +148,7 @@
                       "key"
                     ],
                     "type": "object",
+                    "x-kubernetes-map-type": "atomic",
                     "additionalProperties": false
                   }
                 },
@@ -172,7 +175,16 @@
                   "key"
                 ],
                 "type": "object",
+                "x-kubernetes-map-type": "atomic",
                 "additionalProperties": false
+              },
+              "enableHttp2": {
+                "description": "Whether to enable HTTP2.",
+                "type": "boolean"
+              },
+              "filterRunning": {
+                "description": "Drop pods that are not running. (Failed, Succeeded). Enabled by default. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#pod-phase",
+                "type": "boolean"
               },
               "followRedirects": {
                 "description": "FollowRedirects configures whether scrape requests follow HTTP 3xx redirects.",
@@ -198,15 +210,26 @@
                   "properties": {
                     "action": {
                       "default": "replace",
-                      "description": "Action to perform based on regex matching. Default is 'replace'",
+                      "description": "Action to perform based on regex matching. Default is 'replace'. uppercase and lowercase actions require Prometheus >= 2.36.",
                       "enum": [
                         "replace",
+                        "Replace",
                         "keep",
+                        "Keep",
                         "drop",
+                        "Drop",
                         "hashmod",
+                        "HashMod",
                         "labelmap",
+                        "LabelMap",
                         "labeldrop",
-                        "labelkeep"
+                        "LabelDrop",
+                        "labelkeep",
+                        "LabelKeep",
+                        "lowercase",
+                        "Lowercase",
+                        "uppercase",
+                        "Uppercase"
                       ],
                       "type": "string"
                     },
@@ -272,6 +295,7 @@
                           "key"
                         ],
                         "type": "object",
+                        "x-kubernetes-map-type": "atomic",
                         "additionalProperties": false
                       },
                       "secret": {
@@ -294,6 +318,7 @@
                           "key"
                         ],
                         "type": "object",
+                        "x-kubernetes-map-type": "atomic",
                         "additionalProperties": false
                       }
                     },
@@ -320,6 +345,7 @@
                       "key"
                     ],
                     "type": "object",
+                    "x-kubernetes-map-type": "atomic",
                     "additionalProperties": false
                   },
                   "endpointParams": {
@@ -361,7 +387,7 @@
                 "type": "object"
               },
               "path": {
-                "description": "HTTP path to scrape for metrics.",
+                "description": "HTTP path to scrape for metrics. If empty, Prometheus uses the default value (e.g. `/metrics`).",
                 "type": "string"
               },
               "port": {
@@ -379,15 +405,26 @@
                   "properties": {
                     "action": {
                       "default": "replace",
-                      "description": "Action to perform based on regex matching. Default is 'replace'",
+                      "description": "Action to perform based on regex matching. Default is 'replace'. uppercase and lowercase actions require Prometheus >= 2.36.",
                       "enum": [
                         "replace",
+                        "Replace",
                         "keep",
+                        "Keep",
                         "drop",
+                        "Drop",
                         "hashmod",
+                        "HashMod",
                         "labelmap",
+                        "LabelMap",
                         "labeldrop",
-                        "labelkeep"
+                        "LabelDrop",
+                        "labelkeep",
+                        "LabelKeep",
+                        "lowercase",
+                        "Lowercase",
+                        "uppercase",
+                        "Uppercase"
                       ],
                       "type": "string"
                     },
@@ -452,7 +489,7 @@
                 "description": "TLS configuration to use when scraping the endpoint.",
                 "properties": {
                   "ca": {
-                    "description": "Struct containing the CA cert to use for the targets.",
+                    "description": "Certificate authority used when verifying server certificates.",
                     "properties": {
                       "configMap": {
                         "description": "ConfigMap containing data to use for the targets.",
@@ -474,6 +511,7 @@
                           "key"
                         ],
                         "type": "object",
+                        "x-kubernetes-map-type": "atomic",
                         "additionalProperties": false
                       },
                       "secret": {
@@ -496,6 +534,7 @@
                           "key"
                         ],
                         "type": "object",
+                        "x-kubernetes-map-type": "atomic",
                         "additionalProperties": false
                       }
                     },
@@ -503,7 +542,7 @@
                     "additionalProperties": false
                   },
                   "cert": {
-                    "description": "Struct containing the client cert file for the targets.",
+                    "description": "Client certificate to present when doing client-authentication.",
                     "properties": {
                       "configMap": {
                         "description": "ConfigMap containing data to use for the targets.",
@@ -525,6 +564,7 @@
                           "key"
                         ],
                         "type": "object",
+                        "x-kubernetes-map-type": "atomic",
                         "additionalProperties": false
                       },
                       "secret": {
@@ -547,6 +587,7 @@
                           "key"
                         ],
                         "type": "object",
+                        "x-kubernetes-map-type": "atomic",
                         "additionalProperties": false
                       }
                     },
@@ -577,6 +618,7 @@
                       "key"
                     ],
                     "type": "object",
+                    "x-kubernetes-map-type": "atomic",
                     "additionalProperties": false
                   },
                   "serverName": {
@@ -647,6 +689,7 @@
             }
           },
           "type": "object",
+          "x-kubernetes-map-type": "atomic",
           "additionalProperties": false
         },
         "targetLimit": {
