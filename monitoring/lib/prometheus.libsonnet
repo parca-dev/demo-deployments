@@ -13,7 +13,9 @@ local defaults = {
     commonLabels+: {
       'app.kubernetes.io/instance': $.prometheus.name,
     },
-    alerting: {},
+    alerting: {
+      alertmanagers: [],
+    },
     enableFeatures: ['native-histograms'],
     resources+: {
       limits+: {
