@@ -22,8 +22,8 @@
     {
       "description": "Highlight build dependencies updates",
       "matchPaths": [
-        "(^|/)kustomization.yaml$",
-        ".+\\.(?:j|lib)sonnet"
+        "**/kustomization.yaml",
+        "**/*.{j,lib}sonnet"
       ],
       "automerge": false,
       "semanticCommitType": "build"
