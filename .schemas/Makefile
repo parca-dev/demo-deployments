@@ -4,7 +4,7 @@ PYTHON := python3
 KUBECONFORM_VERSION := v0.6.1
 
 CRDS := \
-	https://github.com/jetstack/cert-manager/releases/download/v1.8.2/cert-manager.crds.yaml \
+	https://github.com/jetstack/cert-manager/releases/download/v1.11.2/cert-manager.crds.yaml \
 	https://raw.githubusercontent.com/fluxcd/image-automation-controller/v0.33.1/config/crd/bases/image.toolkit.fluxcd.io_imageupdateautomations.yaml \
 	https://raw.githubusercontent.com/fluxcd/image-reflector-controller/v0.27.2/config/crd/bases/image.toolkit.fluxcd.io_imagepolicies.yaml \
 	https://raw.githubusercontent.com/fluxcd/image-reflector-controller/v0.27.2/config/crd/bases/image.toolkit.fluxcd.io_imagerepositories.yaml \
