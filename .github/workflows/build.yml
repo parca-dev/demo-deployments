@@ -133,10 +133,11 @@ jobs:
               --arg apps "${HELM_APPS}" \
               "${JQ_SCRIPT}" >>"${GITHUB_OUTPUT}" <<<"${PATH_RESULT}"
           else
-            printf 'kustomize=%s' "${KUSTOMIZE_APPS}" >>"${GITHUB_OUTPUT}"
-            printf 'jsonnet=%s' "${JSONNET_APPS}" >>"${GITHUB_OUTPUT}"
-            printf 'helm=%s' "${HELM_APPS}" >>"${GITHUB_OUTPUT}"
+            printf 'kustomize=%s\n' "${KUSTOMIZE_APPS}" >>"${GITHUB_OUTPUT}"
+            printf 'jsonnet=%s\n' "${JSONNET_APPS}" >>"${GITHUB_OUTPUT}"
+            printf 'helm=%s\n' "${HELM_APPS}" >>"${GITHUB_OUTPUT}"
           fi
+
           cat "${GITHUB_OUTPUT}"
         env:
           REASON: ${{ steps.skip-check.outputs.reason }}
