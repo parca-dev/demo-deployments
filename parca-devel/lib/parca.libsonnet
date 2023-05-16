@@ -1,14 +1,16 @@
 local p = import 'github.com/parca-dev/parca/deploy/lib/parca/parca.libsonnet';
+local versions = std.parseYaml(importstr './versions.yaml');
 
 local defaults = {
-  namespace: 'parca',
-  // renovate: datasource=docker depName=ghcr.io/parca-dev/parca
-  version: 'v0.17.0',
+  name: 'parca-devel',
+  namespace: 'parca-devel',
+  version: versions.parca,
   image: 'ghcr.io/parca-dev/parca:' + self.version,
   replicas: 1,
   ingress: {
     class: 'nginx',
     hosts: error 'must provide ingress hosts',
+    path: '/devel',
   },
   resources: {
     limits: {
@@ -34,6 +36,20 @@ function(params)
           // The demo cluster does not have enough memory
           // for running 2 Parca instances.
           type: 'Recreate',
+        },
+        template+: {
+          spec+: {
+            containers: [
+              if c.name == 'parca' then c {
+                // TODO: Make it easy to pass extra args upstream.
+                args+: [
+                  '--experimental-arrow',
+                  '--path-prefix=' + $.config.ingress.path,
+                ],
+              } else c
+              for c in super.containers
+            ],
+          },
         },
       },
     },
@@ -63,17 +79,10 @@ function(params)
                     },
                   },
                 },
-                path: '/',
+                path: $.config.ingress.path,
                 pathType: 'Prefix',
               }],
             },
-          }
-          for host in $.config.ingress.hosts
-        ],
-        tls: [
-          {
-            hosts: [host],
-            secretName: std.strReplace(host, '.', '-') + '-tls',
           }
           for host in $.config.ingress.hosts
         ],
@@ -110,7 +119,7 @@ function(params)
               podSelector: {
                 matchLabels: {
                   'app.kubernetes.io/name': 'parca-agent',
-                  'app.kubernetes.io/instance': 'parca-agent',
+                  'app.kubernetes.io/instance': 'parca-agent-devel',
                   'app.kubernetes.io/component': 'observability',
                 },
               },

@@ -11,6 +11,7 @@ This is our [demo.parca.dev](https://demo.parca.dev) cluster configuration.
 * ingress-nginx - [![App Status](https://demo.parca.dev/argo-cd/api/badge?name=scaleway-parca-demo-ingress-nginx)](https://demo.parca.dev/argo-cd/applications/scaleway-parca-demo-ingress-nginx)
 * monitoring - [![App Status](https://demo.parca.dev/argo-cd/api/badge?name=scaleway-parca-demo-monitoring)](https://demo.parca.dev/argo-cd/applications/scaleway-parca-demo-monitoring)
 * parca - [![App Status](https://demo.parca.dev/argo-cd/api/badge?name=scaleway-parca-demo-parca)](https://demo.parca.dev/argo-cd/applications/scaleway-parca-demo-parca)
+* parca-devel - [![App Status](https://demo.parca.dev/argo-cd/api/badge?name=scaleway-parca-demo-parca-devel)](https://demo.parca.dev/argo-cd/applications/scaleway-parca-demo-parca-devel)
 
 Ask in one of our channels to be invited to the Scaleway Organization.
 Once you have access you can download the kubeconfig via the UI.

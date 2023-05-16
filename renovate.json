@@ -27,6 +27,21 @@
       ],
       "automerge": false,
       "semanticCommitType": "build"
+    },
+    {
+      "description": "Group Parca packages",
+      "matchSourceUrls": ["https://github.com/parca-dev/parca"],
+      "reviewers": [
+        "team:backend-maintainers",
+        "team:frontend-maintainers"
+      ],
+      "groupName": "parca"
+    },
+    {
+      "description": "Group Parca Agent packages",
+      "matchSourceUrls": ["https://github.com/parca-dev/parca-agent"],
+      "reviewers": ["team:agent-maintainers"],
+      "groupName": "parca-agent"
     }
   ],
   "regexManagers": [
@@ -34,7 +49,9 @@
       "description": "Update versions in Jsonnet files",
       "fileMatch": [
         "grafana/lib/grafana\\.libsonnet",
-        "monitoring/lib/prometheus\\.libsonnet"
+        "monitoring/lib/prometheus\\.libsonnet",
+        "parca/lib/parca\\.libsonnet",
+        "parca/lib/parca-agent\\.libsonnet"
       ],
       "matchStrings": [
         "// renovate: datasource=(?<datasource>.+?) depName=(?<depName>.+?)(?: packageName=(?<packageName>.+?))?(?: versioning=(?<versioning>.+?))?(?: extractVersion=(?<extractVersion>.+?))?\\s+.+:\\s'(?<currentValue>.+?)',\\s"
