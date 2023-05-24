@@ -15,6 +15,7 @@ local utils = import '../lib/utils.libsonnet';
     [if thanos.store != null then 'store.json']:
       local grpcUnarySelector = utils.joinLabels([thanos.store.dashboard.selector, 'grpc_type="unary"']);
       local grpcServerStreamSelector = utils.joinLabels([thanos.store.dashboard.selector, 'grpc_type="server_stream"']);
+      local dataSizeDimensions = utils.joinLabels([thanos.store.dashboard.dimensions, 'data_type']);
 
       g.dashboard(thanos.store.title)
       .addRow(
@@ -181,12 +182,27 @@ local utils = import '../lib/utils.libsonnet';
           g.queryPanel(
             [
               'thanos_bucket_store_series_data_fetched{%s, quantile="0.99"}' % thanos.store.dashboard.selector,
-              'sum by (%(dimensions)s) (rate(thanos_bucket_store_series_data_fetched_sum{%(selector)s}[$interval])) / sum by (%(dimensions)s) (rate(thanos_bucket_store_series_data_fetched_count{%(selector)s}[$interval]))' % thanos.store.dashboard,
+              'sum by (%s) (rate(thanos_bucket_store_series_data_fetched_sum{%s}[$interval])) / sum by (%s) (rate(thanos_bucket_store_series_data_fetched_count{%s}[$interval]))' % [dataSizeDimensions, thanos.store.dashboard.selector, dataSizeDimensions, thanos.store.dashboard.selector],
               'thanos_bucket_store_series_data_fetched{%s, quantile="0.50"}' % thanos.store.dashboard.selector,
             ], [
-              'P99',
-              'mean {{job}}',
-              'P50',
+              'P99: {{data_type}} / {{job}}',
+              'mean: {{data_type}} / {{job}}',
+              'P50: {{data_type}} / {{job}}',
+            ],
+          ) +
+          { yaxes: g.yaxes('bytes') }
+        )
+        .addPanel(
+          g.panel('Data Touched', 'Show the size of data touched') +
+          g.queryPanel(
+            [
+              'thanos_bucket_store_series_data_touched{%s, quantile="0.99"}' % thanos.store.dashboard.selector,
+              'sum by (%s) (rate(thanos_bucket_store_series_data_touched_sum{%s}[$interval])) / sum by (%s) (rate(thanos_bucket_store_series_data_touched_count{%s}[$interval]))' % [dataSizeDimensions, thanos.store.dashboard.selector, dataSizeDimensions, thanos.store.dashboard.selector],
+              'thanos_bucket_store_series_data_touched{%s, quantile="0.50"}' % thanos.store.dashboard.selector,
+            ], [
+              'P99: {{data_type}} / {{job}}',
+              'mean: {{data_type}} / {{job}}',
+              'P50: {{data_type}} / {{job}}',
             ],
           ) +
           { yaxes: g.yaxes('bytes') }
@@ -228,12 +244,12 @@ local utils = import '../lib/utils.libsonnet';
     __overviewRows__+:: if thanos.store == null then [] else [
       g.row('Store')
       .addPanel(
-        g.panel('gPRC (Unary) Rate', 'Shows rate of handled Unary gRPC requests from queriers.') +
+        g.panel('gRPC (Unary) Rate', 'Shows rate of handled Unary gRPC requests from queriers.') +
         g.grpcRequestsPanel('grpc_server_handled_total', utils.joinLabels([thanos.dashboard.overview.selector, 'grpc_type="unary"']), thanos.dashboard.overview.dimensions) +
         g.addDashboardLink(thanos.store.title)
       )
       .addPanel(
-        g.panel('gPRC (Unary) Errors', 'Shows ratio of errors compared to the total number of handled requests from queriers.') +
+        g.panel('gRPC (Unary) Errors', 'Shows ratio of errors compared to the total number of handled requests from queriers.') +
         g.grpcErrorsPanel('grpc_server_handled_total', utils.joinLabels([thanos.dashboard.overview.selector, 'grpc_type="unary"']), thanos.dashboard.overview.dimensions) +
         g.addDashboardLink(thanos.store.title)
       )

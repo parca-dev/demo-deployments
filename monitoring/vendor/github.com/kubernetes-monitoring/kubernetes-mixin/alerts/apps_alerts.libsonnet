@@ -33,7 +33,7 @@
             expr: |||
               sum by (namespace, pod, %(clusterLabel)s) (
                 max by(namespace, pod, %(clusterLabel)s) (
-                  kube_pod_status_phase{%(prefixedNamespaceSelector)s%(kubeStateMetricsSelector)s, phase=~"Pending|Unknown"}
+                  kube_pod_status_phase{%(prefixedNamespaceSelector)s%(kubeStateMetricsSelector)s, phase=~"Pending|Unknown|Failed"}
                 ) * on(namespace, pod, %(clusterLabel)s) group_left(owner_kind) topk by(namespace, pod, %(clusterLabel)s) (
                   1, max by(namespace, pod, owner_kind, %(clusterLabel)s) (kube_pod_owner{owner_kind!="Job"})
                 )
@@ -285,7 +285,7 @@
             },
             annotations: {
               description: 'HPA {{ $labels.namespace }}/{{ $labels.horizontalpodautoscaler  }} has not matched the desired number of replicas for longer than 15 minutes.',
-              summary: 'HPA has not matched descired number of replicas.',
+              summary: 'HPA has not matched desired number of replicas.',
             },
             'for': '15m',
             alert: 'KubeHpaReplicasMismatch',

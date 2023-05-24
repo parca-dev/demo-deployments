@@ -50,6 +50,7 @@
           'nodes',
           'pods',
           'services',
+          'serviceaccounts',
           'resourcequotas',
           'replicationcontrollers',
           'limitranges',
@@ -133,6 +134,7 @@
         apiGroups: ['networking.k8s.io'],
         resources: [
           'networkpolicies',
+          'ingressclasses',
           'ingresses',
         ],
         verbs: ['list', 'watch'],
@@ -144,7 +146,17 @@
         ],
         verbs: ['list', 'watch'],
       },
-    ];
+      {
+        apiGroups: ['rbac.authorization.k8s.io'],
+        resources: [
+          'clusterrolebindings',
+          'clusterroles',
+          'rolebindings',
+          'roles',
+        ],
+        verbs: ['list', 'watch'],
+      },
+     ];
 
     {
       apiVersion: 'rbac.authorization.k8s.io/v1',
@@ -163,9 +175,9 @@
         { name: 'http-metrics', containerPort: 8080 },
         { name: 'telemetry', containerPort: 8081 },
       ],
-      securityContext: { 
-        runAsUser: 65534, 
-        allowPrivilegeEscalation: false,        
+      securityContext: {
+        runAsUser: 65534,
+        allowPrivilegeEscalation: false,
         readOnlyRootFilesystem: true,
         capabilities: { drop: ['ALL'] },
       },
