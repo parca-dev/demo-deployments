@@ -1,0 +1,11 @@
+{
+  "apiVersion": "tanka.dev/v1alpha1",
+  "kind": "Environment",
+  "metadata": {
+    "name": "environments/scaleway-parca-demo"
+  },
+  "spec": {
+    "apiServer": "https://c2a026b7-5252-4729-b805-aeb910d8d789.api.k8s.nl-ams.scw.cloud:6443",
+    "namespace": "parca-devel"
+  }
+}

@@ -56,6 +56,10 @@ local applications =
       name: 'parca',
       namespace: 'parca',
     }),
+    u.newJsonnetApp(common {
+      name: 'parca-devel',
+      namespace: 'parca-devel',
+    }),
   ];
 
 {
