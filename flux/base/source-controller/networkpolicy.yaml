@@ -5,8 +5,23 @@ metadata:
 spec:
   egress:
   - {}
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: parca
+      podSelector:
+        matchExpressions:
+        - key: app.kubernetes.io/name
+          operator: In
+          values:
+          - parca
+    ports:
+    - protocol: TCP
+      port: http-prom
   podSelector:
     matchLabels:
       app.kubernetes.io/component: source-controller
   policyTypes:
   - Egress
+  - Ingress

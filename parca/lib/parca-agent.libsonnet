@@ -69,6 +69,18 @@ function(params={})
                 },
               },
             },
+            {
+              namespaceSelector: {
+                matchLabels: {
+                  'kubernetes.io/metadata.name': 'parca',
+                },
+              },
+              podSelector: {
+                matchLabels: {
+                  'app.kubernetes.io/name': 'parca',
+                },
+              },
+            },
           ],
           ports: [{
             port: 'http',
