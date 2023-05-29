@@ -4,6 +4,16 @@
     {
       "source": {
         "git": {
+          "remote": "https://github.com/parca-dev/jsonnet-libs.git",
+          "subdir": "scrape-configs"
+        }
+      },
+      "version": "84af9d41972b247ed36e0bb3e80ab40e0de87dc2",
+      "sum": "9Sl1vzn4bXH/NvdjSXEVtuq9joATwmh3S+8N5WmOO2U="
+    },
+    {
+      "source": {
+        "git": {
           "remote": "https://github.com/parca-dev/parca-agent.git",
           "subdir": "deploy/lib/parca-agent"
         }
