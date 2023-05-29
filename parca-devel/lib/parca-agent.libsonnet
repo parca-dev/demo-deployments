@@ -73,7 +73,7 @@ function(params={})
             {
               namespaceSelector: {
                 matchLabels: {
-                  'kubernetes.io/metadata.name': 'parca',
+                  'kubernetes.io/metadata.name': 'parca-devel',
                 },
               },
               podSelector: {
