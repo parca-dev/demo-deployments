@@ -9,7 +9,7 @@ spec:
   - from:
     - namespaceSelector:
         matchLabels:
-          kubernetes.io/metadata.name: parca
+          kubernetes.io/metadata.name: parca-devel
       podSelector:
         matchExpressions:
         - key: app.kubernetes.io/name

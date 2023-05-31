@@ -50,6 +50,66 @@ local defaults = {
         },
       },
     },
+    {
+      name: 'image-automation-controller',
+      namespace: 'flux-system',
+      podProfileEndpoints: [{
+        port: 'http-prom',
+        relabelings: [
+          {
+            source_labels: ['namespace', 'pod'],
+            separator: '/',
+            target_label: 'instance',
+          },
+        ],
+      }],
+      selector: {
+        matchLabels: {
+          'app.kubernetes.io/name': 'flux',
+          'app.kubernetes.io/component': 'image-automation-controller',
+        },
+      },
+    },
+    {
+      name: 'image-reflector-controller',
+      namespace: 'flux-system',
+      podProfileEndpoints: [{
+        port: 'http-prom',
+        relabelings: [
+          {
+            source_labels: ['namespace', 'pod'],
+            separator: '/',
+            target_label: 'instance',
+          },
+        ],
+      }],
+      selector: {
+        matchLabels: {
+          'app.kubernetes.io/name': 'flux',
+          'app.kubernetes.io/component': 'image-reflector-controller',
+        },
+      },
+    },
+    {
+      name: 'source-controller',
+      namespace: 'flux-system',
+      podProfileEndpoints: [{
+        port: 'http-prom',
+        relabelings: [
+          {
+            source_labels: ['namespace', 'pod'],
+            separator: '/',
+            target_label: 'instance',
+          },
+        ],
+      }],
+      selector: {
+        matchLabels: {
+          'app.kubernetes.io/name': 'flux',
+          'app.kubernetes.io/component': 'source-controller',
+        },
+      },
+    },
   ],
   serviceProfilers: [
     {
