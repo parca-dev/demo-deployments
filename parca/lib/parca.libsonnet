@@ -47,6 +47,7 @@ function(params)
         labels: $.config.commonLabels,
         annotations: {
           'cert-manager.io/cluster-issuer': 'letsencrypt-prod',
+          'nginx.ingress.kubernetes.io/backend-protocol': 'GRPC',
         },
       },
       spec: {
