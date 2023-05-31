@@ -1,4 +1,3 @@
-local scrapeConfigs = import 'github.com/parca-dev/jsonnet-libs/scrape-configs/scrape-configs.libsonnet';
 local p = import 'github.com/parca-dev/parca/deploy/lib/parca/parca.libsonnet';
 
 local defaults = {
@@ -29,48 +28,6 @@ function(params)
   local config = defaults + params;
 
   p(config) {
-    clusterRole: {
-      apiVersion: 'rbac.authorization.k8s.io/v1',
-      kind: 'ClusterRole',
-      metadata: {
-        name: $.config.name,
-        namespace: $.config.namespace,
-        labels: $.config.commonLabels,
-      },
-      rules: [
-        {
-          apiGroups: [''],
-          resources: ['services', 'endpoints', 'pods'],
-          verbs: ['get', 'list', 'watch'],
-        },
-        {
-          apiGroups: ['networking.k8s.io'],
-          resources: ['ingresses'],
-          verbs: ['get', 'list', 'watch'],
-        },
-      ],
-    },
-
-    clusterRoleBinding: {
-      apiVersion: 'rbac.authorization.k8s.io/v1',
-      kind: 'ClusterRoleBinding',
-      metadata: {
-        name: $.config.name,
-        namespace: $.config.namespace,
-        labels: $.config.commonLabels,
-      },
-      roleRef: {
-        apiGroup: 'rbac.authorization.k8s.io',
-        kind: 'ClusterRole',
-        name: $.config.name,
-      },
-      subjects: [{
-        kind: 'ServiceAccount',
-        name: $.config.name,
-        namespace: $.config.namespace,
-      }],
-    },
-
     deployment+: {
       spec+: {
         strategy: {
