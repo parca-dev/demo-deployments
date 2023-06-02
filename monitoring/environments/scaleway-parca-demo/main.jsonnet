@@ -4,7 +4,7 @@ local prometheuses = [
   m.prometheus({
     prometheus+:: {
       name: 'parca',
-      namespaces: ['parca'],
+      namespaces: ['parca', 'parca-devel'],
     },
   }) {
     prometheus+: {
@@ -13,7 +13,7 @@ local prometheuses = [
           url: 'https://demo.pyrra.dev/prometheus/api/v1/write',
           writeRelabelConfigs: [{
             action: 'keep',
-            regex: 'parca/parca-agent',
+            regex: 'parca/parca-agent.*',
             sourceLabels: ['job'],
           }],
         }],
