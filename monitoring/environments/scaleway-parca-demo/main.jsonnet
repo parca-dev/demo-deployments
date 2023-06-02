@@ -13,7 +13,7 @@ local prometheuses = [
           url: 'https://demo.pyrra.dev/prometheus/api/v1/write',
           writeRelabelConfigs: [{
             action: 'keep',
-            regex: 'parca/parca-agent.*',
+            regex: 'parca(|-devel)/parca-agent(|-devel)',
             sourceLabels: ['job'],
           }],
         }],
