@@ -2,11 +2,10 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: argocd-server
-  annotations:
-    kubernetes.io/ingress.class: nginx
   labels:
     app.kubernetes.io/part-of: argocd
 spec:
+  ingressClassName: nginx
   rules:
   - host: demo.parca.dev
     http:
