@@ -118,6 +118,7 @@ local defaults = {
       endpoints: [{
         port: 'http',
         profilingConfig: {
+          path_prefix: 'devel',
           pprof_config: {
             fgprof: {
               enabled: true,
