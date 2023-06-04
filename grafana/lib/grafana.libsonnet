@@ -73,11 +73,9 @@ function(params)
         name: 'grafana',
         namespace: $._config.namespace,
         labels: $._config.commonLabels,
-        annotations: {
-          'kubernetes.io/ingress.class': $._config.ingress.class,
-        },
       },
       spec: {
+        ingressClassName: $._config.ingress.class,
         rules: [
           {
             host: host,

@@ -226,11 +226,9 @@ function(params)
         name: $.config.name,
         namespace: $.config.namespace,
         labels: $.config.commonLabels,
-        annotations: {
-          'kubernetes.io/ingress.class': $.config.ingress.class,
-        },
       },
       spec: {
+        ingressClassName: $.config.ingress.class,
         rules: [
           {
             host: host,
