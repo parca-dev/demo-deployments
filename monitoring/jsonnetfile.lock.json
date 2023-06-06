@@ -38,7 +38,7 @@
           "subdir": "grafonnet"
         }
       },
-      "version": "f0b70307b8e5f12236b277883d998af129a8211f",
+      "version": "38f3358ccad25a53700a71e3e5b9032e12fe2023",
       "sum": "342u++/7rViR/zj2jeJOjshzglkZ1SY+hFNuyCBFMdc="
     },
     {
@@ -48,7 +48,7 @@
           "subdir": "grafonnet-7.0"
         }
       },
-      "version": "f0b70307b8e5f12236b277883d998af129a8211f",
+      "version": "38f3358ccad25a53700a71e3e5b9032e12fe2023",
       "sum": "gCtR9s/4D5fxU9aKXg0Bru+/njZhA0YjLjPiASc61FM="
     },
     {
@@ -58,7 +58,7 @@
           "subdir": "grafana-builder"
         }
       },
-      "version": "3b08e7d37511dfd39af6027d07788a5ca8ec71b1",
+      "version": "fe2c78b6090156abcb877a4feb9bd288aef79118",
       "sum": "wp/L/9smcsHIiy24DH5WWMv2fcSckN2Lw/m7qDszaWU="
     },
     {
