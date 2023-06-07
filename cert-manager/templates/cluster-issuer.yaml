@@ -13,4 +13,7 @@ spec:
     solvers:
     - http01:
         ingress:
+          class: contour
+    - http01:
+        ingress:
           class: nginx

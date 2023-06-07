@@ -1,0 +1,25 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: contour
+  namespace: projectcontour
+spec:
+  template:
+    spec:
+      containers:
+      - name: contour
+        args:
+        # Original args from
+        # https://github.com/projectcontour/contour/blob/main/examples/contour/03-contour.yaml
+        - serve
+        - --incluster
+        - --xds-address=0.0.0.0
+        - --xds-port=8001
+        - --contour-cafile=/certs/ca.crt
+        - --contour-cert-file=/certs/tls.crt
+        - --contour-key-file=/certs/tls.key
+        - --config-path=/config/contour.yaml
+        # Enable PROXY protocol
+        # https://projectcontour.io/docs/latest/guides/proxy-proto/
+        - --use-proxy-protocol

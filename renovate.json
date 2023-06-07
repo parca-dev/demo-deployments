@@ -61,9 +61,20 @@
       "description": "Pin Kustomize bases digests - https://github.com/renovatebot/renovate/issues/7915",
       "fileMatch": ["(^|/)kustomization.yaml$"],
       "matchStrings": [
-          "- github\\.com\\/(?<depName>[^/]+?\\/[^/]*?)\\/.*\\?ref=(?<currentDigest>[a-f0-9]{40}) # (?<currentValue>.+)"
+          "\\s*-\\s+github\\.com\\/(?<depName>[^/]+?\\/[^/]*?)\\/.*\\?ref=(?<currentDigest>[a-f0-9]{40}) # (?<currentValue>.+)"
       ],
       "datasourceTemplate": "github-tags"
+    },
+    {
+      "description": "Update Kustomize remote bases based on raw Github user content",
+      "fileMatch": [
+        "(^|/)kustomization\\.yaml$"
+      ],
+      "matchStrings": [
+        "\\s*-\\s+https:\\/\\/raw\\.githubusercontent\\.com\\/(?<depName>.+?\\/.+?)\\/(?<currentDigest>[a-f0-9]{40}?)\\/.+\\.yaml # (?<currentValue>.+)"
+      ],
+      "datasourceTemplate": "github-tags",
+      "versioningTemplate": "semver"
     }
   ]
 }

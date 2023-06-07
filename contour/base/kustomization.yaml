@@ -1,0 +1,24 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: projectcontour
+resources:
+- https://raw.githubusercontent.com/projectcontour/contour/29304312ceca63b8dfbb6c359dcc5cf006e868cc/examples/render/contour-deployment.yaml # v1.25.0
+
+labels:
+- pairs:
+    app.kubernetes.io/part-of: projectcontour
+  includeSelectors: true
+
+# Ignoring deprecation for now
+# https://github.com/kubernetes-sigs/kustomize/issues/5049
+patchesStrategicMerge:
+- patches/delete_namespace.yaml
+- patches/configure_contour.yaml
+- patches/set_resources_limits_requests.yaml
+- patches/set_service_annotations.yaml
+
+replicas:
+- name: contour
+  count: 1
+- name: envoy
+  count: 1

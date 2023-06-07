@@ -28,13 +28,17 @@ local applications =
         },
       },
     },
+    u.newHelmApp(common {
+      name: 'cert-manager',
+      namespace: 'cert-manager',
+    }),
     u.newKustomizeApp(common {
       name: 'cluster-config',
       namespace: 'default',
     }),
-    u.newHelmApp(common {
-      name: 'cert-manager',
-      namespace: 'cert-manager',
+    u.newKustomizeApp(common {
+      name: 'contour',
+      namespace: 'projectcontour',
     }),
     u.newKustomizeApp(common {
       name: 'flux',
