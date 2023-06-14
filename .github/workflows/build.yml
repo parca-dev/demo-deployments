@@ -15,7 +15,7 @@ concurrency:
 
 env:
   # renovate: datasource=github-releases depName=helm/helm
-  HELM_VERSION: v3.12.0
+  HELM_VERSION: v3.12.1
   # renovate: datasource=github-releases depName=jsonnet-bundler/jsonnet-bundler
   JB_VERSION: v0.5.1
   # renovate: datasource=github-releases depName=google/go-jsonnet
