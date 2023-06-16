@@ -634,7 +634,11 @@
                         "type": "object",
                         "properties": {
                           "class": {
-                            "description": "The ingress class to use when creating Ingress resources to solve ACME challenges that use this challenge solver. Only one of 'class' or 'name' may be specified.",
+                            "description": "This field configures the annotation `kubernetes.io/ingress.class` when creating Ingress resources to solve ACME challenges that use this challenge solver. Only one of `class`, `name` or `ingressClassName` may be specified.",
+                            "type": "string"
+                          },
+                          "ingressClassName": {
+                            "description": "This field configures the field `ingressClassName` on the created Ingress resources used to solve ACME challenges that use this challenge solver. This is the recommended way of configuring the ingress class. Only one of `class`, `name` or `ingressClassName` may be specified.",
                             "type": "string"
                           },
                           "ingressTemplate": {
@@ -666,7 +670,7 @@
                             "additionalProperties": false
                           },
                           "name": {
-                            "description": "The name of the ingress resource that should have ACME challenge solving routes inserted into it in order to solve HTTP01 challenges. This is typically used in conjunction with ingress controllers like ingress-gce, which maintains a 1:1 mapping between external IPs and ingress resources.",
+                            "description": "The name of the ingress resource that should have ACME challenge solving routes inserted into it in order to solve HTTP01 challenges. This is typically used in conjunction with ingress controllers like ingress-gce, which maintains a 1:1 mapping between external IPs and ingress resources. Only one of `class`, `name` or `ingressClassName` may be specified.",
                             "type": "string"
                           },
                           "podTemplate": {
@@ -695,7 +699,7 @@
                                 "additionalProperties": false
                               },
                               "spec": {
-                                "description": "PodSpec defines overrides for the HTTP01 challenge solver pod. Only the 'priorityClassName', 'nodeSelector', 'affinity', 'serviceAccountName' and 'tolerations' fields are supported currently. All other fields will be ignored.",
+                                "description": "PodSpec defines overrides for the HTTP01 challenge solver pod. Check ACMEChallengeSolverHTTP01IngressPodSpec to find out currently supported fields. All other fields will be ignored.",
                                 "type": "object",
                                 "properties": {
                                   "affinity": {
@@ -1389,6 +1393,22 @@
                                     },
                                     "additionalProperties": false
                                   },
+                                  "imagePullSecrets": {
+                                    "description": "If specified, the pod's imagePullSecrets",
+                                    "type": "array",
+                                    "items": {
+                                      "description": "LocalObjectReference contains enough information to let you locate the referenced object inside the same namespace.",
+                                      "type": "object",
+                                      "properties": {
+                                        "name": {
+                                          "description": "Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?",
+                                          "type": "string"
+                                        }
+                                      },
+                                      "x-kubernetes-map-type": "atomic",
+                                      "additionalProperties": false
+                                    }
+                                  },
                                   "nodeSelector": {
                                     "description": "NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node. More info: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/",
                                     "type": "object",
@@ -1584,8 +1604,7 @@
                   "description": "Kubernetes authenticates with Vault by passing the ServiceAccount token stored in the named Secret resource to the Vault server.",
                   "type": "object",
                   "required": [
-                    "role",
-                    "secretRef"
+                    "role"
                   ],
                   "properties": {
                     "mountPath": {
@@ -1609,6 +1628,20 @@
                         },
                         "name": {
                           "description": "Name of the resource being referred to. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "serviceAccountRef": {
+                      "description": "A reference to a service account that will be used to request a bound token (also known as \"projected token\"). Compared to using \"secretRef\", using this field means that you don't rely on statically bound tokens. To use this field, you must configure an RBAC rule to let cert-manager request a token.",
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "description": "Name of the ServiceAccount used to request a token.",
                           "type": "string"
                         }
                       },
@@ -1767,6 +1800,10 @@
           "description": "ACME specific status options. This field should only be set if the Issuer is configured to use an ACME server to issue certificates.",
           "type": "object",
           "properties": {
+            "lastPrivateKeyHash": {
+              "description": "LastPrivateKeyHash is a hash of the private key associated with the latest registered ACME account, in order to track changes made to registered account associated with the Issuer",
+              "type": "string"
+            },
             "lastRegisteredEmail": {
               "description": "LastRegisteredEmail is the email associated with the latest registered ACME account, in order to track changes made to registered account associated with the  Issuer",
               "type": "string"
