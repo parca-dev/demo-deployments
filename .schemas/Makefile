@@ -4,7 +4,7 @@ PYTHON := python3
 KUBECONFORM_VERSION := v0.6.2
 
 CRDS := \
-	https://github.com/jetstack/cert-manager/releases/download/v1.11.2/cert-manager.crds.yaml \
+	https://github.com/jetstack/cert-manager/releases/download/v1.12.2/cert-manager.crds.yaml \
 	https://raw.githubusercontent.com/argoproj/argo-cd/v2.7.5/manifests/crds/applicationset-crd.yaml \
 	https://raw.githubusercontent.com/argoproj/argo-cd/v2.7.5/manifests/crds/application-crd.yaml \
 	https://raw.githubusercontent.com/argoproj/argo-cd/v2.7.5/manifests/crds/appproject-crd.yaml \
