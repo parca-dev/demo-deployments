@@ -60,6 +60,10 @@ local applications =
       name: 'parca-devel',
       namespace: 'parca-devel',
     }),
+    u.newHelmApp(common {
+      name: 'traefik',
+      namespace: 'traefik',
+    }),
   ];
 
 {
