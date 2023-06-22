@@ -48,6 +48,28 @@ local applications =
       name: 'ingress-nginx',
       namespace: 'ingress-nginx',
     }),
+    u.newHelmApp(common {
+      name: 'istio',
+      namespace: 'istio-system',
+    }) {
+      spec+: {
+        ignoreDifferences: [{
+          group: 'apps',
+          kind: 'Deployment',
+          name: 'istio',
+          jqPathExpressions: [
+            // Divisor is not set in the manifest and shows in the diff as 0
+            |||
+              .spec.template.spec.containers[]
+                |select(.name=="discovery")
+                |.env[]
+                |select(.name=="GOMEMLIMIT")
+                |.valueFrom.resourceFieldRef.divisor
+            |||,
+          ],
+        }],
+      },
+    },
     u.newJsonnetApp(common {
       name: 'monitoring',
       namespace: 'monitoring',

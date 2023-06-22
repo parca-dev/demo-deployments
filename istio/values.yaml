@@ -1,0 +1,42 @@
+istiod:
+  pilot:
+    autoscaleEnabled: false
+    resources:
+      limits:
+        memory: 128Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    seccompProfile:
+      type: RuntimeDefault
+  meshConfig:
+    accessLogFile: /dev/stdout
+  global:
+    defaultPodDisruptionBudget:
+      enabled: false
+
+gateway:
+  name: istio-ingressgateway
+  securityContext:
+    seccompProfile:
+      type: RuntimeDefault
+    sysctls:
+    - name: net.ipv4.ip_unprivileged_port_start
+      value: "0"
+  service:
+    annotations:
+      service.beta.kubernetes.io/scw-loadbalancer-proxy-protocol-v2: "true"
+      service.beta.kubernetes.io/scw-loadbalancer-use-hostname: "true"
+      service.beta.kubernetes.io/scw-loadbalancer-zone: "nl-ams-2"
+    externalTrafficPolicy: Local
+  resources:
+    limits:
+      # Setting this value to null does not actually unset it
+      # https://github.com/helm/helm/issues/9027
+      cpu: null
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi
+  autoscaling:
+    enabled: false

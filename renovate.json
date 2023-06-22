@@ -29,6 +29,11 @@
       "semanticCommitType": "build"
     },
     {
+      "description": "Group Istio packages",
+      "matchSourceUrls": ["https://github.com/istio/istio"],
+      "groupName": "istio"
+    },
+    {
       "description": "Group Parca packages",
       "matchSourceUrls": ["https://github.com/parca-dev/parca"],
       "reviewers": [

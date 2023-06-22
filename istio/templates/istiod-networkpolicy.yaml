@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: istiod
+  labels:
+    app.kubernetes.io/name: istiod
+    app: istiod
+    istio: pilot
+spec:
+  egress:
+  - {}
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: istio-ingressgateway
+          istio: ingressgateway
+    ports:
+    - port: 15012
+  - ports:
+    - port: 15017
+  podSelector:
+    matchLabels:
+      app: istiod
+      istio: pilot
+  policyTypes:
+  - Egress
+  - Ingress
