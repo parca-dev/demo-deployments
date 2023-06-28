@@ -27,6 +27,7 @@ local prometheuses = [
   m.prometheus({
     prometheus+:: {
       name: 'parca-analytics',
+      namespace: 'parca-analytics',
       namespaces: ['parca-analytics'],
     },
   }) {
@@ -48,6 +49,7 @@ local prometheuses = [
         namespace: 'parca-analytics',
       },
       spec: {
+        ingressClassName: 'nginx',
         tls: [{
           secretName: 'analytics.parca.dev',
           hosts: [
