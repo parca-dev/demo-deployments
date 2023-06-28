@@ -32,6 +32,14 @@ local prometheuses = [
   }) {
     local p = self,
 
+    namespace: {
+      apiVersion: 'v1',
+      kind: 'Namespace',
+      metadata: {
+        name: 'parca-analytics',
+      },
+    },
+
     ingressRemoteWrite: {
       apiVersion: 'networking.k8s.io/v1',
       kind: 'Ingress',
