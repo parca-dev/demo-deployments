@@ -47,6 +47,9 @@ local prometheuses = [
       metadata: {
         name: 'parca-analytics',
         namespace: 'parca-analytics',
+        annotations: {
+          'cert-manager.io/cluster-issuer': 'letsencrypt-prod',
+        },
       },
       spec: {
         ingressClassName: 'nginx',
