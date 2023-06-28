@@ -24,6 +24,63 @@ local prometheuses = [
     clusterRole:: {},
     clusterRoleBinding:: {},
   },
+  m.prometheus({
+    prometheus+:: {
+      name: 'parca-analytics',
+      namespaces: ['parca-analytics'],
+    },
+  }) {
+    local p = self,
+
+    ingressRemoteWrite: {
+      apiVersion: 'networking.k8s.io/v1',
+      kind: 'Ingress',
+      metadata: {
+        name: 'parca-analytics',
+        namespace: 'parca-analytics',
+      },
+      spec: {
+        tls: [{
+          secretName: 'analytics.parca.dev',
+          hosts: [
+            'analytics.parca.dev',
+          ],
+        }],
+        rules: [{
+          host: 'analytics.parca.dev',
+          http: {
+            paths: [
+              {
+                path: '/api/v1/write',
+                pathType: 'Prefix',
+                backend: {
+                  service: {
+                    name: p.service.metadata.name,
+                    port: {
+                      number: p.service.spec.ports[0].port,
+                    },
+                  },
+                },
+              },
+            ],
+          },
+        }],
+      },
+    },
+
+    prometheus+: {
+      spec+: {
+        enableRemoteWriteReceiver: true,
+        query+: {
+          lookbackDelta: '15m',  // Analytics are only sent once every 10m
+        },
+      },
+    },
+
+    // We do not monitor k8s metrics with this instance.
+    clusterRole:: {},
+    clusterRoleBinding:: {},
+  },
 ];
 
 local prometheusOperator = m.prometheusOperator();
