@@ -49,10 +49,34 @@ function(params={}) (
         },
         spec: {
           egress: [{}],
+          ingress: [{
+            from: [
+              {
+                namespaceSelector: {
+                  matchLabels: {
+                    'kubernetes.io/metadata.name': 'ingress-nginx',
+                  },
+                },
+                podSelector: {
+                  matchLabels: {
+                    'app.kubernetes.io/name': 'ingress-nginx',
+                    'app.kubernetes.io/component': 'controller',
+                    'app.kubernetes.io/instance': 'ingress-nginx',
+                  },
+                },
+              },
+            ],
+            ports: [{
+              port: 'web',
+            }],
+          }],
           podSelector: {
             matchLabels: p._config.selectorLabels,
           },
-          policyTypes: ['Egress'],
+          policyTypes: [
+            'Egress',
+            'Ingress',
+          ],
         },
       },
 
