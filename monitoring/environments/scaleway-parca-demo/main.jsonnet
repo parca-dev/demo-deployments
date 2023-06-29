@@ -29,11 +29,15 @@ local prometheuses = [
       name: 'parca-analytics',
       namespace: 'parca-analytics',
       namespaces: [],
+      ingress: {
+        class: 'nginx',
+        hosts: ['analytics.parca.dev'],
+      },
     },
   }) {
     local p = self,
 
-    ingressRemoteWrite: {
+    ingress: {
       apiVersion: 'networking.k8s.io/v1',
       kind: 'Ingress',
       metadata: {
@@ -41,35 +45,81 @@ local prometheuses = [
         namespace: 'parca-analytics',
         annotations: {
           'cert-manager.io/cluster-issuer': 'letsencrypt-prod',
+          'nginx.ingress.kubernetes.io/auth-url': 'http://oauth2-proxy.oauth2-proxy.svc.cluster.local/oauth2/auth',
+          'nginx.ingress.kubernetes.io/auth-signin': 'https://oauth2.parca.dev/oauth2/start',
         },
       },
       spec: {
-        ingressClassName: 'nginx',
-        tls: [{
-          secretName: 'analytics.parca.dev',
-          hosts: [
-            'analytics.parca.dev',
-          ],
-        }],
-        rules: [{
-          host: 'analytics.parca.dev',
-          http: {
-            paths: [
-              {
-                path: '/api/v1/write',
-                pathType: 'Prefix',
+        ingressClassName: p._config.ingress.class,
+        rules: [
+          {
+            host: host,
+            http: {
+              paths: [{
                 backend: {
                   service: {
                     name: p.service.metadata.name,
                     port: {
-                      number: p.service.spec.ports[0].port,
+                      name: p.service.spec.ports[0].name,
                     },
                   },
                 },
-              },
-            ],
-          },
-        }],
+                path: '/',
+                pathType: 'Prefix',
+              }],
+            },
+          }
+          for host in p._config.ingress.hosts
+        ],
+        tls: [
+          {
+            hosts: [host],
+            secretName: host,
+          }
+          for host in p._config.ingress.hosts
+        ],
+      },
+    },
+
+    ingressRemoteWrite: {
+      apiVersion: 'networking.k8s.io/v1',
+      kind: 'Ingress',
+      metadata: {
+        name: 'parca-analytics-remote-write',
+        namespace: 'parca-analytics',
+        annotations: {
+          'cert-manager.io/cluster-issuer': 'letsencrypt-prod',
+        },
+      },
+      spec: {
+        ingressClassName: p._config.ingress.class,
+        rules: [
+          {
+            host: host,
+            http: {
+              paths: [{
+                backend: {
+                  service: {
+                    name: p.service.metadata.name,
+                    port: {
+                      name: p.service.spec.ports[0].name,
+                    },
+                  },
+                },
+                path: '/api/v1/write',
+                pathType: 'Prefix',
+              }],
+            },
+          }
+          for host in p._config.ingress.hosts
+        ],
+        tls: [
+          {
+            hosts: [host],
+            secretName: host,
+          }
+          for host in p._config.ingress.hosts
+        ],
       },
     },
 
