@@ -1,0 +1,39 @@
+oauth2-proxy:
+  config:
+    existingSecret: oauth2-proxy
+    configFile: |-
+      cookie_domains       = [".parca.dev"]
+      cookie_refresh       = "24h"
+      email_domains        = ["*"]
+      github_org           = "parca-dev"
+      github_team          = "maintainers"
+      provider             = "github"
+      reverse_proxy        = true
+      # https://github.com/oauth2-proxy/oauth2-proxy/issues/1724
+      scope                = "user:email read:org"
+      set_xauthrequest     = true
+      silence_ping_logging = true
+      upstreams            = ["file:///dev/null"]
+      whitelist_domains    = [".parca.dev"]
+  ingress:
+    enabled: true
+    className: nginx
+  resources:
+    limits:
+      memory: 32Mi
+    requests:
+      cpu: 30m
+      memory: 32Mi
+  securityContext:
+    enabled: true
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+      - ALL
+  podDisruptionBudget:
+    enabled: false
+  podSecurityContext:
+    seccompProfile:
+      type: RuntimeDefault
+  metrics:
+    enabled: false

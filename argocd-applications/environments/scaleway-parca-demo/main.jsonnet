@@ -52,6 +52,10 @@ local applications =
       name: 'monitoring',
       namespace: 'monitoring',
     }),
+    u.newHelmApp(common {
+      name: 'oauth2-proxy',
+      namespace: 'oauth2-proxy',
+    }),
     u.newJsonnetApp(common {
       name: 'parca',
       namespace: 'parca',
