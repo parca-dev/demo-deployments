@@ -10,7 +10,7 @@ This is our [demo.parca.dev](https://demo.parca.dev) cluster configuration.
 * grafana - [![App Status](https://demo.parca.dev/argo-cd/api/badge?name=scaleway-parca-demo-grafana)](https://demo.parca.dev/argo-cd/applications/scaleway-parca-demo-grafana)
 * ingress-nginx - [![App Status](https://demo.parca.dev/argo-cd/api/badge?name=scaleway-parca-demo-ingress-nginx)](https://demo.parca.dev/argo-cd/applications/scaleway-parca-demo-ingress-nginx)
 * monitoring - [![App Status](https://demo.parca.dev/argo-cd/api/badge?name=scaleway-parca-demo-monitoring)](https://demo.parca.dev/argo-cd/applications/scaleway-parca-demo-monitoring)
-* oauth2-proxy - [![App Status](https://demo.oauth2-proxy.dev/argo-cd/api/badge?name=scaleway-oauth2-proxy-demo-oauth2-proxy)](https://demo.oauth2-proxy.dev/argo-cd/applications/scaleway-oauth2-proxy-demo-oauth2-proxy)
+* oauth2-proxy - [![App Status](https://demo.parca.dev/argo-cd/api/badge?name=scaleway-parca-demo-oauth2-proxy)](https://demo.parca.dev/argo-cd/applications/scaleway-parca-demo-oauth2-proxy)
 * parca - [![App Status](https://demo.parca.dev/argo-cd/api/badge?name=scaleway-parca-demo-parca)](https://demo.parca.dev/argo-cd/applications/scaleway-parca-demo-parca)
 * parca-devel - [![App Status](https://demo.parca.dev/argo-cd/api/badge?name=scaleway-parca-demo-parca-devel)](https://demo.parca.dev/argo-cd/applications/scaleway-parca-demo-parca-devel)
 
