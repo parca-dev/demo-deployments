@@ -28,18 +28,10 @@ local prometheuses = [
     prometheus+:: {
       name: 'parca-analytics',
       namespace: 'parca-analytics',
-      namespaces: ['parca-analytics'],
+      namespaces: [],
     },
   }) {
     local p = self,
-
-    namespace: {
-      apiVersion: 'v1',
-      kind: 'Namespace',
-      metadata: {
-        name: 'parca-analytics',
-      },
-    },
 
     ingressRemoteWrite: {
       apiVersion: 'networking.k8s.io/v1',
