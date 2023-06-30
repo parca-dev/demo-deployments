@@ -36,6 +36,15 @@ function(params={}) (
     prometheus+: {
       local p = self,
 
+      prometheus+: {
+        spec+: {
+          securityContext+: {
+            // TODO: contribute seccompProfile to upstream
+            seccompProfile+: { type: 'RuntimeDefault' },
+          },
+        },
+      },
+
       // Hide
       prometheusRule:: {},
 
