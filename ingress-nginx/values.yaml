@@ -16,3 +16,29 @@ ingress-nginx:
       requests:
         cpu: 100m
         memory: 256Mi
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+       drop:
+       - ALL
+       add:
+       - NET_BIND_SERVICE
+    podSecurityContext:
+      runAsNonRoot: true
+      seccompProfile:
+        type: RuntimeDefault
+    admissionWebhooks:
+      createSecretJob:
+        securityContext:
+          capabilities:
+           drop:
+           - ALL
+      patchWebhookJob:
+        securityContext:
+          capabilities:
+           drop:
+           - ALL
+      patch:
+        securityContext:
+          seccompProfile:
+            type: RuntimeDefault
