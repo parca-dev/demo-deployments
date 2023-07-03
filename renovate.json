@@ -4,7 +4,10 @@
   "packageRules": [
     {
       "description": "Group Flux CD packages and update them even if they are pre-releases",
-      "matchPackagePatterns": ["^fluxcd/.+"],
+      "matchPackageNames": [
+        "fluxcd/image-automation-controller",
+        "fluxcd/image-reflector-controller"
+      ],
       "ignoreUnstable": false,
       "groupName": "fluxcd"
     },
