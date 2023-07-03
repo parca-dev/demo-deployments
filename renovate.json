@@ -3,13 +3,17 @@
   "extends": ["github>parca-dev/.github"],
   "packageRules": [
     {
-      "description": "Group Flux CD packages and update them even if they are pre-releases",
+      "description": "Group Flux CD packages",
+      "matchPackageNames": ["^fluxcd/.+"],
+      "groupName": "fluxcd"
+    },
+    {
+      "description": "Update Flux CD packages even if they are pre-releases",
       "matchPackageNames": [
         "fluxcd/image-automation-controller",
         "fluxcd/image-reflector-controller"
       ],
-      "ignoreUnstable": false,
-      "groupName": "fluxcd"
+      "ignoreUnstable": false
     },
     {
       "description": "Highlight build dependencies updates",
