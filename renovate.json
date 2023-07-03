@@ -4,7 +4,7 @@
   "packageRules": [
     {
       "description": "Group Flux CD packages",
-      "matchPackageNames": ["^fluxcd/.+"],
+      "matchPackagePatterns": ["^fluxcd/.+"],
       "groupName": "fluxcd"
     },
     {
