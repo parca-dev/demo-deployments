@@ -219,9 +219,6 @@ function(params)
       },
     },
 
-    // Hide PSP: Removed in K8s 1.25
-    podSecurityPolicy:: {},
-
     ingress: {
       apiVersion: 'networking.k8s.io/v1',
       kind: 'Ingress',
