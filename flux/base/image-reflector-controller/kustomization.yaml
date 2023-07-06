@@ -2,7 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- github.com/fluxcd/image-reflector-controller/config/default?ref=0a35c15fa055bcbf4625c5aa5e661516a64f1c61 # v0.28.0
+- github.com/fluxcd/image-reflector-controller/config/default?ref=8b0e84d5c74aecbba7fa754153aa1cd441b8ace5 # v0.29.0
 - serviceaccount.yaml
 - networkpolicy.yaml
 
