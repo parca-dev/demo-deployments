@@ -13,6 +13,21 @@ function(params={}) (
     prometheusOperator+: {
       local po = self,
 
+      deployment+: {
+        spec+: {
+          template+: {
+            spec+: {
+              securityContext+: {
+                seccompProfile+: {
+                  // TODO: contribute seccompProfile to upstream
+                  type: 'RuntimeDefault',
+                },
+              },
+            },
+          },
+        },
+      },
+
       // Hide
       prometheusRule:: {},
 
