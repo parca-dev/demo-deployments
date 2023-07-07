@@ -2,19 +2,19 @@
 
 This is our [demo.parca.dev](https://demo.parca.dev) cluster configuration.
 
-* argocd - [![App Status](https://demo.parca.dev/argo-cd/api/badge?name=scaleway-parca-demo-argocd)](https://demo.parca.dev/argo-cd/applications/scaleway-parca-demo-argocd)
-* argocd-applications - [![App Status](https://demo.parca.dev/argo-cd/api/badge?name=scaleway-parca-demo-argocd-applications)](https://demo.parca.dev/argo-cd/applications/scaleway-parca-demo-argocd-applications)
-* cert-manager - [![App Status](https://demo.parca.dev/argo-cd/api/badge?name=scaleway-parca-demo-cert-manager)](https://demo.parca.dev/argo-cd/applications/scaleway-parca-demo-cert-manager)
-* cluster-config - [![App Status](https://demo.parca.dev/argo-cd/api/badge?name=scaleway-parca-demo-cluster-config)](https://demo.parca.dev/argo-cd/applications/scaleway-parca-demo-cluster-config)
-* flux - [![App Status](https://demo.parca.dev/argo-cd/api/badge?name=scaleway-parca-demo-flux)](https://demo.parca.dev/argo-cd/applications/scaleway-parca-demo-flux)
-* grafana - [![App Status](https://demo.parca.dev/argo-cd/api/badge?name=scaleway-parca-demo-grafana)](https://demo.parca.dev/argo-cd/applications/scaleway-parca-demo-grafana)
-* ingress-nginx - [![App Status](https://demo.parca.dev/argo-cd/api/badge?name=scaleway-parca-demo-ingress-nginx)](https://demo.parca.dev/argo-cd/applications/scaleway-parca-demo-ingress-nginx)
-* monitoring - [![App Status](https://demo.parca.dev/argo-cd/api/badge?name=scaleway-parca-demo-monitoring)](https://demo.parca.dev/argo-cd/applications/scaleway-parca-demo-monitoring)
-* oauth2-proxy - [![App Status](https://demo.parca.dev/argo-cd/api/badge?name=scaleway-parca-demo-oauth2-proxy)](https://demo.parca.dev/argo-cd/applications/scaleway-parca-demo-oauth2-proxy)
-* parca - [![App Status](https://demo.parca.dev/argo-cd/api/badge?name=scaleway-parca-demo-parca)](https://demo.parca.dev/argo-cd/applications/scaleway-parca-demo-parca)
-* parca-devel - [![App Status](https://demo.parca.dev/argo-cd/api/badge?name=scaleway-parca-demo-parca-devel)](https://demo.parca.dev/argo-cd/applications/scaleway-parca-demo-parca-devel)
+* argocd - [![App Status](https://demo.parca.dev/argo-cd/api/badge?name=civo-demo-argocd)](https://demo.parca.dev/argo-cd/applications/civo-demo-argocd)
+* argocd-applications - [![App Status](https://demo.parca.dev/argo-cd/api/badge?name=civo-demo-argocd-applications)](https://demo.parca.dev/argo-cd/applications/civo-demo-argocd-applications)
+* cert-manager - [![App Status](https://demo.parca.dev/argo-cd/api/badge?name=civo-demo-cert-manager)](https://demo.parca.dev/argo-cd/applications/civo-demo-cert-manager)
+* cluster-config - [![App Status](https://demo.parca.dev/argo-cd/api/badge?name=civo-demo-cluster-config)](https://demo.parca.dev/argo-cd/applications/civo-demo-cluster-config)
+* flux - [![App Status](https://demo.parca.dev/argo-cd/api/badge?name=civo-demo-flux)](https://demo.parca.dev/argo-cd/applications/civo-demo-flux)
+* grafana - [![App Status](https://demo.parca.dev/argo-cd/api/badge?name=civo-demo-grafana)](https://demo.parca.dev/argo-cd/applications/civo-demo-grafana)
+* ingress-nginx - [![App Status](https://demo.parca.dev/argo-cd/api/badge?name=civo-demo-ingress-nginx)](https://demo.parca.dev/argo-cd/applications/civo-demo-ingress-nginx)
+* monitoring - [![App Status](https://demo.parca.dev/argo-cd/api/badge?name=civo-demo-monitoring)](https://demo.parca.dev/argo-cd/applications/civo-demo-monitoring)
+* oauth2-proxy - [![App Status](https://demo.parca.dev/argo-cd/api/badge?name=civo-demo-oauth2-proxy)](https://demo.parca.dev/argo-cd/applications/civo-demo-oauth2-proxy)
+* parca - [![App Status](https://demo.parca.dev/argo-cd/api/badge?name=civo-demo-parca)](https://demo.parca.dev/argo-cd/applications/civo-demo-parca)
+* parca-devel - [![App Status](https://demo.parca.dev/argo-cd/api/badge?name=civo-demo-parca-devel)](https://demo.parca.dev/argo-cd/applications/civo-demo-parca-devel)
 
-Ask in one of our channels to be invited to the Scaleway Organization.
+Ask in one of our channels to be invited to the Civo Organization.
 Once you have access you can download the kubeconfig via the UI.
 
 ## File structure

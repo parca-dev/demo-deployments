@@ -23,6 +23,18 @@ patches:
     - op: add
       path: /spec/template/spec/containers/0/args/-
       value: --maxmemory 84mb
+- target:
+    group: networking.k8s.io
+    version: v1
+    kind: NetworkPolicy
+  patch: |-
+    # allow egress traffic
+    - op: add
+      path: /spec/egress
+      value: [{}]
+    - op: add
+      path: /spec/policyTypes/-
+      value: Egress
 
 configMapGenerator:
 - name: argocd-cmd-params-cm

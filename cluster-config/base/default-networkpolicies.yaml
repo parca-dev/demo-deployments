@@ -1,0 +1,17 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default
+  namespace: kube-system
+spec:
+  # We do not manage everything in this namespace,
+  # so we keep the default policy as "allow".
+  egress:
+  - {}
+  ingress:
+  - {}
+  podSelector: {}
+  policyTypes:
+  - Egress
+  - Ingress

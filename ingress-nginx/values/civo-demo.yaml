@@ -1,0 +1,5 @@
+ingress-nginx:
+  controller:
+    service:
+      annotations:
+        kubernetes.civo.com/loadbalancer-enable-proxy-protocol: send-proxy-v2
