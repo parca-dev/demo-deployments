@@ -49,6 +49,9 @@ function(params)
         name: $.config.name,
         namespace: $.config.namespace,
         labels: $.config.commonLabels,
+        annotations: {
+          'cert-manager.io/cluster-issuer': 'letsencrypt-prod',
+        },
       },
       spec: {
         ingressClassName: $.config.ingress.class,

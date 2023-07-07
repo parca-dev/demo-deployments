@@ -25,6 +25,8 @@ ingress-nginx:
        - NET_BIND_SERVICE
     podSecurityContext:
       runAsNonRoot: true
+      runAsUser: 101
+      runAsGroup: 82
       seccompProfile:
         type: RuntimeDefault
     admissionWebhooks:
