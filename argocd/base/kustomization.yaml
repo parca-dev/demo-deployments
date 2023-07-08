@@ -32,9 +32,11 @@ patches:
     - op: add
       path: /spec/egress
       value: [{}]
-    - op: add
-      path: /spec/policyTypes/-
-      value: Egress
+    - op: replace
+      path: /spec/policyTypes
+      value:
+      - Ingress
+      - Egress
 
 configMapGenerator:
 - name: argocd-cmd-params-cm
