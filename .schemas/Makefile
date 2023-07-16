@@ -1,7 +1,7 @@
 PYTHON := python3
 
 # renovate: datasource=github-releases depName=yannh/kubeconform
-KUBECONFORM_VERSION := v0.6.2
+KUBECONFORM_VERSION := v0.6.3
 
 CRDS := \
 	https://github.com/jetstack/cert-manager/releases/download/v1.12.2/cert-manager.crds.yaml \
