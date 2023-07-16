@@ -70,7 +70,8 @@
       "matchStrings": [
           "- github\\.com\\/(?<depName>[^/]+?\\/[^/]*?)\\/.*\\?ref=(?<currentDigest>[a-f0-9]{40}) # (?<currentValue>.+)"
       ],
-      "datasourceTemplate": "github-tags"
+      "datasourceTemplate": "github-tags",
+      "versioningTemplate": "semver"
     }
   ]
 }
