@@ -24,16 +24,7 @@ oauth2-proxy:
     requests:
       cpu: 30m
       memory: 32Mi
-  securityContext:
-    enabled: true
-    allowPrivilegeEscalation: false
-    capabilities:
-      drop:
-      - ALL
   podDisruptionBudget:
     enabled: false
-  podSecurityContext:
-    seccompProfile:
-      type: RuntimeDefault
   metrics:
     enabled: false
