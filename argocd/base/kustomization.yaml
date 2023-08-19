@@ -3,7 +3,7 @@ kind: Kustomization
 namespace: argocd
 
 resources:
-- github.com/argoproj/argo-cd/manifests/cluster-install?ref=469f25753b2be7ef0905a11632a6382060bcae99 # v2.7.10
+- github.com/argoproj/argo-cd/manifests/cluster-install?ref=804d4b8ca6bc4c2cf02c5c971aa923ec5b8623f0 # v2.8.0
 
 # Ignoring deprecation for now
 # https://github.com/kubernetes-sigs/kustomize/issues/5049
