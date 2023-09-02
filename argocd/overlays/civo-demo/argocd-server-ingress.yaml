@@ -2,12 +2,14 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: argocd-server
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
   labels:
     app.kubernetes.io/part-of: argocd
 spec:
   ingressClassName: nginx
   rules:
-  - host: demo.parca.dev
+  - host: argocd.parca.dev
     http:
       paths:
       - backend:
@@ -15,5 +17,9 @@ spec:
             name: argocd-server
             port:
               name: http
-        path: /argo-cd
+        path: /
         pathType: Prefix
+  tls:
+  - hosts:
+    - argocd.parca.dev
+    secretName: argocd.parca.dev
