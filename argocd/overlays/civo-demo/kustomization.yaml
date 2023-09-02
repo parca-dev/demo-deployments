@@ -6,24 +6,12 @@ resources:
 - ../../base
 - argocd-server-ingress.yaml
 
-patches:
-- target:
-    group: apps
-    version: v1
-    kind: Deployment
-    name: argocd-server
-  patch: |-
-    - op: add
-      path: /spec/template/spec/containers/0/args/-
-      value: --rootpath=/argo-cd
-
-
 configMapGenerator:
 - name: argocd-cm
   namespace: argocd
   behavior: merge
   literals:
-  - url=https://demo.parca.dev/argo-cd
+  - url=https://argocd.parca.dev
   files:
   - dex.config=files/dex.config.yaml
 - name: argocd-rbac-cm

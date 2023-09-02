@@ -8,7 +8,7 @@ See [Operator Manual - Argo CD](https://argo-cd.readthedocs.io/en/stable/operato
 2. Login with:
 
    ```shell
-   argocd login demo.parca.dev --grpc-web-root-path /argo-cd --sso
+   argocd login argocd.parca.dev --grpc-web --sso
    ```
 
 3. Optional, validate the authentication was successful with: `argocd account get-user-info`
