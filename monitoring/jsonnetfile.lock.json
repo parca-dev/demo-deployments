@@ -18,7 +18,7 @@
           "subdir": "contrib/mixin"
         }
       },
-      "version": "5d7c457873c2a6dd5e88a3dbaf58192154b0c6b5",
+      "version": "182e352298642f8abb64de70611a53271b67955c",
       "sum": "W/Azptf1PoqjyMwJON96UY69MFugDA4IAYiKURscryc="
     },
     {
@@ -58,7 +58,7 @@
           "subdir": "grafana-builder"
         }
       },
-      "version": "c0d0a133a88a1a1b0729525d0269e861a28ce09a",
+      "version": "c0abc546c782a095a22c277d36f871bb94ffc944",
       "sum": "xEFMv4+ObwP5L1Wu0XK5agWci4AJzNApys6iKAQxLlQ="
     },
     {
@@ -129,7 +129,7 @@
           "subdir": "doc/alertmanager-mixin"
         }
       },
-      "version": "258fab7cdd551f2cf251ed0348f0ad7289aee789",
+      "version": "a4e8574be7165d3c21162456f160e0faf3d05de3",
       "sum": "PsK+V7oETCPKu2gLoPfqY0wwPKH9TzhNj6o2xezjjXc=",
       "name": "alertmanager"
     },
