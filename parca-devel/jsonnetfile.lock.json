@@ -8,7 +8,7 @@
           "subdir": "scrape-configs"
         }
       },
-      "version": "f01f41d0162e25becedf4e7d7a0b7ea88d730b86",
+      "version": "59ad46669b8b94a4c0b9880198f25bb0f9e78cd2",
       "sum": "9Sl1vzn4bXH/NvdjSXEVtuq9joATwmh3S+8N5WmOO2U="
     },
     {
@@ -18,7 +18,7 @@
           "subdir": "deploy/lib/parca-agent"
         }
       },
-      "version": "f2aa11f74910f609cfba79f485b6e5302e1b4839",
+      "version": "562a7999b0eaaefe14f11278d0175528811f1e6f",
       "sum": "sdrqh5FAqLJc0p4BmqvdKjjMw+9BLlHkDrlvpAlf7UA="
     },
     {
@@ -28,7 +28,7 @@
           "subdir": "deploy/lib/parca"
         }
       },
-      "version": "418867ebb96f85e928436cd8575535fb3c79848b",
+      "version": "6f9a132da7b7598c0aed2854f6c525f8ee97d67b",
       "sum": "3jHwGjkrJ39XMNlGNMS+/O3CbW+Dl6CuwH1Xp0sL4M0="
     }
   ],
