@@ -1,10 +1,14 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["github>parca-dev/.github"],
+  "extends": [
+    "github>parca-dev/.github"
+  ],
   "packageRules": [
     {
       "description": "Group Flux CD packages",
-      "matchPackagePatterns": ["^fluxcd/.+"],
+      "matchPackagePatterns": [
+        "^fluxcd/.+"
+      ],
       "groupName": "fluxcd"
     },
     {
@@ -28,7 +32,7 @@
     },
     {
       "description": "Highlight build dependencies updates",
-      "matchPaths": [
+      "matchFileNames": [
         "**/kustomization.yaml",
         "**/*.{j,lib}sonnet"
       ],
@@ -37,7 +41,9 @@
     },
     {
       "description": "Group Parca packages",
-      "matchSourceUrls": ["https://github.com/parca-dev/parca"],
+      "matchSourceUrls": [
+        "https://github.com/parca-dev/parca"
+      ],
       "reviewers": [
         "team:backend-maintainers",
         "team:frontend-maintainers"
@@ -46,13 +52,18 @@
     },
     {
       "description": "Group Parca Agent packages",
-      "matchSourceUrls": ["https://github.com/parca-dev/parca-agent"],
-      "reviewers": ["team:agent-maintainers"],
+      "matchSourceUrls": [
+        "https://github.com/parca-dev/parca-agent"
+      ],
+      "reviewers": [
+        "team:agent-maintainers"
+      ],
       "groupName": "parca-agent"
     }
   ],
   "regexManagers": [
     {
+      "customType": "regex",
       "description": "Update versions in Jsonnet files",
       "fileMatch": [
         "grafana/lib/grafana\\.libsonnet",
@@ -65,10 +76,13 @@
       ]
     },
     {
+      "customType": "regex",
       "description": "Pin Kustomize bases digests - https://github.com/renovatebot/renovate/issues/7915",
-      "fileMatch": ["(^|/)kustomization.yaml$"],
+      "fileMatch": [
+        "(^|/)kustomization.yaml$"
+      ],
       "matchStrings": [
-          "- github\\.com\\/(?<depName>[^/]+?\\/[^/]*?)\\/.*\\?ref=(?<currentDigest>[a-f0-9]{40}) # (?<currentValue>.+)"
+        "- github\\.com\\/(?<depName>[^/]+?\\/[^/]*?)\\/.*\\?ref=(?<currentDigest>[a-f0-9]{40}) # (?<currentValue>.+)"
       ],
       "datasourceTemplate": "github-tags",
       "versioningTemplate": "semver"
