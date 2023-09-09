@@ -13,6 +13,12 @@ local defaults = {
     requests: { cpu: '102m', memory: '180Mi' },
     limits: { cpu: '250m', memory: '180Mi' },
   },
+  kubeRbacProxy:: {
+    resources+: {
+      requests: { cpu: '10m', memory: '20Mi' },
+      limits: { cpu: '20m', memory: '40Mi' },
+    },
+  },
   listenAddress:: '127.0.0.1',
   filesystemMountPointsExclude:: '^/(dev|proc|sys|run/k3s/containerd/.+|var/lib/docker/.+|var/lib/kubelet/pods/.+)($|/)',
   // NOTE: ignore veth network interface associated with containers.
@@ -86,7 +92,10 @@ function(params) {
   clusterRoleBinding: {
     apiVersion: 'rbac.authorization.k8s.io/v1',
     kind: 'ClusterRoleBinding',
-    metadata: ne._metadata,
+    metadata: {
+      name: ne._config.name,
+      labels: ne._config.commonLabels,
+    },
     roleRef: {
       apiGroup: 'rbac.authorization.k8s.io',
       kind: 'ClusterRole',
@@ -102,7 +111,10 @@ function(params) {
   clusterRole: {
     apiVersion: 'rbac.authorization.k8s.io/v1',
     kind: 'ClusterRole',
-    metadata: ne._metadata,
+    metadata: {
+      name: ne._config.name,
+      labels: ne._config.commonLabels,
+    },
     rules: [
       {
         apiGroups: ['authentication.k8s.io'],
@@ -204,6 +216,7 @@ function(params) {
         '--path.udev.data=/host/root/run/udev/data',
         '--no-collector.wifi',
         '--no-collector.hwmon',
+        '--no-collector.btrfs',
         '--collector.filesystem.mount-points-exclude=' + ne._config.filesystemMountPointsExclude,
         '--collector.netclass.ignored-devices=' + ne._config.ignoredNetworkDevices,
         '--collector.netdev.device-exclude=' + ne._config.ignoredNetworkDevices,
@@ -220,7 +233,7 @@ function(params) {
       },
     };
 
-    local kubeRbacProxy = krp({
+    local kubeRbacProxy = krp(ne._config.kubeRbacProxy {
       name: 'kube-rbac-proxy',
       //image: krpImage,
       upstream: 'http://127.0.0.1:' + ne._config.port + '/',

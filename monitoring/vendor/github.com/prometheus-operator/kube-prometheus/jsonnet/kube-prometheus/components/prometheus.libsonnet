@@ -120,6 +120,18 @@ function(params) {
         from: [{
           podSelector: {
             matchLabels: {
+              'app.kubernetes.io/name': 'prometheus-adapter',
+            },
+          },
+        }],
+        ports: [{
+          port: 9090,
+          protocol: 'TCP',
+        }],
+      }, {
+        from: [{
+          podSelector: {
+            matchLabels: {
               'app.kubernetes.io/name': 'grafana',
             },
           },
@@ -236,11 +248,11 @@ function(params) {
     roleRef: {
       apiGroup: 'rbac.authorization.k8s.io',
       kind: 'Role',
-      name: p._metadata.name + '-config',
+      name: p.roleConfig.metadata.name,
     },
     subjects: [{
       kind: 'ServiceAccount',
-      name: p._metadata.name,
+      name: p.serviceAccount.metadata.name,
       namespace: p._config.namespace,
     }],
   },
@@ -254,11 +266,11 @@ function(params) {
     roleRef: {
       apiGroup: 'rbac.authorization.k8s.io',
       kind: 'ClusterRole',
-      name: p._metadata.name,
+      name: p.clusterRole.metadata.name,
     },
     subjects: [{
       kind: 'ServiceAccount',
-      name: p._metadata.name,
+      name: p.serviceAccount.metadata.name,
       namespace: p._config.namespace,
     }],
   },
