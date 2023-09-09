@@ -11,6 +11,7 @@ local defaults = {
   mixin:: {
     ruleLabels: {},
     _config: {
+      showMultiCluster: true,
       cadvisorSelector: 'job="kubelet", metrics_path="/metrics/cadvisor"',
       kubeletSelector: 'job="kubelet", metrics_path="/metrics"',
       kubeStateMetricsSelector: 'job="kube-state-metrics"',
@@ -105,6 +106,7 @@ function(params) {
           bearerTokenFile: '/var/run/secrets/kubernetes.io/serviceaccount/token',
           metricRelabelings: relabelings,
           relabelings: [{
+            action: 'replace',
             sourceLabels: ['__metrics_path__'],
             targetLabel: 'metrics_path',
           }],
@@ -121,6 +123,7 @@ function(params) {
           },
           bearerTokenFile: '/var/run/secrets/kubernetes.io/serviceaccount/token',
           relabelings: [{
+            action: 'replace',
             sourceLabels: ['__metrics_path__'],
             targetLabel: 'metrics_path',
           }],
@@ -166,6 +169,7 @@ function(params) {
           tlsConfig: { insecureSkipVerify: true },
           bearerTokenFile: '/var/run/secrets/kubernetes.io/serviceaccount/token',
           relabelings: [{
+            action: 'replace',
             sourceLabels: ['__metrics_path__'],
             targetLabel: 'metrics_path',
           }],

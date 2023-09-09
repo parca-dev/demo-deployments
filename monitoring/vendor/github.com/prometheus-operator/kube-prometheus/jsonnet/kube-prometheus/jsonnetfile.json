@@ -8,7 +8,7 @@
           "subdir": "grafana"
         }
       },
-      "version": "d039275e4916aceae1c137120882e01d857787ac"
+      "version": "5698c8940b6dadca3f42107b7839557bc041761f"
     },
     {
       "source": {
@@ -17,7 +17,7 @@
           "subdir": "grafana-mixin"
         }
       },
-      "version": "release-9.3.0",
+      "version": "v10.1.0",
       "name": "grafana-mixin"
     },
     {
@@ -27,7 +27,7 @@
           "subdir": "contrib/mixin"
         }
       },
-      "version": "release-3.5"
+      "version": "60051be9908649b1a0f2d000dc75b3bd0822d53c"
     },
     {
       "source": {
@@ -36,7 +36,7 @@
           "subdir": "jsonnet/prometheus-operator"
         }
       },
-      "version": "release-0.62"
+      "version": "v0.67.1"
     },
     {
       "source": {
@@ -45,7 +45,7 @@
           "subdir": "jsonnet/mixin"
         }
       },
-      "version": "release-0.62",
+      "version": "v0.67.1",
       "name": "prometheus-operator-mixin"
     },
     {
@@ -55,7 +55,7 @@
           "subdir": ""
         }
       },
-      "version": "release-0.12"
+      "version": "63337d921db856bbcd2e91814a0ac90c250410d6"
     },
     {
       "source": {
@@ -64,7 +64,7 @@
           "subdir": "jsonnet/kube-state-metrics"
         }
       },
-      "version": "release-2.7"
+      "version": "v2.9.2"
     },
     {
       "source": {
@@ -73,7 +73,7 @@
           "subdir": "jsonnet/kube-state-metrics-mixin"
         }
       },
-      "version": "release-2.7"
+      "version": "v2.9.2"
     },
     {
       "source": {
@@ -82,7 +82,7 @@
           "subdir": "docs/node-mixin"
         }
       },
-      "version": "release-1.4"
+      "version": "master"
     },
     {
       "source": {
@@ -91,7 +91,7 @@
           "subdir": "documentation/prometheus-mixin"
         }
       },
-      "version": "release-2.41",
+      "version": "v2.46.0",
       "name": "prometheus"
     },
     {
@@ -101,7 +101,7 @@
           "subdir": "doc/alertmanager-mixin"
         }
       },
-      "version": "release-0.25",
+      "version": "v0.26.0",
       "name": "alertmanager"
     },
     {
@@ -111,7 +111,7 @@
           "subdir": "config/crd/bases"
         }
       },
-      "version": "release-0.5"
+      "version": "v0.6.4"
     },
     {
       "source": {
@@ -120,7 +120,7 @@
           "subdir": "mixin"
         }
       },
-      "version": "release-0.30",
+      "version": "v0.32.2",
       "name": "thanos-mixin"
     }
   ],
