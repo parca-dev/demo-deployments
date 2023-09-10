@@ -15,6 +15,7 @@ spec:
   - ports:
     - port: http
     - port: https
+    - port: webhook
   podSelector:
     matchLabels:
       app.kubernetes.io/name: ingress-nginx
