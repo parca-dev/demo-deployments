@@ -35,7 +35,7 @@ function(params={})
               if c.name == 'parca-agent' then c {
                 // TODO: Make it easy to pass extra args upstream.
                 args+: [
-                  '--verbose-bpf-logging',
+                  '--bpf-verbose-logging',
                 ],
               } else c
               for c in super.containers
