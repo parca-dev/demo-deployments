@@ -62,8 +62,9 @@
         "parca/lib/parca-agent\\.libsonnet"
       ],
       "matchStrings": [
-        "// renovate: datasource=(?<datasource>.+?) depName=(?<depName>.+?)(?: packageName=(?<packageName>.+?))?(?: versioning=(?<versioning>.+?))?(?: extractVersion=(?<extractVersion>.+?))?\\s+.+:\\s'(?<currentValue>.+?)',\\s"
-      ]
+        "// renovate: datasource=(?<datasource>.+?) depName=(?<depName>.+?)(?: packageName=(?<packageName>.+?))?(?: versioning=(?<versioning>.+?))?(?: extractVersion=(?<extractVersion>.+?))?\\s+.+:\\s'(?<currentValue>.+?)(?:@(?<currentDigest>.+?))?',\\s"
+      ],
+      "autoReplaceStringTemplate": "{{newValue}}{{#if newDigest}}@{{newDigest}}{{/if}}"
     },
     {
       "description": "Pin Kustomize bases digests - https://github.com/renovatebot/renovate/issues/7915",
