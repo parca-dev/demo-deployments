@@ -8,7 +8,7 @@ local defaults = {
   ],
   namespace: 'grafana',
   // renovate: datasource=docker depName=docker.io/grafana/grafana
-  version: '10.1.2@sha256:63854c5592bab6c7b8ac2ceb35b420925465eb24ef05f2402e4cb805253efb46',
+  version: '10.1.2',
   replicas: 1,
   commonLabels+: {
     'app.kubernetes.io/component': 'observability',
