@@ -62,7 +62,7 @@
         "parca/lib/parca-agent\\.libsonnet"
       ],
       "matchStrings": [
-        "// renovate: datasource=(?<datasource>.+?) depName=(?<depName>.+?)(?: packageName=(?<packageName>.+?))?(?: versioning=(?<versioning>.+?))?(?: extractVersion=(?<extractVersion>.+?))?\\s+.+:\\s'(?<currentValue>.+?)(?:@(?<currentDigest>.+?))?',\\s"
+        "// renovate: datasource=(?<datasource>.+?) depName=(?<depName>.+?)(?: packageName=(?<packageName>.+?))?(?: versioning=(?<versioning>.+?))?(?: extractVersion=(?<extractVersion>.+?))?\\s+.+:\\s'(?<currentValue>.+?)',\\s"
       ]
     },
     {
