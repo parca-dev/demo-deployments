@@ -225,6 +225,9 @@ function(params)
         name: $.config.name,
         namespace: $.config.namespace,
         labels: $.config.commonLabels,
+        annotations: {
+          'nginx.ingress.kubernetes.io/backend-protocol': 'GRPC',
+        },
       },
       spec: {
         ingressClassName: $.config.ingress.class,
