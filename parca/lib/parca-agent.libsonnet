@@ -34,7 +34,7 @@ function(params={})
               if c.name == 'parca-agent' then c {
                 // TODO: Make it easy to pass extra args upstream.
                 args+: [
-                  '--verbose-bpf-logging',
+                  '--bpf-verbose-logging',
                 ],
               } else c
               for c in super.containers
@@ -44,10 +44,6 @@ function(params={})
         },
       },
     },
-
-    // Hide PSP: Removed in K8s 1.25
-    // TODO: Clean up after next release
-    podSecurityPolicy:: {},
 
     networkPolicy: {
       apiVersion: 'networking.k8s.io/v1',

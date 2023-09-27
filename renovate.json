@@ -51,7 +51,7 @@
       "groupName": "parca-agent"
     }
   ],
-  "regexManagers": [
+  "customManagers": [
     {
       "description": "Update versions in Jsonnet files",
       "customType": "regex",
@@ -70,7 +70,7 @@
       "customType": "regex",
       "fileMatch": ["(^|/)kustomization.yaml$"],
       "matchStrings": [
-          "- github\\.com\\/(?<depName>[^/]+?\\/[^/]*?)\\/.*\\?ref=(?<currentDigest>[a-f0-9]{40}) # (?<currentValue>.+)"
+        "- github\\.com\\/(?<depName>[^/]+?\\/[^/]*?)\\/.*\\?ref=(?<currentDigest>[a-f0-9]{40}) # (?<currentValue>.+)"
       ],
       "datasourceTemplate": "github-tags",
       "versioningTemplate": "semver"
