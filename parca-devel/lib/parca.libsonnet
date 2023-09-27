@@ -208,7 +208,6 @@ function(params)
               if c.name == 'parca' then c {
                 // TODO: Make it easy to pass extra args upstream.
                 args+: [
-                  '--experimental-arrow',
                   '--path-prefix=' + $.config.ingress.path,
                 ],
               } else c
