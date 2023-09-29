@@ -48,6 +48,16 @@ function(params)
         annotations: {
           'cert-manager.io/cluster-issuer': 'letsencrypt-prod',
           'nginx.ingress.kubernetes.io/backend-protocol': 'GRPC',
+          // NGINX does not pass the CORS headers to the client when the backend
+          // protocol is set to GRPC, even with `grpc_pass_header` in a
+          // server-snippet annotation.
+          // https://nginx.org/en/docs/http/ngx_http_grpc_module.html#grpc_pass_header
+          'nginx.ingress.kubernetes.io/cors-allow-credentials': 'true',
+          'nginx.ingress.kubernetes.io/cors-allow-headers': 'Content-Type, X-Grpc-Web',
+          'nginx.ingress.kubernetes.io/cors-allow-methods': 'HEAD, GET, POST, PUT, PATCH, DELETE',
+          'nginx.ingress.kubernetes.io/cors-allow-origin': 'https://demo.parca.dev, https://*.vercel.app',
+          'nginx.ingress.kubernetes.io/cors-expose-headers': 'Access-Control-Allow-Credentials, Access-Control-Allow-Origin, Grpc-Status, Grpc-Message, Content-Type, Date, Vary',
+          'nginx.ingress.kubernetes.io/enable-cors': 'true',
         },
       },
       spec: {
