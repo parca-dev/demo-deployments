@@ -6,7 +6,6 @@ metadata:
 spec:
   acme:
     email: parca-team@googlegroups.com
-    preferredChain: ""
     privateKeySecretRef:
       name: letsencrypt-prod
     server: https://acme-v02.api.letsencrypt.org/directory
