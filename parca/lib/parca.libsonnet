@@ -55,7 +55,7 @@ function(params)
           'nginx.ingress.kubernetes.io/cors-allow-credentials': 'true',
           'nginx.ingress.kubernetes.io/cors-allow-headers': 'Content-Type, X-Grpc-Web',
           'nginx.ingress.kubernetes.io/cors-allow-methods': 'HEAD, GET, POST, PUT, PATCH, DELETE',
-          'nginx.ingress.kubernetes.io/cors-allow-origin': 'https://demo.parca.dev, https://*.vercel.app',
+          'nginx.ingress.kubernetes.io/cors-allow-origin': 'https://demo.parca.dev, https://*.vercel.app, http://localhost:3000',
           'nginx.ingress.kubernetes.io/cors-expose-headers': 'Access-Control-Allow-Credentials, Access-Control-Allow-Origin, Grpc-Status, Grpc-Message, Content-Type, Date, Vary',
           'nginx.ingress.kubernetes.io/enable-cors': 'true',
         },
