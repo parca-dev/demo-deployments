@@ -4,7 +4,7 @@ local defaults = {
   common+: {
     versions+: {
       // renovate: datasource=docker depName=quay.io/prometheus/prometheus extractVersion=v(?<version>.*)$
-      prometheus: '2.47.0',
+      prometheus: '2.47.1',
     },
   },
   prometheus+: {
