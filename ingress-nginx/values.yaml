@@ -10,6 +10,8 @@ ingress-nginx:
         service.beta.kubernetes.io/scw-loadbalancer-zone: "nl-ams-2"
     config:
       use-proxy-protocol: "true"
+    networkPolicy:
+      enabled: true
     resources:
       limits:
         memory: 256Mi
