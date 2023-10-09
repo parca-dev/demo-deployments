@@ -13,11 +13,11 @@ local defaults = {
   resources: {
     limits: {
       cpu: '100m',
-      memory: '512Mi',
+      memory: '1Gi',
     },
     requests: {
       cpu: '10m',
-      memory: '128Mi',
+      memory: '1Gi',
     },
   },
   podMonitor: true,
@@ -31,15 +31,6 @@ function(params={})
       spec+: {
         template+: {
           spec+: {
-            containers: [
-              if c.name == 'parca-agent' then c {
-                // TODO: Make it easy to pass extra args upstream.
-                args+: [
-                  '--bpf-verbose-logging',
-                ],
-              } else c
-              for c in super.containers
-            ],
             priorityClassName: 'system-node-critical',
           },
         },
