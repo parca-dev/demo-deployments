@@ -213,6 +213,7 @@ function(params)
               } else c
               for c in super.containers
             ],
+            priorityClassName: 'system-cluster-critical',
           },
         },
       },

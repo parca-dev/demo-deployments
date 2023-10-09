@@ -35,6 +35,11 @@ function(params)
           // for running 2 Parca instances.
           type: 'Recreate',
         },
+        template+: {
+          spec+: {
+            priorityClassName: 'system-cluster-critical',
+          },
+        },
       },
     },
 
