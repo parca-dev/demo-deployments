@@ -12,7 +12,7 @@ CRDS := \
 	https://raw.githubusercontent.com/fluxcd/image-automation-controller/v0.36.1/config/crd/bases/image.toolkit.fluxcd.io_imageupdateautomations.yaml \
 	https://raw.githubusercontent.com/fluxcd/image-reflector-controller/v0.30.0/config/crd/bases/image.toolkit.fluxcd.io_imagepolicies.yaml \
 	https://raw.githubusercontent.com/fluxcd/image-reflector-controller/v0.30.0/config/crd/bases/image.toolkit.fluxcd.io_imagerepositories.yaml \
-	https://raw.githubusercontent.com/fluxcd/source-controller/v1.1.1/config/crd/bases/source.toolkit.fluxcd.io_gitrepositories.yaml \
+	https://raw.githubusercontent.com/fluxcd/source-controller/v1.1.2/config/crd/bases/source.toolkit.fluxcd.io_gitrepositories.yaml \
 	https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.67.1/jsonnet/prometheus-operator/podmonitors-crd.json \
 	https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.67.1/jsonnet/prometheus-operator/prometheuses-crd.json \
 
