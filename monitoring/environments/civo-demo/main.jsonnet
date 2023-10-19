@@ -129,12 +129,6 @@ local prometheuses = [
         query+: {
           lookbackDelta: '15m',  // Analytics are only sent once every 10m
         },
-        thanos+: {
-          objectStorageConfig: {
-            key: 'thanos.yaml',
-            name: 'parca-analytics-objectstorage',
-          },
-        },
       },
     },
 

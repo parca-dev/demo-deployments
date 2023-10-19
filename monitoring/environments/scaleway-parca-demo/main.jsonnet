@@ -33,6 +33,12 @@ local prometheuses = [
         class: 'nginx',
         hosts: ['analytics.parca.dev'],
       },
+      thanos+: {
+        objectStorageConfig: {
+          key: 'thanos.yaml',
+          name: 'parca-analytics-objectstorage',
+        },
+      },
     },
   }) {
     local p = self,
@@ -128,6 +134,17 @@ local prometheuses = [
         enableRemoteWriteReceiver: true,
         query+: {
           lookbackDelta: '15m',  // Analytics are only sent once every 10m
+        },
+        storage: {
+          volumeClaimTemplate: {
+            apiVersion: 'v1',
+            kind: 'PersistentVolumeClaim',
+            spec: {
+              accessModes: ['ReadWriteOnce'],
+              resources: { requests: { storage: '5Gi' } },
+              storageClassName: 'scw-bssd-retain',
+            },
+          },
         },
       },
     },
