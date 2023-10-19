@@ -33,7 +33,7 @@ local prometheuses = [
         class: 'nginx',
         hosts: ['analytics.parca.dev'],
       },
-      thanos+: {
+      thanos: {
         objectStorageConfig: {
           key: 'thanos.yaml',
           name: 'parca-analytics-objectstorage',
