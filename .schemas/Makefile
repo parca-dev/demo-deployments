@@ -15,6 +15,8 @@ CRDS := \
 	https://raw.githubusercontent.com/fluxcd/source-controller/v1.1.2/config/crd/bases/source.toolkit.fluxcd.io_gitrepositories.yaml \
 	https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.67.1/jsonnet/prometheus-operator/podmonitors-crd.json \
 	https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.67.1/jsonnet/prometheus-operator/prometheuses-crd.json \
+	https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.67.1/jsonnet/prometheus-operator/prometheusrules-crd.json \
+	https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.67.1/jsonnet/prometheus-operator/servicemonitors-crd.json \
 
 all: schemas
 
