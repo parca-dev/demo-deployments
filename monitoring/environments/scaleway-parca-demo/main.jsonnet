@@ -157,6 +157,8 @@ local prometheuses = [
 
 local prometheusOperator = m.prometheusOperator();
 
+local kubeThanos = m.kubeThanos;
+
 {
   apiVersion: 'v1',
   kind: 'List',
@@ -175,5 +177,6 @@ local prometheusOperator = m.prometheusOperator();
       for prometheus in prometheuses
       for name in std.objectFields(prometheus)
       if !std.setMember(prometheus[name].kind, ['RoleBindingList', 'RoleList'])
-    ],
+    ] +
+    [kubeThanos[name] for name in std.objectFields(kubeThanos)],
 }
