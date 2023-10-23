@@ -180,5 +180,6 @@ local kubeThanos = m.kubeThanos({
       for name in std.objectFields(prometheus)
       if !std.setMember(prometheus[name].kind, ['RoleBindingList', 'RoleList'])
     ] +
-    [kubeThanos[name] for name in std.objectFields(kubeThanos)],
+    [kubeThanos.query[name] for name in std.objectFields(kubeThanos.query)] +
+    [kubeThanos.store[name] for name in std.objectFields(kubeThanos.store)],
 }
