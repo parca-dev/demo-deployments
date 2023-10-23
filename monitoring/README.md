@@ -14,8 +14,8 @@ Copy these into a file like the following (in the example stored as `/tmp/thanos
 ```yaml
 type: s3
 config:
-  bucket: thanos
-  endpoint: parca-analytics-tmp.s3.nl-ams.scw.cloud
+  bucket: parca-analytics
+  endpoint: s3.nl-ams.scw.cloud
   access_key: XXX
   secret_key: XXX
 ```
