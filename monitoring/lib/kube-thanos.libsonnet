@@ -15,17 +15,19 @@ local commonConfig = {
   },
 };
 
-local s = t.store(commonConfig.config {
-  replicas: 1,
-  serviceMonitor: true,
-});
+function(params={}) {
+  local cfg = commonConfig.config + params,
 
-local q = t.query(commonConfig.config {
-  replicas: 1,
-  replicaLabels: ['prometheus_replica', 'rule_replica'],
-  serviceMonitor: true,
-  stores: [s.storeEndpoint],
-});
+  local store = t.store(cfg {
+    replicas: 1,
+    serviceMonitor: true,
+  }),
+  store: store,
 
-{ ['thanos-store-' + name]: s[name] for name in std.objectFields(s) } +
-{ ['thanos-query-' + name]: q[name] for name in std.objectFields(q) }
+  query: t.query(cfg {
+    replicas: 1,
+    replicaLabels: ['prometheus_replica', 'rule_replica'],
+    serviceMonitor: true,
+    stores: [store.storeEndpoint, 'dnssrv+_grpc._tcp.prometheus-parca-analytics-thanos-sidecar.%s.svc.cluster.local' % cfg.namespace],
+  }),
+}

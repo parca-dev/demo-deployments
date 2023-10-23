@@ -157,7 +157,9 @@ local prometheuses = [
 
 local prometheusOperator = m.prometheusOperator();
 
-local kubeThanos = m.kubeThanos;
+local kubeThanos = m.kubeThanos({
+  namespace: 'parca-analytics',
+});
 
 {
   apiVersion: 'v1',
