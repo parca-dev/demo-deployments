@@ -22,7 +22,7 @@ function(params={}) {
     replicas: 1,
     serviceMonitor: true,
   }),
-  store: store + {
+  store: store {
     networkPolicy: {
       kind: 'NetworkPolicy',
       apiVersion: 'networking.k8s.io/v1',
@@ -36,7 +36,7 @@ function(params={}) {
             'app.kubernetes.io/name': 'thanos-store',
           },
         },
-        egress: [{}], // Allow all outside egress to connect to object storage
+        egress: [{}],  // Allow all outside egress to connect to object storage
         ingress: [{
           from: [{
             namespaceSelector: {
@@ -96,5 +96,5 @@ function(params={}) {
       },
     },
 
-  }
+  },
 }
