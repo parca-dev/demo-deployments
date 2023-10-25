@@ -9,7 +9,16 @@
         }
       },
       "version": "v0.13.0"
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/thanos-io/kube-thanos.git",
+          "subdir": "jsonnet/kube-thanos"
+        }
+      },
+      "version": "main"
     }
   ],
-  "legacyImports": false
+  "legacyImports": true
 }

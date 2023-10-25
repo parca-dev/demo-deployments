@@ -167,6 +167,16 @@
     {
       "source": {
         "git": {
+          "remote": "https://github.com/thanos-io/kube-thanos.git",
+          "subdir": "jsonnet/kube-thanos"
+        }
+      },
+      "version": "ac261330bb819523d2caba81b4e82add166436c7",
+      "sum": "sN9PqW93Kh+jyf5kvRKQgotY3xbRIU/h22TcNO2KTag="
+    },
+    {
+      "source": {
+        "git": {
           "remote": "https://github.com/thanos-io/thanos.git",
           "subdir": "mixin"
         }
