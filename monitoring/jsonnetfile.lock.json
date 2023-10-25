@@ -58,7 +58,7 @@
           "subdir": "grafana-builder"
         }
       },
-      "version": "2b47d50bf1a5d30e5fac8a379bad3dedd22d958b",
+      "version": "197b22d7a053fe6d03a40f26abda064d4b717620",
       "sum": "xEFMv4+ObwP5L1Wu0XK5agWci4AJzNApys6iKAQxLlQ="
     },
     {
@@ -140,7 +140,7 @@
           "subdir": "docs/node-mixin"
         }
       },
-      "version": "e8c5110ada6152ec0efb8b2dc8be7e493624d232",
+      "version": "6122cee47a39ef35de5698b348fc5cf9343f28a5",
       "sum": "By6n6U10hYDogUsyhsaKZehbhzxBZZobJloiKyKadgM="
     },
     {
@@ -171,8 +171,8 @@
           "subdir": "jsonnet/kube-thanos"
         }
       },
-      "version": "ac261330bb819523d2caba81b4e82add166436c7",
-      "sum": "sN9PqW93Kh+jyf5kvRKQgotY3xbRIU/h22TcNO2KTag="
+      "version": "d94f051cdb980f11259d7481422f0d7c88090f2e",
+      "sum": "22UgIfAACAxg2HRyAXFIN8Qi+p8rEcbWoM5XsXu9Mdo="
     },
     {
       "source": {
