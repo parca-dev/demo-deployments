@@ -1,5 +1,22 @@
 local m = import 'main.libsonnet';
 
+local kubeThanos = m.kubeThanos({
+  namespace: 'parca-analytics',
+  objectStorageConfig: {
+    key: 'thanos.yaml',
+    name: 'parca-analytics-objectstorage',
+  },
+  volumeClaimTemplate: {
+    apiVersion: 'v1',
+    kind: 'PersistentVolumeClaim',
+    spec: {
+      accessModes: ['ReadWriteOnce'],
+      resources: { requests: { storage: '10Gi' } },
+      storageClassName: 'scw-bssd-retain',
+    },
+  },
+});
+
 local prometheuses = [
   m.prometheus({
     prometheus+:: {
