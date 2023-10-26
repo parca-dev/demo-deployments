@@ -166,6 +166,17 @@ local prometheuses = [
       },
     },
 
+    networkPolicy+: {
+      spec+: {
+        ingress+: [{
+          from: [{
+            namespaceSelector: { matchLabels: { 'kubernetes.io/metadata.name': p._config.namespace } },
+            podSelector: { matchLabels: { 'app.kubernetes.io/name': 'thanos-query' } },
+          }],
+        }],
+      },
+    },
+
     // We do not monitor k8s metrics with this instance.
     clusterRole:: {},
     clusterRoleBinding:: {},
