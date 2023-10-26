@@ -15,7 +15,29 @@ local kubeThanos = m.kubeThanos({
       storageClassName: 'scw-bssd-retain',
     },
   },
-});
+}) + {
+  query+: {
+    networkPolicy+: {
+      spec+: {
+        ingress: [
+          {
+            from: [{
+              namespaceSelector: { matchLabels: { 'kubernetes.io/metadata.name': 'ingress-nginx' } },
+              podSelector: {
+                matchLabels: {
+                  'app.kubernetes.io/component': 'controller',
+                  'app.kubernetes.io/instance': 'ingress-nginx',
+                  'app.kubernetes.io/name': 'ingress-nginx',
+                },
+              },
+            }],
+            ports: [{ port: 'http', protocol: 'TCP' }],
+          },
+        ],
+      },
+    },
+  },
+};
 
 local prometheuses = [
   m.prometheus({
@@ -81,9 +103,9 @@ local prometheuses = [
               paths: [{
                 backend: {
                   service: {
-                    name: p.service.metadata.name,
+                    name: kubeThanos.query.service.metadata.name,
                     port: {
-                      name: p.service.spec.ports[0].name,
+                      name: kubeThanos.query.service.spec.ports[1].name,
                     },
                   },
                 },
