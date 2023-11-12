@@ -73,9 +73,21 @@ local prometheuses = [
         hosts: ['analytics.parca.dev'],
       },
       thanos: {
+        image: 'quay.io/thanos/thanos:%s' % self.version,
+        // renovate: datasource=docker depName=quay.io/thanos/thanos
+        version: 'v0.32.5',
         objectStorageConfig: {
           key: 'thanos.yaml',
           name: 'parca-analytics-objectstorage',
+        },
+        resources+: {
+          limits+: {
+            memory: '64Mi',
+          },
+          requests+: {
+            cpu: '50m',
+            memory: '64Mi',
+          },
         },
       },
     },
@@ -87,7 +99,8 @@ local prometheuses = [
       kind: 'Ingress',
       metadata: {
         name: 'parca-analytics',
-        namespace: 'parca-analytics',
+        namespace: p._config.namespace,
+        labels: p._config.commonLabels,
         annotations: {
           'cert-manager.io/cluster-issuer': 'letsencrypt-prod',
           'nginx.ingress.kubernetes.io/auth-url': 'http://oauth2-proxy.oauth2-proxy.svc.cluster.local/oauth2/auth',
@@ -130,8 +143,9 @@ local prometheuses = [
       apiVersion: 'networking.k8s.io/v1',
       kind: 'Ingress',
       metadata: {
-        name: 'parca-analytics-remote-write',
-        namespace: 'parca-analytics',
+        name: p._config.name + '-remote-write',
+        namespace: p._config.namespace,
+        labels: p._config.commonLabels,
         annotations: {
           'cert-manager.io/cluster-issuer': 'letsencrypt-prod',
         },
@@ -185,6 +199,16 @@ local prometheuses = [
             },
           },
         },
+      },
+    },
+
+    objectStorageSecret: {
+      apiVersion: 'v1',
+      kind: 'Secret',
+      metadata: {
+        name: p._config.name + '-objectstorage',
+        namespace: p._config.namespace,
+        labels: p._config.commonLabels,
       },
     },
 

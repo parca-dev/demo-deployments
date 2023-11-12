@@ -4,7 +4,7 @@ local commonConfig = {
   config+:: {
     local cfg = self,
     namespace: 'monitoring',
-    // renovate: datasource=docker depName=quay.io/thanos/thanos extractVersion=v(?<version>.*)$
+    // renovate: datasource=docker depName=quay.io/thanos/thanos
     version: 'v0.32.5',
     image: 'quay.io/thanos/thanos:' + cfg.version,
     imagePullPolicy: 'IfNotPresent',
@@ -21,27 +21,35 @@ function(params={}) {
   local store = t.store(cfg {
     replicas: 1,
     serviceMonitor: true,
+    resources: {
+      limits: {
+        memory: '256Mi',
+      },
+      requests: {
+        cpu: '100m',
+        memory: '256Mi',
+      },
+    },
   }),
   store: store {
     networkPolicy: {
       kind: 'NetworkPolicy',
       apiVersion: 'networking.k8s.io/v1',
       metadata: {
-        name: 'thanos-store',
-        namespace: cfg.namespace,
+        name: $.store.config.name,
+        namespace: $.store.config.namespace,
+        labels: $.store.config.commonLabels,
       },
       spec: {
         podSelector: {
-          matchLabels: {
-            'app.kubernetes.io/name': 'thanos-store',
-          },
+          matchLabels: $.store.config.podLabelSelector,
         },
         egress: [{}],  // Allow all outside egress to connect to object storage
         ingress: [{
           from: [{
             namespaceSelector: {
               matchLabels: {
-                'kubernetes.io/metadata.name': cfg.namespace,
+                'kubernetes.io/metadata.name': $.store.config.namespace,
               },
             },
             podSelector: {
@@ -61,19 +69,27 @@ function(params={}) {
     replicaLabels: ['prometheus_replica', 'rule_replica'],
     serviceMonitor: true,
     stores: [store.storeEndpoint, 'dnssrv+_grpc._tcp.prometheus-parca-analytics-thanos-sidecar.%s.svc.cluster.local' % cfg.namespace],
+    resources: {
+      limits: {
+        memory: '128Mi',
+      },
+      requests: {
+        cpu: '100m',
+        memory: '128Mi',
+      },
+    },
   }) + {
     networkPolicy: {
       kind: 'NetworkPolicy',
       apiVersion: 'networking.k8s.io/v1',
       metadata: {
-        name: 'thanos-query',
-        namespace: 'parca-analytics',
+        name: $.query.config.name,
+        namespace: $.query.config.namespace,
+        labels: $.query.config.commonLabels,
       },
       spec: {
         podSelector: {
-          matchLabels: {
-            'app.kubernetes.io/name': 'thanos-query',
-          },
+          matchLabels: $.query.config.podLabelSelector,
         },
         egress: [{
           to: [

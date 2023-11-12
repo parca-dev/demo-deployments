@@ -20,10 +20,11 @@ config:
   secret_key: XXX
 ```
 
-Use the following command to create it in the cluster.
+Use the following command to patch it into the cluster.
 
 ```bash
-kubectl -n parca-analytics create secret generic parca-analytics-objectstorage --from-file=thanos.yaml=/tmp/thanos.yaml
+jq -Rs '{"data": {"thanos.yaml": .|@base64 }}' /tmp/thanos.yaml \
+  | kubectl patch --namespace=parca-analytics secret parca-analytics-objectstorage --patch-file=/dev/stdin
 ```
 
 This will unblock the parca-analytics Prometheus Pod and it will start uploading data to the object storage.
