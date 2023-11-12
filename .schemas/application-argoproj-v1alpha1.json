@@ -360,6 +360,55 @@
                       "description": "Namespace sets the namespace that Kustomize adds to all resources",
                       "type": "string"
                     },
+                    "patches": {
+                      "description": "Patches is a list of Kustomize patches",
+                      "items": {
+                        "properties": {
+                          "options": {
+                            "additionalProperties": {
+                              "type": "boolean"
+                            },
+                            "type": "object"
+                          },
+                          "patch": {
+                            "type": "string"
+                          },
+                          "path": {
+                            "type": "string"
+                          },
+                          "target": {
+                            "properties": {
+                              "annotationSelector": {
+                                "type": "string"
+                              },
+                              "group": {
+                                "type": "string"
+                              },
+                              "kind": {
+                                "type": "string"
+                              },
+                              "labelSelector": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "namespace": {
+                                "type": "string"
+                              },
+                              "version": {
+                                "type": "string"
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
+                      },
+                      "type": "array"
+                    },
                     "replicas": {
                       "description": "Replicas is a list of Kustomize Replicas override specifications",
                       "items": {
@@ -709,6 +758,55 @@
                         "description": "Namespace sets the namespace that Kustomize adds to all resources",
                         "type": "string"
                       },
+                      "patches": {
+                        "description": "Patches is a list of Kustomize patches",
+                        "items": {
+                          "properties": {
+                            "options": {
+                              "additionalProperties": {
+                                "type": "boolean"
+                              },
+                              "type": "object"
+                            },
+                            "patch": {
+                              "type": "string"
+                            },
+                            "path": {
+                              "type": "string"
+                            },
+                            "target": {
+                              "properties": {
+                                "annotationSelector": {
+                                  "type": "string"
+                                },
+                                "group": {
+                                  "type": "string"
+                                },
+                                "kind": {
+                                  "type": "string"
+                                },
+                                "labelSelector": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "namespace": {
+                                  "type": "string"
+                                },
+                                "version": {
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        },
+                        "type": "array"
+                      },
                       "replicas": {
                         "description": "Replicas is a list of Kustomize Replicas override specifications",
                         "items": {
@@ -887,7 +985,7 @@
           "description": "Destination is a reference to the target Kubernetes server and namespace",
           "properties": {
             "name": {
-              "description": "Name is an alternate way of specifying the target cluster by its symbolic name",
+              "description": "Name is an alternate way of specifying the target cluster by its symbolic name. This must be set if Server is not set.",
               "type": "string"
             },
             "namespace": {
@@ -895,7 +993,7 @@
               "type": "string"
             },
             "server": {
-              "description": "Server specifies the URL of the target cluster and must be set to the Kubernetes control plane API",
+              "description": "Server specifies the URL of the target cluster's Kubernetes control plane API. This must be set if Name is not set.",
               "type": "string"
             }
           },
@@ -1197,6 +1295,55 @@
                 "namespace": {
                   "description": "Namespace sets the namespace that Kustomize adds to all resources",
                   "type": "string"
+                },
+                "patches": {
+                  "description": "Patches is a list of Kustomize patches",
+                  "items": {
+                    "properties": {
+                      "options": {
+                        "additionalProperties": {
+                          "type": "boolean"
+                        },
+                        "type": "object"
+                      },
+                      "patch": {
+                        "type": "string"
+                      },
+                      "path": {
+                        "type": "string"
+                      },
+                      "target": {
+                        "properties": {
+                          "annotationSelector": {
+                            "type": "string"
+                          },
+                          "group": {
+                            "type": "string"
+                          },
+                          "kind": {
+                            "type": "string"
+                          },
+                          "labelSelector": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "namespace": {
+                            "type": "string"
+                          },
+                          "version": {
+                            "type": "string"
+                          }
+                        },
+                        "type": "object",
+                        "additionalProperties": false
+                      }
+                    },
+                    "type": "object",
+                    "additionalProperties": false
+                  },
+                  "type": "array"
                 },
                 "replicas": {
                   "description": "Replicas is a list of Kustomize Replicas override specifications",
@@ -1546,6 +1693,55 @@
                   "namespace": {
                     "description": "Namespace sets the namespace that Kustomize adds to all resources",
                     "type": "string"
+                  },
+                  "patches": {
+                    "description": "Patches is a list of Kustomize patches",
+                    "items": {
+                      "properties": {
+                        "options": {
+                          "additionalProperties": {
+                            "type": "boolean"
+                          },
+                          "type": "object"
+                        },
+                        "patch": {
+                          "type": "string"
+                        },
+                        "path": {
+                          "type": "string"
+                        },
+                        "target": {
+                          "properties": {
+                            "annotationSelector": {
+                              "type": "string"
+                            },
+                            "group": {
+                              "type": "string"
+                            },
+                            "kind": {
+                              "type": "string"
+                            },
+                            "labelSelector": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "namespace": {
+                              "type": "string"
+                            },
+                            "version": {
+                              "type": "string"
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        }
+                      },
+                      "type": "object",
+                      "additionalProperties": false
+                    },
+                    "type": "array"
                   },
                   "replicas": {
                     "description": "Replicas is a list of Kustomize Replicas override specifications",
@@ -2069,6 +2265,55 @@
                         "description": "Namespace sets the namespace that Kustomize adds to all resources",
                         "type": "string"
                       },
+                      "patches": {
+                        "description": "Patches is a list of Kustomize patches",
+                        "items": {
+                          "properties": {
+                            "options": {
+                              "additionalProperties": {
+                                "type": "boolean"
+                              },
+                              "type": "object"
+                            },
+                            "patch": {
+                              "type": "string"
+                            },
+                            "path": {
+                              "type": "string"
+                            },
+                            "target": {
+                              "properties": {
+                                "annotationSelector": {
+                                  "type": "string"
+                                },
+                                "group": {
+                                  "type": "string"
+                                },
+                                "kind": {
+                                  "type": "string"
+                                },
+                                "labelSelector": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "namespace": {
+                                  "type": "string"
+                                },
+                                "version": {
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            }
+                          },
+                          "type": "object",
+                          "additionalProperties": false
+                        },
+                        "type": "array"
+                      },
                       "replicas": {
                         "description": "Replicas is a list of Kustomize Replicas override specifications",
                         "items": {
@@ -2417,6 +2662,55 @@
                         "namespace": {
                           "description": "Namespace sets the namespace that Kustomize adds to all resources",
                           "type": "string"
+                        },
+                        "patches": {
+                          "description": "Patches is a list of Kustomize patches",
+                          "items": {
+                            "properties": {
+                              "options": {
+                                "additionalProperties": {
+                                  "type": "boolean"
+                                },
+                                "type": "object"
+                              },
+                              "patch": {
+                                "type": "string"
+                              },
+                              "path": {
+                                "type": "string"
+                              },
+                              "target": {
+                                "properties": {
+                                  "annotationSelector": {
+                                    "type": "string"
+                                  },
+                                  "group": {
+                                    "type": "string"
+                                  },
+                                  "kind": {
+                                    "type": "string"
+                                  },
+                                  "labelSelector": {
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "namespace": {
+                                    "type": "string"
+                                  },
+                                  "version": {
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "type": "array"
                         },
                         "replicas": {
                           "description": "Replicas is a list of Kustomize Replicas override specifications",
@@ -2920,6 +3214,55 @@
                               "description": "Namespace sets the namespace that Kustomize adds to all resources",
                               "type": "string"
                             },
+                            "patches": {
+                              "description": "Patches is a list of Kustomize patches",
+                              "items": {
+                                "properties": {
+                                  "options": {
+                                    "additionalProperties": {
+                                      "type": "boolean"
+                                    },
+                                    "type": "object"
+                                  },
+                                  "patch": {
+                                    "type": "string"
+                                  },
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "target": {
+                                    "properties": {
+                                      "annotationSelector": {
+                                        "type": "string"
+                                      },
+                                      "group": {
+                                        "type": "string"
+                                      },
+                                      "kind": {
+                                        "type": "string"
+                                      },
+                                      "labelSelector": {
+                                        "type": "string"
+                                      },
+                                      "name": {
+                                        "type": "string"
+                                      },
+                                      "namespace": {
+                                        "type": "string"
+                                      },
+                                      "version": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "type": "object",
+                                    "additionalProperties": false
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              },
+                              "type": "array"
+                            },
                             "replicas": {
                               "description": "Replicas is a list of Kustomize Replicas override specifications",
                               "items": {
@@ -3268,6 +3611,55 @@
                               "namespace": {
                                 "description": "Namespace sets the namespace that Kustomize adds to all resources",
                                 "type": "string"
+                              },
+                              "patches": {
+                                "description": "Patches is a list of Kustomize patches",
+                                "items": {
+                                  "properties": {
+                                    "options": {
+                                      "additionalProperties": {
+                                        "type": "boolean"
+                                      },
+                                      "type": "object"
+                                    },
+                                    "patch": {
+                                      "type": "string"
+                                    },
+                                    "path": {
+                                      "type": "string"
+                                    },
+                                    "target": {
+                                      "properties": {
+                                        "annotationSelector": {
+                                          "type": "string"
+                                        },
+                                        "group": {
+                                          "type": "string"
+                                        },
+                                        "kind": {
+                                          "type": "string"
+                                        },
+                                        "labelSelector": {
+                                          "type": "string"
+                                        },
+                                        "name": {
+                                          "type": "string"
+                                        },
+                                        "namespace": {
+                                          "type": "string"
+                                        },
+                                        "version": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object",
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                },
+                                "type": "array"
                               },
                               "replicas": {
                                 "description": "Replicas is a list of Kustomize Replicas override specifications",
@@ -3767,6 +4159,55 @@
                           "description": "Namespace sets the namespace that Kustomize adds to all resources",
                           "type": "string"
                         },
+                        "patches": {
+                          "description": "Patches is a list of Kustomize patches",
+                          "items": {
+                            "properties": {
+                              "options": {
+                                "additionalProperties": {
+                                  "type": "boolean"
+                                },
+                                "type": "object"
+                              },
+                              "patch": {
+                                "type": "string"
+                              },
+                              "path": {
+                                "type": "string"
+                              },
+                              "target": {
+                                "properties": {
+                                  "annotationSelector": {
+                                    "type": "string"
+                                  },
+                                  "group": {
+                                    "type": "string"
+                                  },
+                                  "kind": {
+                                    "type": "string"
+                                  },
+                                  "labelSelector": {
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "namespace": {
+                                    "type": "string"
+                                  },
+                                  "version": {
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "type": "array"
+                        },
                         "replicas": {
                           "description": "Replicas is a list of Kustomize Replicas override specifications",
                           "items": {
@@ -4116,6 +4557,55 @@
                             "description": "Namespace sets the namespace that Kustomize adds to all resources",
                             "type": "string"
                           },
+                          "patches": {
+                            "description": "Patches is a list of Kustomize patches",
+                            "items": {
+                              "properties": {
+                                "options": {
+                                  "additionalProperties": {
+                                    "type": "boolean"
+                                  },
+                                  "type": "object"
+                                },
+                                "patch": {
+                                  "type": "string"
+                                },
+                                "path": {
+                                  "type": "string"
+                                },
+                                "target": {
+                                  "properties": {
+                                    "annotationSelector": {
+                                      "type": "string"
+                                    },
+                                    "group": {
+                                      "type": "string"
+                                    },
+                                    "kind": {
+                                      "type": "string"
+                                    },
+                                    "labelSelector": {
+                                      "type": "string"
+                                    },
+                                    "name": {
+                                      "type": "string"
+                                    },
+                                    "namespace": {
+                                      "type": "string"
+                                    },
+                                    "version": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            },
+                            "type": "array"
+                          },
                           "replicas": {
                             "description": "Replicas is a list of Kustomize Replicas override specifications",
                             "items": {
@@ -4366,7 +4856,7 @@
                   "description": "Destination is a reference to the application's destination used for comparison",
                   "properties": {
                     "name": {
-                      "description": "Name is an alternate way of specifying the target cluster by its symbolic name",
+                      "description": "Name is an alternate way of specifying the target cluster by its symbolic name. This must be set if Server is not set.",
                       "type": "string"
                     },
                     "namespace": {
@@ -4374,7 +4864,7 @@
                       "type": "string"
                     },
                     "server": {
-                      "description": "Server specifies the URL of the target cluster and must be set to the Kubernetes control plane API",
+                      "description": "Server specifies the URL of the target cluster's Kubernetes control plane API. This must be set if Name is not set.",
                       "type": "string"
                     }
                   },
@@ -4647,6 +5137,55 @@
                         "namespace": {
                           "description": "Namespace sets the namespace that Kustomize adds to all resources",
                           "type": "string"
+                        },
+                        "patches": {
+                          "description": "Patches is a list of Kustomize patches",
+                          "items": {
+                            "properties": {
+                              "options": {
+                                "additionalProperties": {
+                                  "type": "boolean"
+                                },
+                                "type": "object"
+                              },
+                              "patch": {
+                                "type": "string"
+                              },
+                              "path": {
+                                "type": "string"
+                              },
+                              "target": {
+                                "properties": {
+                                  "annotationSelector": {
+                                    "type": "string"
+                                  },
+                                  "group": {
+                                    "type": "string"
+                                  },
+                                  "kind": {
+                                    "type": "string"
+                                  },
+                                  "labelSelector": {
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "namespace": {
+                                    "type": "string"
+                                  },
+                                  "version": {
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object",
+                                "additionalProperties": false
+                              }
+                            },
+                            "type": "object",
+                            "additionalProperties": false
+                          },
+                          "type": "array"
                         },
                         "replicas": {
                           "description": "Replicas is a list of Kustomize Replicas override specifications",
@@ -4996,6 +5535,55 @@
                           "namespace": {
                             "description": "Namespace sets the namespace that Kustomize adds to all resources",
                             "type": "string"
+                          },
+                          "patches": {
+                            "description": "Patches is a list of Kustomize patches",
+                            "items": {
+                              "properties": {
+                                "options": {
+                                  "additionalProperties": {
+                                    "type": "boolean"
+                                  },
+                                  "type": "object"
+                                },
+                                "patch": {
+                                  "type": "string"
+                                },
+                                "path": {
+                                  "type": "string"
+                                },
+                                "target": {
+                                  "properties": {
+                                    "annotationSelector": {
+                                      "type": "string"
+                                    },
+                                    "group": {
+                                      "type": "string"
+                                    },
+                                    "kind": {
+                                      "type": "string"
+                                    },
+                                    "labelSelector": {
+                                      "type": "string"
+                                    },
+                                    "name": {
+                                      "type": "string"
+                                    },
+                                    "namespace": {
+                                      "type": "string"
+                                    },
+                                    "version": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "type": "object",
+                                  "additionalProperties": false
+                                }
+                              },
+                              "type": "object",
+                              "additionalProperties": false
+                            },
+                            "type": "array"
                           },
                           "replicas": {
                             "description": "Replicas is a list of Kustomize Replicas override specifications",
