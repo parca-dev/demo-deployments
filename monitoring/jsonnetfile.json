@@ -17,7 +17,7 @@
           "subdir": "jsonnet/kube-thanos"
         }
       },
-      "version": "security-context"
+      "version": "main"
     }
   ],
   "legacyImports": true
