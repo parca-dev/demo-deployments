@@ -57,6 +57,8 @@
       "customType": "regex",
       "fileMatch": [
         "grafana/lib/grafana\\.libsonnet",
+        "monitoring/environments/scaleway-parca-demo/main\\.jsonnet",
+        "monitoring/lib/kube-thanos\\.libsonnet",
         "monitoring/lib/prometheus\\.libsonnet",
         "parca/lib/parca\\.libsonnet",
         "parca/lib/parca-agent\\.libsonnet"
