@@ -32,7 +32,7 @@ function(params={})
         template+: {
           spec+: {
             containers: [
-              if c.name == 'parca' then c {
+              if c.name == 'parca-agent' then c {
                 // TODO: Make it easy to pass extra args upstream.
                 args+: [
                   // One percent of events are profiled.
