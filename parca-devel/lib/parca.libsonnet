@@ -209,6 +209,9 @@ function(params)
                 // TODO: Make it easy to pass extra args upstream.
                 args+: [
                   '--path-prefix=' + $.config.ingress.path,
+                  // One percent of events are profiled.
+                  '--mutex-profile-fraction=100',
+                  '--block-profile-rate=100',
                 ],
               } else c
               for c in super.containers
