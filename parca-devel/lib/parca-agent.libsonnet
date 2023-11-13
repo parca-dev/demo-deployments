@@ -31,6 +31,17 @@ function(params={})
       spec+: {
         template+: {
           spec+: {
+            containers: [
+              if c.name == 'parca' then c {
+                // TODO: Make it easy to pass extra args upstream.
+                args+: [
+                  // One percent of events are profiled.
+                  '--mutex-profile-fraction=100',
+                  '--block-profile-rate=100',
+                ],
+              } else c
+              for c in super.containers
+            ],
             priorityClassName: 'system-node-critical',
           },
         },
