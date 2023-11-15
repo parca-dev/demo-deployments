@@ -15,14 +15,10 @@ images:
 - name: fluxcd/image-reflector-controller
   newName: ghcr.io/fluxcd/image-reflector-controller
 
-# Ignoring deprecation for now
-# https://github.com/kubernetes-sigs/kustomize/issues/5049
-patchesStrategicMerge:
-- patches/delete_namespace.yaml
-- patches/use_serviceaccount.yaml
-- patches/set_resources_limits_requests.yaml
-
 patches:
+- path: patches/delete_namespace.yaml
+- path: patches/use_serviceaccount.yaml
+- path: patches/set_resources_limits_requests.yaml
 - target:
     group: rbac.authorization.k8s.io
     version: v1

@@ -5,14 +5,10 @@ namespace: argocd
 resources:
 - github.com/argoproj/argo-cd/manifests/cluster-install?ref=58b04e5e11d007b0518853029ff7612c24a2eb35 # v2.9.1
 
-# Ignoring deprecation for now
-# https://github.com/kubernetes-sigs/kustomize/issues/5049
-patchesStrategicMerge:
-- patches/configure_argocd-cm.yaml
-- patches/set_liveness_and_readiness_probes.yaml
-- patches/set_resource_limits_and_requests.yaml
-
 patches:
+- path: patches/configure_argocd-cm.yaml
+- path: patches/set_liveness_and_readiness_probes.yaml
+- path: patches/set_resource_limits_and_requests.yaml
 - target:
     group: apps
     version: v1
