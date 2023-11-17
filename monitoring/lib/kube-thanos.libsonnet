@@ -23,7 +23,7 @@ function(params={}) {
     serviceMonitor: true,
     resources: {
       limits: {
-        memory: '256Mi',
+        memory: '2Gi',
       },
       requests: {
         cpu: '100m',
@@ -71,7 +71,7 @@ function(params={}) {
     stores: [store.storeEndpoint, 'dnssrv+_grpc._tcp.prometheus-parca-analytics-thanos-sidecar.%s.svc.cluster.local' % cfg.namespace],
     resources: {
       limits: {
-        memory: '128Mi',
+        memory: '1Gi',
       },
       requests: {
         cpu: '100m',
@@ -111,6 +111,5 @@ function(params={}) {
         }],
       },
     },
-
   },
 }
