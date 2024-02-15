@@ -23,7 +23,7 @@ local defaults = {
       },
       requests+: {
         cpu: '100m',
-        memory: '512Mi',
+        memory: '128Mi',
       },
     },
   },
