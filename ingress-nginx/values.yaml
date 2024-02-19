@@ -43,6 +43,8 @@ ingress-nginx:
            drop:
            - ALL
       patch:
+        networkPolicy:
+          enabled: true
         securityContext:
           seccompProfile:
             type: RuntimeDefault
