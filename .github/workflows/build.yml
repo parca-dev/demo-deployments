@@ -187,7 +187,7 @@ jobs:
           APP: ${{ matrix.app }}
 
       - name: Archive manifests
-        uses: actions/upload-artifact@a8a3f3ad30e3422c9c7b888a15615d19a852ae32 # v3.1.3
+        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4.3.1
         with:
           name: manifests
           path: .manifests/
@@ -283,7 +283,7 @@ jobs:
           APP: ${{ matrix.app }}
 
       - name: Archive manifests
-        uses: actions/upload-artifact@a8a3f3ad30e3422c9c7b888a15615d19a852ae32 # v3.1.3
+        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4.3.1
         with:
           name: manifests
           path: .manifests/
@@ -355,7 +355,7 @@ jobs:
           APP: ${{ matrix.app }}
 
       - name: Archive manifests
-        uses: actions/upload-artifact@a8a3f3ad30e3422c9c7b888a15615d19a852ae32 # v3.1.3
+        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4.3.1
         with:
           name: manifests
           path: .manifests/
@@ -387,7 +387,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Download manifests
-        uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3.0.2
+        uses: actions/download-artifact@eaceaf801fd36c7dee90939fad912460b18a1ffe # v4.1.2
         with:
           name: manifests
           path: .manifests/
