@@ -26,7 +26,7 @@ env:
   # https://github.com/parca-dev/demo-infrastructure/blob/main/scaleway/main.tf
   KUBERNETES_VERSION: 1.27.1
   # renovate: datasource=github-releases depName=kubernetes-sigs/kustomize versioning=regex:^(?<compatibility>.+)/v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
-  KUSTOMIZE_VERSION: kustomize/v5.3.0
+  KUSTOMIZE_VERSION: kustomize/v5.4.1
 
 jobs:
   pre-job:
