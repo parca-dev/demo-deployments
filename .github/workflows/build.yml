@@ -21,7 +21,7 @@ env:
   # renovate: datasource=github-releases depName=google/go-jsonnet
   JSONNET_VERSION: v0.20.0
   # renovate: datasource=github-releases depName=yannh/kubeconform
-  KUBECONFORM_VERSION: v0.6.5
+  KUBECONFORM_VERSION: v0.6.6
   # Must match target Kubernetes cluster minor version
   # https://github.com/parca-dev/demo-infrastructure/blob/main/scaleway/main.tf
   KUBERNETES_VERSION: 1.27.1
