@@ -1,4 +1,4 @@
-apiVersion: image.toolkit.fluxcd.io/v1beta1
+apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageUpdateAutomation
 metadata:
   name: parca-dev-demo-deployments
@@ -14,10 +14,7 @@ spec:
       author:
         email: fluxcdbot@users.noreply.github.com
         name: fluxcdbot
-      messageTemplate: |-
-        chore(deploy): update {{ range $i, $image := .Updated.Images -}}
-          {{- if $i }}, {{ end }}{{ $image -}}
-        {{- end }}
+      messageTemplate: 'chore(deploy): update from image update automation'
   interval: 1m0s
   update:
     strategy: Setters
