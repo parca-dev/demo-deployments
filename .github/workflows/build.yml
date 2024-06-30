@@ -24,7 +24,7 @@ env:
   KUBECONFORM_VERSION: v0.6.6
   # Must match target Kubernetes cluster minor version
   # https://github.com/parca-dev/demo-infrastructure/blob/main/scaleway/main.tf
-  KUBERNETES_VERSION: 1.28.6
+  KUBERNETES_VERSION: 1.29.1
   # renovate: datasource=github-releases depName=kubernetes-sigs/kustomize versioning=regex:^(?<compatibility>.+)/v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)$
   KUSTOMIZE_VERSION: kustomize/v5.4.2
 
