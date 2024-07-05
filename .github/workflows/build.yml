@@ -187,7 +187,7 @@ jobs:
           APP: ${{ matrix.app }}
 
       - name: Archive manifests
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
+        uses: actions/upload-artifact@0b2256b8c012f0828dc542b3febcab082c67f72b # v4.3.4
         with:
           name: manifests-${{ matrix.app }}
           path: .manifests/
@@ -283,7 +283,7 @@ jobs:
           APP: ${{ matrix.app }}
 
       - name: Archive manifests
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
+        uses: actions/upload-artifact@0b2256b8c012f0828dc542b3febcab082c67f72b # v4.3.4
         with:
           name: manifests-${{ matrix.app }}
           path: .manifests/
@@ -355,7 +355,7 @@ jobs:
           APP: ${{ matrix.app }}
 
       - name: Archive manifests
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
+        uses: actions/upload-artifact@0b2256b8c012f0828dc542b3febcab082c67f72b # v4.3.4
         with:
           name: manifests-${{ matrix.app }}
           path: .manifests/
