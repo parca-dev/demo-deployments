@@ -3,7 +3,7 @@ kind: Kustomization
 namespace: argocd
 
 resources:
-- github.com/argoproj/argo-cd/manifests/cluster-install?ref=3f344d54a4e0bbbb4313e1c19cfe1e544b162598 # v2.11.3
+- github.com/argoproj/argo-cd/manifests/cluster-install?ref=26b2039a55b9bdf807a70d344af8ade5171d3d39 # v2.12.1
 
 patches:
 - path: patches/configure_argocd-cm.yaml
