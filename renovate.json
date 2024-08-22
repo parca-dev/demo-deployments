@@ -4,7 +4,7 @@
   "packageRules": [
     {
       "description": "Group Flux CD packages",
-      "matchPackagePatterns": ["^fluxcd/.+"],
+      "matchPackageNames": ["/^fluxcd/.+/"],
       "groupName": "fluxcd"
     },
     {
@@ -28,20 +28,14 @@
     },
     {
       "description": "Highlight build dependencies updates",
-      "matchFileNames": [
-        "**/kustomization.yaml",
-        "**/*.{j,lib}sonnet"
-      ],
+      "matchFileNames": ["**/kustomization.yaml", "**/*.{j,lib}sonnet"],
       "automerge": false,
       "semanticCommitType": "build"
     },
     {
       "description": "Group Parca packages",
       "matchSourceUrls": ["https://github.com/parca-dev/parca"],
-      "reviewers": [
-        "team:backend-maintainers",
-        "team:frontend-maintainers"
-      ],
+      "reviewers": ["team:backend-maintainers", "team:frontend-maintainers"],
       "groupName": "parca"
     },
     {
