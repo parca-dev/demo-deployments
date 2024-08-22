@@ -5,7 +5,7 @@ local commonConfig = {
     local cfg = self,
     namespace: 'monitoring',
     // renovate: datasource=docker depName=quay.io/thanos/thanos
-    version: 'v0.35.1',
+    version: 'v0.36.1',
     image: 'quay.io/thanos/thanos:' + cfg.version,
     imagePullPolicy: 'IfNotPresent',
     objectStorageConfig: {
