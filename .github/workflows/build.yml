@@ -17,7 +17,7 @@ env:
   # renovate: datasource=github-releases depName=helm/helm
   HELM_VERSION: v3.15.4
   # renovate: datasource=github-releases depName=jsonnet-bundler/jsonnet-bundler
-  JB_VERSION: v0.5.1
+  JB_VERSION: v0.6.0
   # renovate: datasource=github-releases depName=google/go-jsonnet
   JSONNET_VERSION: v0.20.0
   # renovate: datasource=github-releases depName=yannh/kubeconform
