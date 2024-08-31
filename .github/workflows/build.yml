@@ -191,6 +191,7 @@ jobs:
         with:
           name: manifests-${{ matrix.app }}
           path: .manifests/
+          include-hidden-files: 'true'
 
   jsonnet:
     name: Jsonnet
@@ -287,6 +288,7 @@ jobs:
         with:
           name: manifests-${{ matrix.app }}
           path: .manifests/
+          include-hidden-files: 'true'
 
   helm:
     name: Helm
@@ -359,6 +361,7 @@ jobs:
         with:
           name: manifests-${{ matrix.app }}
           path: .manifests/
+          include-hidden-files: 'true'
 
   kubeconform:
     name: Kubeconform
