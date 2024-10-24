@@ -58,8 +58,8 @@
           "subdir": "grafana-builder"
         }
       },
-      "version": "0098700428a0a4ee7d884d332d137caff5c52497",
-      "sum": "B49EzIY2WZsFxNMJcgRxE/gcZ9ltnS8pkOOV6Q5qioc="
+      "version": "b9761545ddeac33ffe25bd87121076eab258c6f1",
+      "sum": "yxqWcq/N3E/a/XreeU6EuE6X7kYPnG0AspAQFKOjASo="
     },
     {
       "source": {
@@ -140,8 +140,8 @@
           "subdir": "docs/node-mixin"
         }
       },
-      "version": "3866d2a8296fd6de5d48f51242e61d02341bb169",
-      "sum": "PqPMf2Lqp7tW7T752kxdbMqF7JJ6vC8XrBN8WL5MMCc="
+      "version": "e6a9cfbdcdaa21bf9676c6cd37bef8160227f423",
+      "sum": "cQCW+1N0Xae5yXecCWDK2oAlN0luBS/5GrwBYSlaFms="
     },
     {
       "source": {
@@ -171,8 +171,8 @@
           "subdir": "jsonnet/kube-thanos"
         }
       },
-      "version": "48639958ccd4fa81fbb261ce4f9e790d69c71e2e",
-      "sum": "22UgIfAACAxg2HRyAXFIN8Qi+p8rEcbWoM5XsXu9Mdo="
+      "version": "a28d8ac336e4d7ca4309237fa79d4116e5364d7e",
+      "sum": "6WL0iZD2b4OkWVni3ppQ4n5TP3SsJFBYddacf2YU4gk="
     },
     {
       "source": {
