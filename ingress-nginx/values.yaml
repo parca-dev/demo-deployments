@@ -14,7 +14,7 @@ ingress-nginx:
       enabled: true
     resources:
       limits:
-        memory: 256Mi
+        memory: 1Gi
       requests:
         cpu: 100m
         memory: 256Mi
