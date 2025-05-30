@@ -1,14 +1,10 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "github>parca-dev/.github"
-  ],
+  "extends": ["github>parca-dev/.github"],
   "packageRules": [
     {
       "description": "Group Flux CD packages",
-      "matchPackageNames": [
-        "/^fluxcd/.+/"
-      ],
+      "matchPackageNames": ["/^fluxcd/.+/"],
       "groupName": "fluxcd"
     },
     {
@@ -32,32 +28,20 @@
     },
     {
       "description": "Highlight build dependencies updates",
-      "matchFileNames": [
-        "**/kustomization.yaml",
-        "**/*.{j,lib}sonnet"
-      ],
+      "matchFileNames": ["**/kustomization.yaml", "**/*.{j,lib}sonnet"],
       "automerge": false,
       "semanticCommitType": "build"
     },
     {
       "description": "Group Parca packages",
-      "matchSourceUrls": [
-        "https://github.com/parca-dev/parca"
-      ],
-      "reviewers": [
-        "team:backend-maintainers",
-        "team:frontend-maintainers"
-      ],
+      "matchSourceUrls": ["https://github.com/parca-dev/parca"],
+      "reviewers": ["team:backend-maintainers", "team:frontend-maintainers"],
       "groupName": "parca"
     },
     {
       "description": "Group Parca Agent packages",
-      "matchSourceUrls": [
-        "https://github.com/parca-dev/parca-agent"
-      ],
-      "reviewers": [
-        "team:agent-maintainers"
-      ],
+      "matchSourceUrls": ["https://github.com/parca-dev/parca-agent"],
+      "reviewers": ["team:agent-maintainers"],
       "groupName": "parca-agent"
     }
   ],
@@ -80,9 +64,7 @@
     {
       "description": "Pin Kustomize bases digests - https://github.com/renovatebot/renovate/issues/7915",
       "customType": "regex",
-      "managerFilePatterns": [
-        "/(^|/)kustomization.yaml$/"
-      ],
+      "managerFilePatterns": ["/(^|/)kustomization.yaml$/"],
       "matchStrings": [
         "- github\\.com\\/(?<depName>[^/]+?\\/[^/]*?)\\/.*\\?ref=(?<currentDigest>[a-f0-9]{40}) # (?<currentValue>.+)"
       ],
