@@ -49,13 +49,13 @@
     {
       "description": "Update versions in Jsonnet files",
       "customType": "regex",
-      "fileMatch": [
-        "grafana/lib/grafana\\.libsonnet",
-        "monitoring/environments/scaleway-parca-demo/main\\.jsonnet",
-        "monitoring/lib/kube-thanos\\.libsonnet",
-        "monitoring/lib/prometheus\\.libsonnet",
-        "parca/lib/parca\\.libsonnet",
-        "parca/lib/parca-agent\\.libsonnet"
+      "managerFilePatterns": [
+        "/grafana/lib/grafana\\.libsonnet/",
+        "/monitoring/environments/scaleway-parca-demo/main\\.jsonnet/",
+        "/monitoring/lib/kube-thanos\\.libsonnet/",
+        "/monitoring/lib/prometheus\\.libsonnet/",
+        "/parca/lib/parca\\.libsonnet/",
+        "/parca/lib/parca-agent\\.libsonnet/"
       ],
       "matchStrings": [
         "// renovate: datasource=(?<datasource>.+?) depName=(?<depName>.+?)(?: packageName=(?<packageName>.+?))?(?: versioning=(?<versioning>.+?))?(?: extractVersion=(?<extractVersion>.+?))?\\s+.+:\\s'(?<currentValue>.+?)',\\s"
@@ -64,7 +64,7 @@
     {
       "description": "Pin Kustomize bases digests - https://github.com/renovatebot/renovate/issues/7915",
       "customType": "regex",
-      "fileMatch": ["(^|/)kustomization.yaml$"],
+      "managerFilePatterns": ["/(^|/)kustomization.yaml$/"],
       "matchStrings": [
         "- github\\.com\\/(?<depName>[^/]+?\\/[^/]*?)\\/.*\\?ref=(?<currentDigest>[a-f0-9]{40}) # (?<currentValue>.+)"
       ],
