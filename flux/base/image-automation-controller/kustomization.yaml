@@ -2,7 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- github.com/fluxcd/image-automation-controller/config/default?ref=5e98055e29626dfa46975d1812f507a2f65b6ff7 # v0.40.0
+- github.com/fluxcd/image-automation-controller/config/default?ref=b8e667d558af620c45fa41038acba6ed10643f27 # v0.41.1
 - serviceaccount.yaml
 - networkpolicy.yaml
 
