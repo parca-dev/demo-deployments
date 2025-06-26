@@ -17,7 +17,7 @@
           "subdir": "grafana-mixin"
         }
       },
-      "version": "v10.1.0",
+      "version": "release-12.0.1",
       "name": "grafana-mixin"
     },
     {
@@ -27,7 +27,7 @@
           "subdir": "contrib/mixin"
         }
       },
-      "version": "60051be9908649b1a0f2d000dc75b3bd0822d53c"
+      "version": "release-3.6"
     },
     {
       "source": {
@@ -36,7 +36,7 @@
           "subdir": "jsonnet/prometheus-operator"
         }
       },
-      "version": "v0.67.1"
+      "version": "release-0.83"
     },
     {
       "source": {
@@ -45,7 +45,7 @@
           "subdir": "jsonnet/mixin"
         }
       },
-      "version": "v0.67.1",
+      "version": "release-0.83",
       "name": "prometheus-operator-mixin"
     },
     {
@@ -55,7 +55,7 @@
           "subdir": ""
         }
       },
-      "version": "63337d921db856bbcd2e91814a0ac90c250410d6"
+      "version": "56af5da5a4e038a3bd24939161f11d0eb3eeb9c8"
     },
     {
       "source": {
@@ -64,7 +64,7 @@
           "subdir": "jsonnet/kube-state-metrics"
         }
       },
-      "version": "v2.9.2"
+      "version": "release-2.15"
     },
     {
       "source": {
@@ -73,7 +73,7 @@
           "subdir": "jsonnet/kube-state-metrics-mixin"
         }
       },
-      "version": "v2.9.2"
+      "version": "release-2.15"
     },
     {
       "source": {
@@ -82,7 +82,7 @@
           "subdir": "docs/node-mixin"
         }
       },
-      "version": "master"
+      "version": "release-1.9"
     },
     {
       "source": {
@@ -91,7 +91,7 @@
           "subdir": "documentation/prometheus-mixin"
         }
       },
-      "version": "v2.46.0",
+      "version": "release-3.4",
       "name": "prometheus"
     },
     {
@@ -101,17 +101,18 @@
           "subdir": "doc/alertmanager-mixin"
         }
       },
-      "version": "v0.26.0",
+      "version": "0f1a701e9d233211cfd04033150223d404d751a3",
       "name": "alertmanager"
     },
     {
       "source": {
         "git": {
           "remote": "https://github.com/pyrra-dev/pyrra.git",
-          "subdir": "config/crd/bases"
+          "subdir": "jsonnet/controller-gen"
         }
       },
-      "version": "v0.6.4"
+      "version": "release-0.8",
+      "name": "pyrra"
     },
     {
       "source": {
@@ -120,7 +121,7 @@
           "subdir": "mixin"
         }
       },
-      "version": "v0.32.2",
+      "version": "release-0.38",
       "name": "thanos-mixin"
     }
   ],
