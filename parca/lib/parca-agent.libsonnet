@@ -12,11 +12,11 @@ local defaults = {
   resources: {
     limits: {
       cpu: '100m',
-      memory: '1Gi',
+      memory: '500Mi',
     },
     requests: {
       cpu: '10m',
-      memory: '1Gi',
+      memory: '500Mi',
     },
   },
   podMonitor: true,
