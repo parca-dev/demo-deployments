@@ -8,7 +8,7 @@ local defaults = {
   name:: 'windows-exporter',
   namespace:: error 'must provide namespace',
   version:: error 'must provide version',
-  image:: error 'must provide version',
+  image:: error 'must provide image',
   resources:: {
     requests: { cpu: '300m', memory: '200Mi' },
     limits: { memory: '200Mi' },
@@ -67,7 +67,7 @@ local windowsExporter = function(params) {
           initContainers: [
             {
               name: 'configure-firewall',
-              image: 'mcr.microsoft.com/windows/nanoserver:1809',
+              image: 'mcr.microsoft.com/powershell:nanoserver-lts',
               resources: we._config.resources,
               command: [
                 'powershell',
@@ -93,7 +93,7 @@ local windowsExporter = function(params) {
             {
               args: [
                 '--config.file=%CONTAINER_SANDBOX_MOUNT_POINT%/config.yml',
-                '--collector.textfile.directory=%CONTAINER_SANDBOX_MOUNT_POINT%',
+                '--collector.textfile.directories=%CONTAINER_SANDBOX_MOUNT_POINT%',
               ],
               name: we._config.name,
               image: we._config.image + ':' + we._config.version,
@@ -118,6 +118,14 @@ local windowsExporter = function(params) {
           nodeSelector: {
             'kubernetes.io/os': 'windows',
           },
+          tolerations: [
+            {
+              key: 'os',
+              operator: 'Equal',
+              value: 'windows',
+              effect: 'NoSchedule',
+            },
+          ],
           volumes: [
             {
               name: 'windows-exporter-config',

@@ -6,7 +6,7 @@ local defaults = {
   // If there is no CRD for the component, everything is hidden in defaults.
   namespace:: error 'must provide namespace',
   version:: error 'must provide version',
-  image:: error 'must provide version',
+  image:: error 'must provide image',
   resources:: {
     requests: { cpu: '10m', memory: '20Mi' },
     limits: { cpu: '20m', memory: '40Mi' },
@@ -28,7 +28,7 @@ local defaults = {
     for labelName in std.objectFields(defaults.commonLabels)
     if !std.setMember(labelName, ['app.kubernetes.io/version'])
   },
-  configmapReloaderImage:: error 'must provide version',
+  configmapReloaderImage:: error 'must provide configmapReloaderImage',
   kubeRbacProxyImage:: error 'must provide kubeRbacProxyImage',
 
   port:: 9115,
@@ -129,6 +129,7 @@ function(params) {
     kind: 'ClusterRole',
     metadata: {
       name: 'blackbox-exporter',
+      labels: bb._config.commonLabels,
     },
     rules: [
       {
@@ -183,6 +184,7 @@ function(params) {
       } else {
         runAsNonRoot: true,
         runAsUser: 65534,
+        runAsGroup: 65534,
         allowPrivilegeEscalation: false,
         readOnlyRootFilesystem: true,
         capabilities: { drop: ['ALL'] },
@@ -205,6 +207,7 @@ function(params) {
       securityContext: {
         runAsNonRoot: true,
         runAsUser: 65534,
+        runAsGroup: 65534,
         allowPrivilegeEscalation: false,
         readOnlyRootFilesystem: true,
         capabilities: { drop: ['ALL'] },
