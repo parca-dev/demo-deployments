@@ -1,5 +1,3 @@
-local utils = import '../lib/utils.libsonnet';
-
 {
   _config+:: {
     notKubeDnsCoreDnsSelector: 'job!~"kube-dns|coredns"',
@@ -21,9 +19,7 @@ local utils = import '../lib/utils.libsonnet';
               severity: 'warning',
             },
             annotations: {
-              description: 'There are {{ $value }} different semantic versions of Kubernetes components running%s.' % [
-                utils.ifShowMultiCluster($._config, ' on cluster {{ $labels.%(clusterLabel)s }}' % $._config),
-              ],
+              description: 'There are {{ $value }} different semantic versions of Kubernetes components running.',
               summary: 'Different semantic versions of Kubernetes components running.',
             },
           },
@@ -43,9 +39,7 @@ local utils = import '../lib/utils.libsonnet';
               severity: 'warning',
             },
             annotations: {
-              description: "Kubernetes API server client '{{ $labels.job }}/{{ $labels.instance }}' is experiencing {{ $value | humanizePercentage }} errors%s." % [
-                utils.ifShowMultiCluster($._config, ' on cluster {{ $labels.%(clusterLabel)s }}' % $._config),
-              ],
+              description: "Kubernetes API server client '{{ $labels.job }}/{{ $labels.instance }}' is experiencing {{ $value | humanizePercentage }} errors.'",
               summary: 'Kubernetes API server client is experiencing errors.',
             },
           },
