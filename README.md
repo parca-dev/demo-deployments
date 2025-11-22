@@ -15,7 +15,7 @@ This is our [demo.parca.dev](https://demo.parca.dev) cluster configuration.
 * parca-devel - [![App Status](https://argocd.parca.dev/api/badge?name=scaleway-parca-demo-parca-devel)](https://argocd.parca.dev/applications/scaleway-parca-demo-parca-devel)
 
 Ask in one of our channels to be invited to the Scaleway Organization.
-Once you have access you can download the kubeconfig via the UI.
+Once you have access you can [configure `kubectl`](https://www.scaleway.com/en/docs/kubernetes/how-to/connect-cluster-kubectl/).
 
 ## File structure
 
