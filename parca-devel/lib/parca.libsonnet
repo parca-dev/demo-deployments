@@ -15,12 +15,12 @@ local defaults = {
   },
   resources: {
     limits: {
-      memory: '2Gi',
+      memory: '3Gi',
       'ephemeral-storage': '5Gi',
     },
     requests: {
       cpu: '1',
-      memory: '2Gi',
+      memory: '3Gi',
       'ephemeral-storage': '5Gi',
     },
   },
