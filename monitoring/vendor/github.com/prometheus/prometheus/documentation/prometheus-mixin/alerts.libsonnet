@@ -35,6 +35,20 @@
             },
           },
           {
+            alert: 'PrometheusKubernetesListWatchFailures',
+            expr: |||
+              increase(prometheus_sd_kubernetes_failures_total{%(prometheusSelector)s}[5m]) > 0
+            ||| % $._config,
+            'for': '15m',
+            labels: {
+              severity: 'warning',
+            },
+            annotations: {
+              summary: 'Requests in Kubernetes SD are failing.',
+              description: 'Kubernetes service discovery of Prometheus %(prometheusName)s is experiencing {{ printf "%%.0f" $value }} failures with LIST/WATCH requests to the Kubernetes API in the last 5 minutes.' % $._config,
+            },
+          },
+          {
             alert: 'PrometheusNotificationQueueRunningFull',
             expr: |||
               # Without min_over_time, failed scrapes could create false negatives, see
@@ -70,8 +84,8 @@
               severity: 'warning',
             },
             annotations: {
-              summary: 'Prometheus has encountered more than 1% errors sending alerts to a specific Alertmanager.',
-              description: '{{ printf "%%.1f" $value }}%% errors while sending alerts from Prometheus %(prometheusName)s to Alertmanager {{$labels.alertmanager}}.' % $._config,
+              summary: 'More than 1% of alerts sent by Prometheus to a specific Alertmanager were affected by errors.',
+              description: '{{ printf "%%.1f" $value }}%% of alerts sent by Prometheus %(prometheusName)s to Alertmanager {{$labels.alertmanager}} were affected by errors.' % $._config,
             },
           },
           {
@@ -122,7 +136,7 @@
             alert: 'PrometheusNotIngestingSamples',
             expr: |||
               (
-                rate(prometheus_tsdb_head_samples_appended_total{%(prometheusSelector)s}[5m]) <= 0
+                sum without(type) (rate(prometheus_tsdb_head_samples_appended_total{%(prometheusSelector)s}[5m])) <= 0
               and
                 (
                   sum without(scrape_job) (prometheus_target_metadata_cache_entries{%(prometheusSelector)s}) > 0
