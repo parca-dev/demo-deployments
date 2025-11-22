@@ -8,7 +8,7 @@ CRDS := \
 	https://raw.githubusercontent.com/argoproj/argo-cd/v2.14.21/manifests/crds/application-crd.yaml \
 	https://raw.githubusercontent.com/argoproj/argo-cd/v2.14.21/manifests/crds/applicationset-crd.yaml \
 	https://raw.githubusercontent.com/argoproj/argo-cd/v2.14.21/manifests/crds/appproject-crd.yaml \
-	https://raw.githubusercontent.com/cilium/cilium/v1.15.0/pkg/k8s/apis/cilium.io/client/crds/v2/ciliumclusterwidenetworkpolicies.yaml \
+	https://raw.githubusercontent.com/cilium/cilium/v1.17.6/pkg/k8s/apis/cilium.io/client/crds/v2/ciliumclusterwidenetworkpolicies.yaml \
 	https://raw.githubusercontent.com/fluxcd/image-automation-controller/v0.41.2/config/crd/bases/image.toolkit.fluxcd.io_imageupdateautomations.yaml \
 	https://raw.githubusercontent.com/fluxcd/image-reflector-controller/v0.35.2/config/crd/bases/image.toolkit.fluxcd.io_imagepolicies.yaml \
 	https://raw.githubusercontent.com/fluxcd/image-reflector-controller/v0.35.2/config/crd/bases/image.toolkit.fluxcd.io_imagerepositories.yaml \
