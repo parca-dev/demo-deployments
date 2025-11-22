@@ -9,9 +9,9 @@ CRDS := \
 	https://raw.githubusercontent.com/argoproj/argo-cd/v2.14.21/manifests/crds/applicationset-crd.yaml \
 	https://raw.githubusercontent.com/argoproj/argo-cd/v2.14.21/manifests/crds/appproject-crd.yaml \
 	https://raw.githubusercontent.com/cilium/cilium/v1.17.6/pkg/k8s/apis/cilium.io/client/crds/v2/ciliumclusterwidenetworkpolicies.yaml \
-	https://raw.githubusercontent.com/fluxcd/image-automation-controller/v0.41.2/config/crd/bases/image.toolkit.fluxcd.io_imageupdateautomations.yaml \
-	https://raw.githubusercontent.com/fluxcd/image-reflector-controller/v0.35.2/config/crd/bases/image.toolkit.fluxcd.io_imagepolicies.yaml \
-	https://raw.githubusercontent.com/fluxcd/image-reflector-controller/v0.35.2/config/crd/bases/image.toolkit.fluxcd.io_imagerepositories.yaml \
+	https://raw.githubusercontent.com/fluxcd/image-automation-controller/v1.0.4/config/crd/bases/image.toolkit.fluxcd.io_imageupdateautomations.yaml \
+	https://raw.githubusercontent.com/fluxcd/image-reflector-controller/v1.0.4/config/crd/bases/image.toolkit.fluxcd.io_imagepolicies.yaml \
+	https://raw.githubusercontent.com/fluxcd/image-reflector-controller/v1.0.4/config/crd/bases/image.toolkit.fluxcd.io_imagerepositories.yaml \
 	https://raw.githubusercontent.com/fluxcd/source-controller/v1.7.4/config/crd/bases/source.toolkit.fluxcd.io_gitrepositories.yaml \
 	https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.85.0/jsonnet/prometheus-operator/podmonitors-crd.json \
 	https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.85.0/jsonnet/prometheus-operator/prometheuses-crd.json \

@@ -77,7 +77,7 @@
                   "additionalProperties": false
                 },
                 "messageTemplate": {
-                  "description": "MessageTemplate provides a template for the commit message,\ninto which will be interpolated the details of the change made.",
+                  "description": "MessageTemplate provides a template for the commit message,\ninto which will be interpolated the details of the change made.\nNote: The `Updated` template field has been removed. Use `Changed` instead.",
                   "type": "string"
                 },
                 "messageTemplateValues": {
@@ -253,9 +253,6 @@
               "type": "string"
             }
           },
-          "required": [
-            "strategy"
-          ],
           "type": "object",
           "additionalProperties": false
         }

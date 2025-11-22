@@ -44,7 +44,7 @@
           "additionalProperties": false
         },
         "certSecretRef": {
-          "description": "CertSecretRef can be given the name of a secret containing\neither or both of\n\n - a PEM-encoded client certificate (`certFile`) and private\n key (`keyFile`);\n - a PEM-encoded CA certificate (`caFile`)\n\n and whichever are supplied, will be used for connecting to the\n registry. The client cert and key are useful if you are\n authenticating with a certificate; the CA cert is useful if\n you are using a self-signed server certificate.",
+          "description": "CertSecretRef can be given the name of a Secret containing\neither or both of\n\n- a PEM-encoded client certificate (`tls.crt`) and private\nkey (`tls.key`);\n- a PEM-encoded CA certificate (`ca.crt`)\n\nand whichever are supplied, will be used for connecting to the\nregistry. The client cert and key are useful if you are\nauthenticating with a certificate; the CA cert is useful if\nyou are using a self-signed server certificate. The Secret must\nbe of type `Opaque` or `kubernetes.io/tls`.\n\nNote: Support for the `caFile`, `certFile` and `keyFile` keys has\nbeen deprecated.",
           "properties": {
             "name": {
               "description": "Name of the referent.",
@@ -58,20 +58,53 @@
           "additionalProperties": false
         },
         "exclusionList": {
+          "default": [
+            "^.*\\.sig$"
+          ],
           "description": "ExclusionList is a list of regex strings used to exclude certain tags\nfrom being stored in the database.",
           "items": {
             "type": "string"
           },
+          "maxItems": 25,
           "type": "array"
         },
         "image": {
           "description": "Image is the name of the image repository",
           "type": "string"
         },
+        "insecure": {
+          "description": "Insecure allows connecting to a non-TLS HTTP container registry.",
+          "type": "boolean"
+        },
         "interval": {
           "description": "Interval is the length of time to wait between\nscans of the image repository.",
           "pattern": "^([0-9]+(\\.[0-9]+)?(ms|s|m|h))+$",
           "type": "string"
+        },
+        "provider": {
+          "default": "generic",
+          "description": "The provider used for authentication, can be 'aws', 'azure', 'gcp' or 'generic'.\nWhen not specified, defaults to 'generic'.",
+          "enum": [
+            "generic",
+            "aws",
+            "azure",
+            "gcp"
+          ],
+          "type": "string"
+        },
+        "proxySecretRef": {
+          "description": "ProxySecretRef specifies the Secret containing the proxy configuration\nto use while communicating with the container registry.",
+          "properties": {
+            "name": {
+              "description": "Name of the referent.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "type": "object",
+          "additionalProperties": false
         },
         "secretRef": {
           "description": "SecretRef can be given the name of a secret containing\ncredentials to use for the image registry. The secret should be\ncreated with `kubectl create secret docker-registry`, or the\nequivalent.",
@@ -181,11 +214,24 @@
         "lastScanResult": {
           "description": "LastScanResult contains the number of fetched tags.",
           "properties": {
+            "latestTags": {
+              "description": "LatestTags is a small sample of the tags found in the last scan.\nIt's the first 10 tags when sorting all the tags in descending\nalphabetical order.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "revision": {
+              "description": "Revision is a stable hash of the scanned tags.",
+              "type": "string"
+            },
             "scanTime": {
+              "description": "ScanTime is the time when the last scan was performed.",
               "format": "date-time",
               "type": "string"
             },
             "tagCount": {
+              "description": "TagCount is the number of tags found in the last scan.",
               "type": "integer"
             }
           },
@@ -194,6 +240,13 @@
           ],
           "type": "object",
           "additionalProperties": false
+        },
+        "observedExclusionList": {
+          "description": "ObservedExclusionList is a list of observed exclusion list. It reflects\nthe exclusion rules used for the observed scan result in\nspec.lastScanResult.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         },
         "observedGeneration": {
           "description": "ObservedGeneration is the last reconciled generation.",
