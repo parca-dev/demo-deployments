@@ -38,6 +38,7 @@ configMapGenerator:
 - name: argocd-cmd-params-cm
   behavior: replace
   literals:
+  - controller.diff.server.side=true
   - reposerver.parallelism.limit=1
   - server.insecure=true
 - name: argocd-rbac-cm
