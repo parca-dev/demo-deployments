@@ -200,6 +200,9 @@ local diskSpaceUtilisation =
                            + dashboard.withVariables([
                              datasource,
                              $._clusterVariable,
+                             variable.query.withDatasourceFromVariable(datasource)
+                             + variable.query.refresh.onTime()
+                             + variable.query.withSort(asc=true),
                            ])
                            + dashboard.withPanels(
                              grafana.util.grid.makeGrid([
@@ -328,6 +331,9 @@ local diskSpaceUtilisation =
                            + dashboard.withUid(std.md5('node-multicluster-rsrc-use.json'))
                            + dashboard.withVariables([
                              datasource,
+                             variable.query.withDatasourceFromVariable(datasource)
+                             + variable.query.refresh.onTime()
+                             + variable.query.withSort(asc=true),
                            ])
                            + dashboard.withPanels(
                              grafana.util.grid.makeGrid([
