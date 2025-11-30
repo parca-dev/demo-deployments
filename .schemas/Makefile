@@ -5,9 +5,9 @@ KUBECONFORM_VERSION := v0.7.0
 
 CRDS := \
 	https://github.com/jetstack/cert-manager/releases/download/v1.19.1/cert-manager.crds.yaml \
-	https://raw.githubusercontent.com/argoproj/argo-cd/v3.2.0/manifests/crds/application-crd.yaml \
-	https://raw.githubusercontent.com/argoproj/argo-cd/v3.2.0/manifests/crds/applicationset-crd.yaml \
-	https://raw.githubusercontent.com/argoproj/argo-cd/v3.2.0/manifests/crds/appproject-crd.yaml \
+	https://raw.githubusercontent.com/argoproj/argo-cd/v3.2.1/manifests/crds/application-crd.yaml \
+	https://raw.githubusercontent.com/argoproj/argo-cd/v3.2.1/manifests/crds/applicationset-crd.yaml \
+	https://raw.githubusercontent.com/argoproj/argo-cd/v3.2.1/manifests/crds/appproject-crd.yaml \
 	https://raw.githubusercontent.com/cilium/cilium/v1.17.6/pkg/k8s/apis/cilium.io/client/crds/v2/ciliumclusterwidenetworkpolicies.yaml \
 	https://raw.githubusercontent.com/fluxcd/image-automation-controller/v1.0.4/config/crd/bases/image.toolkit.fluxcd.io_imageupdateautomations.yaml \
 	https://raw.githubusercontent.com/fluxcd/image-reflector-controller/v1.0.4/config/crd/bases/image.toolkit.fluxcd.io_imagepolicies.yaml \
