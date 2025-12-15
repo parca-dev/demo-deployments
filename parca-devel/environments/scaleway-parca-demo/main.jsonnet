@@ -6,7 +6,20 @@ local parca = p.parca({
   },
 });
 
-local parcaAgent = p.parcaAgent();
+local parcaAgent = p.parcaAgent({
+  config+: {
+    relabel_configs+: [
+      {
+        source_labels: ['__meta_thread_id'],
+        target_label: 'thread_id',
+      },
+      {
+        source_labels: ['__meta_cpu'],
+        target_label: 'cpu',
+      },
+    ],
+  },
+});
 
 {
   kind: 'List',
