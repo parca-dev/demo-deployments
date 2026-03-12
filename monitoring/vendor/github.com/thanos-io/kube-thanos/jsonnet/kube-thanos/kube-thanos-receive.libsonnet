@@ -53,8 +53,9 @@ function(params) {
   },
 
   statefulSet:
-    local localEndpointFlag = '--receive.local-endpoint=$(NAME).%s.$(NAMESPACE):%d' % [
+    local localEndpointFlag = '--receive.local-endpoint=$(NAME).%s.$(NAMESPACE).svc.%s:%d' % [
       tr.config.name,
+      tr.config.clusterDomain,
       tr.config.ports.grpc,
     ];
 

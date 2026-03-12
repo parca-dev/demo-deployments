@@ -33,6 +33,7 @@
   ],
   tenantLabelName: null,
   tenantHeader: null,
+  clusterDomain: 'cluster.local',
   extraEnv: [],
   receiveLimitsConfigFile: {},
   storeLimits: {},
