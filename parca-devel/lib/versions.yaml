@@ -1,4 +1,4 @@
 # Maintained by Flux
 # See flux/overlays/scaleway-parca-demo/ for the configuration
-parca: main-1775270780-14029ef6 # {"$imagepolicy": "flux-system:parca:tag"}
+parca: main-1775279308-534b3add # {"$imagepolicy": "flux-system:parca:tag"}
 parcaAgent: main-1775113883-358d3eda # {"$imagepolicy": "flux-system:parca-agent:tag"}
