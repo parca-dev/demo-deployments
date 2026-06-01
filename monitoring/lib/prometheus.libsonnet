@@ -19,7 +19,7 @@ local defaults = {
     enableFeatures: ['native-histograms'],
     resources+: {
       limits+: {
-        memory: '512Mi',
+        memory: '1Gi',
       },
       requests+: {
         cpu: '100m',
