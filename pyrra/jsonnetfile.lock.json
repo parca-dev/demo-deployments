@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "dependencies": [
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/pyrra-dev/pyrra.git",
+          "subdir": "jsonnet/controller-gen"
+        }
+      },
+      "version": "a876a72a31bb1aabdbd361e221228c06fd7bfae1",
+      "sum": "vY3+ZELH6GFEpNJ0tKeU8ybCMLOQePKnnqFP4CSLSWo="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/pyrra-dev/pyrra.git",
+          "subdir": "jsonnet/pyrra"
+        }
+      },
+      "version": "a876a72a31bb1aabdbd361e221228c06fd7bfae1",
+      "sum": "krhq3SWR2ohPIGjW/nnjCLuoqt0BX8IeohWO2+m1v+I="
+    }
+  ],
+  "legacyImports": false
+}
