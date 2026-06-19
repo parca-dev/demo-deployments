@@ -41,17 +41,28 @@ local ingressNginx = {
       limits: { memory: '128Mi' },
     },
 
+    // The monitoring namespace enforces the restricted Pod Security Standard.
+    // The image already runs as a non-root user (USER 65533).
+    local podSecurityContext = {
+      runAsNonRoot: true,
+      seccompProfile: { type: 'RuntimeDefault' },
+    },
+    local hardened(container) = container {
+      resources: resources,
+      securityContext+: { capabilities: { drop: ['ALL'] } },
+    },
+
     apiDeployment+: {
       spec+: { template+: { spec+: {
-        securityContext+: { seccompProfile: { type: 'RuntimeDefault' } },
-        containers: [c { resources: resources } for c in super.containers],
+        securityContext+: podSecurityContext,
+        containers: [hardened(c) for c in super.containers],
       } } },
     },
 
     kubernetesDeployment+: {
       spec+: { template+: { spec+: {
-        securityContext+: { seccompProfile: { type: 'RuntimeDefault' } },
-        containers: [c { resources: resources } for c in super.containers],
+        securityContext+: podSecurityContext,
+        containers: [hardened(c) for c in super.containers],
       } } },
     },
 
