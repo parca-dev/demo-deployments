@@ -13,6 +13,7 @@ This is our [demo.parca.dev](https://demo.parca.dev) cluster configuration.
 * oauth2-proxy - [![App Status](https://argocd.parca.dev/api/badge?name=scaleway-parca-demo-oauth2-proxy)](https://argocd.parca.dev/applications/scaleway-parca-demo-oauth2-proxy)
 * parca - [![App Status](https://argocd.parca.dev/api/badge?name=scaleway-parca-demo-parca)](https://argocd.parca.dev/applications/scaleway-parca-demo-parca)
 * parca-devel - [![App Status](https://argocd.parca.dev/api/badge?name=scaleway-parca-demo-parca-devel)](https://argocd.parca.dev/applications/scaleway-parca-demo-parca-devel)
+* pyrra - [![App Status](https://argocd.parca.dev/api/badge?name=scaleway-parca-demo-pyrra)](https://argocd.parca.dev/applications/scaleway-parca-demo-pyrra)
 
 Ask in one of our channels to be invited to the Scaleway Organization.
 Once you have access you can [configure `kubectl`](https://www.scaleway.com/en/docs/kubernetes/how-to/connect-cluster-kubectl/).
