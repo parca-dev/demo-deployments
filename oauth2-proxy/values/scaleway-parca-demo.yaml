@@ -1,4 +1,7 @@
 oauth2-proxy:
+  # Scaled to 0: only fronts analytics.parca.dev, which is paused while the
+  # analytics stack is evaluated for moving off this cluster.
+  replicaCount: 0
   ingress:
     hosts:
     - oauth2.parca.dev

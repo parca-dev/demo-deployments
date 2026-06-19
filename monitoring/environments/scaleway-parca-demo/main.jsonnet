@@ -16,7 +16,11 @@ local kubeThanos = m.kubeThanos({
     },
   },
 }) + {
+  // Analytics stack temporarily scaled to 0 while we evaluate moving it off this
+  // cluster. PVCs, services and object storage are retained; only pods stop.
+  store+: { statefulSet+: { spec+: { replicas: 0 } } },
   query+: {
+    deployment+: { spec+: { replicas: 0 } },
     networkPolicy+: {
       spec+: {
         ingress: [
@@ -184,6 +188,8 @@ local prometheuses = [
 
     prometheus+: {
       spec+: {
+        // Analytics stack temporarily scaled to 0 (see kubeThanos above).
+        replicas: 0,
         enableRemoteWriteReceiver: true,
         query+: {
           lookbackDelta: '15m',  // Analytics are only sent once every 10m
