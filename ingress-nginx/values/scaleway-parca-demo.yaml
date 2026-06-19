@@ -1,5 +1,25 @@
 ingress-nginx:
   controller:
+    # Run two controllers so a single wedged/flapping pod can't take ingress
+    # down (a single replica pegged its CPU and failed its 1s healthz probe,
+    # flapping NotReady and dropping the only LB backend).
+    replicaCount: 2
+    minAvailable: 1
+    # The default 1s probe timeout flaps NotReady under load; give it headroom.
+    livenessProbe:
+      timeoutSeconds: 5
+    readinessProbe:
+      timeoutSeconds: 5
+    # Keep the two replicas on different nodes (soft, so rollouts never block).
+    topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: ingress-nginx
+            app.kubernetes.io/instance: ingress-nginx
+            app.kubernetes.io/component: controller
     service:
       annotations:
         service.beta.kubernetes.io/scw-loadbalancer-proxy-protocol-v2: "true"
