@@ -21,6 +21,12 @@ spec:
           app.kubernetes.io/name: ingress-nginx
           app.kubernetes.io/component: controller
           app.kubernetes.io/instance: ingress-nginx
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: traefik
+      podSelector:
+        matchLabels:
+          app.kubernetes.io/name: traefik
     ports:
     - port: http
   podSelector:
