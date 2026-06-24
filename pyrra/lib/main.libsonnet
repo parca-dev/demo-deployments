@@ -14,6 +14,13 @@ local ingressNginx = {
   },
 };
 
+// Traefik runs alongside ingress-nginx during the migration and serves the
+// same Ingresses, so it has to be an allowed source too.
+local traefik = {
+  namespaceSelector: { matchLabels: { 'kubernetes.io/metadata.name': 'traefik' } },
+  podSelector: { matchLabels: { 'app.kubernetes.io/name': 'traefik' } },
+};
+
 {
   pyrra(params):: (
     pyrra {
@@ -111,8 +118,8 @@ local ingressNginx = {
         policyTypes: ['Egress', 'Ingress'],
         egress: [{}],
         ingress: [
-          // UI traffic via ingress-nginx and Prometheus scraping the API metrics.
-          { from: [ingressNginx, { podSelector: { matchLabels: prometheus } }], ports: [{ port: 9099 }] },
+          // UI traffic via the ingress controllers and Prometheus scraping the API metrics.
+          { from: [ingressNginx, traefik, { podSelector: { matchLabels: prometheus } }], ports: [{ port: 9099 }] },
         ],
       },
     },
