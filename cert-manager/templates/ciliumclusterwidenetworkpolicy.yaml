@@ -13,6 +13,9 @@ spec:
         k8s:app.kubernetes.io/component: controller
         k8s:app.kubernetes.io/instance: ingress-nginx
         k8s:io.kubernetes.pod.namespace: ingress-nginx
+    - matchLabels:
+        k8s:app.kubernetes.io/name: traefik
+        k8s:io.kubernetes.pod.namespace: traefik
     toPorts:
     - ports:
       - port: http

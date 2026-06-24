@@ -132,6 +132,18 @@ function(params)
                 },
               },
             },
+            {
+              namespaceSelector: {
+                matchLabels: {
+                  'kubernetes.io/metadata.name': 'traefik',
+                },
+              },
+              podSelector: {
+                matchLabels: {
+                  'app.kubernetes.io/name': 'traefik',
+                },
+              },
+            },
           ],
           ports: [{
             port: 'http',
