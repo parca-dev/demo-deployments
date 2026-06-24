@@ -1,0 +1,52 @@
+traefik:
+  # Migration mode: serve the existing `ingressClassName: nginx` Ingresses and translate
+  # the nginx.ingress.kubernetes.io/* annotations natively, running in parallel with
+  # ingress-nginx until the DNS cutover.
+  # https://doc.traefik.io/traefik/migrate/nginx-to-traefik/
+  providers:
+    kubernetesIngressNGINX:
+      enabled: true
+      # Defaults are correct for us: controllerClass "k8s.io/ingress-nginx",
+      # ingressClass "nginx", watching all namespaces.
+    kubernetesIngress:
+      publishedService:
+        # Do not write the Ingress .status.loadBalancer address while ingress-nginx is
+        # still the source of truth, to avoid the two controllers flapping the status.
+        enabled: false
+    kubernetesCRD:
+      # Needed for the native Middleware/IngressRoute CRDs we switch to in the final phase.
+      enabled: true
+
+  # The Traefik-native IngressClass exists for the end state but must not become the default,
+  # so it never hijacks Ingresses that omit a class.
+  ingressClass:
+    enabled: true
+    isDefaultClass: false
+
+  service:
+    spec:
+      type: LoadBalancer
+      # Preserve client source IPs (matches ingress-nginx); the Scaleway LB also forwards
+      # them via PROXY protocol.
+      externalTrafficPolicy: Local
+
+  ports:
+    web:
+      proxyProtocol:
+        # The Scaleway LB prepends PROXY protocol v2 (mirrors ingress-nginx
+        # use-proxy-protocol). TODO(hardening): restrict to the Scaleway LB source range.
+        insecure: true
+      forwardedHeaders:
+        insecure: true
+    websecure:
+      proxyProtocol:
+        insecure: true
+      forwardedHeaders:
+        insecure: true
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      memory: 1Gi
