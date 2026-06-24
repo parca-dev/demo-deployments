@@ -78,7 +78,7 @@ local traefik = {
       metadata+: { annotations+: { 'argocd.argoproj.io/sync-wave': '-1' } },
     },
 
-    // UI ingress, gated by oauth2-proxy like analytics.parca.dev.
+    // Public UI ingress.
     apiIngress: {
       apiVersion: 'networking.k8s.io/v1',
       kind: 'Ingress',
@@ -88,8 +88,6 @@ local traefik = {
         labels: p.apiService.metadata.labels,
         annotations: {
           'cert-manager.io/cluster-issuer': 'letsencrypt-prod',
-          'nginx.ingress.kubernetes.io/auth-url': 'http://oauth2-proxy.oauth2-proxy.svc.cluster.local/oauth2/auth',
-          'nginx.ingress.kubernetes.io/auth-signin': 'https://oauth2.parca.dev/oauth2/start',
         },
       },
       spec: {
