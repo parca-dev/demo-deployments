@@ -234,7 +234,7 @@ local prometheuses = [
             port: 443,
             scheme: 'https',
             serversTransport: p.polarSignalsCloudServersTransport.metadata.name,
-            percent: 100,
+            percent: 1,
           }],
         },
       },
