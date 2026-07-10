@@ -191,8 +191,8 @@ local prometheuses = [
         // This instance only ingests via remote-write and monitors its own Thanos
         // components. The default {} selectors match every PodMonitor/ServiceMonitor
         // cluster-wide, which would pull in unrelated apps (parca-agent, pyrra, ...).
-        podMonitorNamespaceSelector: { matchNames: [p._config.namespace] },
-        serviceMonitorNamespaceSelector: { matchNames: [p._config.namespace] },
+        podMonitorNamespaceSelector: { matchLabels: { 'kubernetes.io/metadata.name': p._config.namespace } },
+        serviceMonitorNamespaceSelector: { matchLabels: { 'kubernetes.io/metadata.name': p._config.namespace } },
         query+: {
           lookbackDelta: '15m',  // Analytics are only sent once every 10m
         },
