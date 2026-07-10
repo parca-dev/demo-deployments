@@ -17,6 +17,7 @@ CRDS := \
 	https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.85.0/jsonnet/prometheus-operator/prometheuses-crd.json \
 	https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.85.0/jsonnet/prometheus-operator/prometheusrules-crd.json \
 	https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.85.0/jsonnet/prometheus-operator/servicemonitors-crd.json \
+	https://raw.githubusercontent.com/traefik/traefik-helm-chart/v41.0.0/traefik/crds/traefik.io_ingressroutes.yaml \
 
 all: schemas
 

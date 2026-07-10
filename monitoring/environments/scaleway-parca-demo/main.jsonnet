@@ -145,46 +145,36 @@ local prometheuses = [
       },
     },
 
-    ingressRemoteWrite: {
-      apiVersion: 'networking.k8s.io/v1',
-      kind: 'Ingress',
+    // First route in this repo on Traefik-native CRDs (IngressRoute) rather than the
+    // nginx-compat Ingress provider — a scoped start ahead of the broader
+    // native-Traefik migration. Mirroring to Polar Signals Cloud intentionally left
+    // out for now; this just proves the IngressRoute switch-over works on its own.
+    remoteWriteIngressRoute: {
+      apiVersion: 'traefik.io/v1alpha1',
+      kind: 'IngressRoute',
       metadata: {
         name: p._config.name + '-remote-write',
         namespace: p._config.namespace,
         labels: p._config.commonLabels,
-        annotations: {
-          'cert-manager.io/cluster-issuer': 'letsencrypt-prod',
-        },
       },
       spec: {
-        ingressClassName: p._config.ingress.class,
-        rules: [
+        entryPoints: ['websecure'],
+        routes: [
           {
-            host: host,
-            http: {
-              paths: [{
-                backend: {
-                  service: {
-                    name: p.service.metadata.name,
-                    port: {
-                      name: p.service.spec.ports[0].name,
-                    },
-                  },
-                },
-                path: '/api/v1/write',
-                pathType: 'Prefix',
-              }],
-            },
+            kind: 'Rule',
+            match: 'Host(`%s`) && PathPrefix(`/api/v1/write`)' % host,
+            services: [{
+              name: p.service.metadata.name,
+              port: p.service.spec.ports[0].name,
+            }],
           }
           for host in p._config.ingress.hosts
         ],
-        tls: [
-          {
-            hosts: [host],
-            secretName: host,
-          }
-          for host in p._config.ingress.hosts
-        ],
+        // spec.tls is a single object (unlike Ingress' tls list); ingress.hosts has
+        // exactly one entry (analytics.parca.dev), which is also the cert secret name.
+        tls: {
+          secretName: p._config.ingress.hosts[0],
+        },
       },
     },
 
