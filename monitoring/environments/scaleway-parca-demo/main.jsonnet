@@ -161,7 +161,7 @@ local prometheuses = [
       },
       spec: {
         type: 'ExternalName',
-        externalName: 'cloud.polarsignals.com',
+        externalName: 'api.polarsignals.com',
         ports: [{ name: 'https', port: 443 }],
       },
     },
@@ -175,7 +175,7 @@ local prometheuses = [
         labels: p._config.commonLabels,
       },
       spec: {
-        serverName: 'cloud.polarsignals.com',
+        serverName: 'api.polarsignals.com',
         // Without these, Traefik's HTTP client waits indefinitely for a slow/dead
         // mirror target. Since mirrorBody buffers each request's full body in memory
         // until the mirror completes or fails, an unresponsive Polar Signals Cloud
