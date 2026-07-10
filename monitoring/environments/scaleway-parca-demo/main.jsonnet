@@ -273,6 +273,15 @@ local prometheuses = [
     prometheus+: {
       spec+: {
         enableRemoteWriteReceiver: true,
+        remoteWrite: [{
+          url: 'https://api.polarsignals.com/api/v1/write',
+          authorization: {
+            credentials: { name: p.polarSignalsCloudSecret.metadata.name, key: 'token' },
+          },
+          headers: {
+            projectID: '5a755043-1fb8-48fd-a2c8-2787498ec59d',
+          },
+        }],
         // This instance only ingests via remote-write and monitors its own Thanos
         // components. The default {} selectors match every PodMonitor/ServiceMonitor
         // cluster-wide, which would pull in unrelated apps (parca-agent, pyrra, ...).
@@ -302,6 +311,16 @@ local prometheuses = [
             },
           },
         },
+      },
+    },
+
+    polarSignalsCloudSecret: {
+      apiVersion: 'v1',
+      kind: 'Secret',
+      metadata: {
+        name: 'polarsignals-cloud',
+        namespace: p._config.namespace,
+        labels: p._config.commonLabels,
       },
     },
 

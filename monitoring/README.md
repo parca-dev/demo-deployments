@@ -47,3 +47,17 @@ kubectl --namespace=parca-analytics patch middleware psc-remote-write-headers \
     "Authorization":"Bearer <token>","<project-id-header>":"<project-id>"
   }}}}'
 ```
+
+## Sending parca-analytics data to Polar Signals Cloud via remoteWrite
+
+The parca-analytics Prometheus has a second `remoteWrite` target pointing
+directly at Polar Signals Cloud. The token is not committed to git — the
+`polarsignals-cloud` Secret is committed with no `data` at all, matching the
+`objectStorageSecret` pattern above. Once you have a Polar Signals Cloud API
+token, patch it in:
+
+```bash
+kubectl --namespace=parca-analytics create secret generic polarsignals-cloud \
+  --from-literal=token=<token> --dry-run=client -o yaml \
+  | kubectl apply -f -
+```
