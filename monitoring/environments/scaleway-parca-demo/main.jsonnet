@@ -147,8 +147,88 @@ local prometheuses = [
 
     // First route in this repo on Traefik-native CRDs (IngressRoute) rather than the
     // nginx-compat Ingress provider — a scoped start ahead of the broader
-    // native-Traefik migration. Mirroring to Polar Signals Cloud intentionally left
-    // out for now; this just proves the IngressRoute switch-over works on its own.
+    // native-Traefik migration.
+    //
+    // Mirrors parca-analytics remote-write traffic to Polar Signals Cloud, in addition
+    // to the primary write into this Prometheus.
+    polarSignalsCloudService: {
+      apiVersion: 'v1',
+      kind: 'Service',
+      metadata: {
+        name: 'polarsignals-cloud',
+        namespace: p._config.namespace,
+        labels: p._config.commonLabels,
+      },
+      spec: {
+        type: 'ExternalName',
+        externalName: 'cloud.polarsignals.com',
+        ports: [{ name: 'https', port: 443 }],
+      },
+    },
+
+    polarSignalsCloudServersTransport: {
+      apiVersion: 'traefik.io/v1alpha1',
+      kind: 'ServersTransport',
+      metadata: {
+        name: 'polarsignals-cloud',
+        namespace: p._config.namespace,
+        labels: p._config.commonLabels,
+      },
+      spec: {
+        serverName: 'cloud.polarsignals.com',
+      },
+    },
+
+    // Real Authorization/project-ID header values are patched onto this live, see
+    // monitoring/README.md; committed empty here, matching the empty-shell pattern
+    // used by objectStorageSecret below. Traefik runs this Middleware once, before
+    // the mirroring service fans the request out, so both the primary write and the
+    // mirrored copy receive these headers — harmless, since the local Prometheus
+    // remote-write receiver has no auth configured and ignores headers it doesn't
+    // recognize.
+    remoteWriteHeadersMiddleware: {
+      apiVersion: 'traefik.io/v1alpha1',
+      kind: 'Middleware',
+      metadata: {
+        name: 'psc-remote-write-headers',
+        namespace: p._config.namespace,
+        labels: p._config.commonLabels,
+      },
+      spec: {
+        headers: {
+          customRequestHeaders: {},
+        },
+      },
+    },
+
+    remoteWriteMirror: {
+      apiVersion: 'traefik.io/v1alpha1',
+      kind: 'TraefikService',
+      metadata: {
+        name: 'parca-analytics-mirror',
+        namespace: p._config.namespace,
+        labels: p._config.commonLabels,
+      },
+      spec: {
+        mirroring: {
+          name: p.service.metadata.name,
+          port: 9090,
+          mirrorBody: true,
+          // Bound the mirror buffer (Traefik's memory has been unstable on this
+          // cluster). Batches larger than this are simply not mirrored; the
+          // primary write into the local Prometheus is unaffected either way.
+          maxBodySize: 4194304,
+          mirrors: [{
+            name: p.polarSignalsCloudService.metadata.name,
+            port: 443,
+            scheme: 'https',
+            serversTransport: p.polarSignalsCloudServersTransport.metadata.name,
+            percent: 100,
+          }],
+        },
+      },
+    },
+
     remoteWriteIngressRoute: {
       apiVersion: 'traefik.io/v1alpha1',
       kind: 'IngressRoute',
@@ -163,9 +243,10 @@ local prometheuses = [
           {
             kind: 'Rule',
             match: 'Host(`%s`) && PathPrefix(`/api/v1/write`)' % host,
+            middlewares: [{ name: p.remoteWriteHeadersMiddleware.metadata.name }],
             services: [{
-              name: p.service.metadata.name,
-              port: p.service.spec.ports[0].name,
+              name: p.remoteWriteMirror.metadata.name,
+              kind: 'TraefikService',
             }],
           }
           for host in p._config.ingress.hosts
