@@ -54,11 +54,7 @@ traefik:
 
   resources:
     requests:
-      cpu: 100m
+      cpu: 2
       memory: 256Mi
     limits:
-      # Still OOMKilled once at 2Gi under the full cutover traffic. Bounded
-      # rather than unlimited/near-node-capacity: this node also runs
-      # production parca, argocd, cert-manager, etc, so a real leak here
-      # should get contained rather than starve the whole node.
       memory: 4Gi
