@@ -180,12 +180,15 @@ local prometheuses = [
     },
 
     // Real Authorization/project-ID header values are patched onto this live, see
-    // monitoring/README.md; committed empty here, matching the empty-shell pattern
-    // used by objectStorageSecret below. Traefik runs this Middleware once, before
-    // the mirroring service fans the request out, so both the primary write and the
-    // mirrored copy receive these headers — harmless, since the local Prometheus
-    // remote-write receiver has no auth configured and ignores headers it doesn't
-    // recognize.
+    // monitoring/README.md. Unlike a Kubernetes Secret, Traefik rejects a headers
+    // Middleware with an empty customRequestHeaders as invalid (the whole Middleware
+    // goes "disabled", which 500s every request on any IngressRoute referencing it,
+    // including the primary write) — so this needs a placeholder value rather than
+    // {} to stay valid until the real headers are patched in. Traefik runs this
+    // Middleware once, before the mirroring service fans the request out, so both
+    // the primary write and the mirrored copy receive these headers — harmless,
+    // since the local Prometheus remote-write receiver has no auth configured and
+    // ignores headers it doesn't recognize.
     remoteWriteHeadersMiddleware: {
       apiVersion: 'traefik.io/v1alpha1',
       kind: 'Middleware',
@@ -196,7 +199,9 @@ local prometheuses = [
       },
       spec: {
         headers: {
-          customRequestHeaders: {},
+          customRequestHeaders: {
+            'X-PSC-Mirror': 'pending-token',
+          },
         },
       },
     },
