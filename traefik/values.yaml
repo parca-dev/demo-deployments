@@ -17,6 +17,14 @@ traefik:
       # Needed for the native Middleware/IngressRoute CRDs we switch to in the final phase.
       enabled: true
 
+  # Dashboard/API only bind to the "traefik" entrypoint (port 8080), which the
+  # LoadBalancer Service never exposes (only web/websecure are published) — so
+  # `insecure: true` here is still only reachable via `kubectl port-forward`, never
+  # from the internet.
+  api:
+    dashboard: true
+    insecure: true
+
   # The Traefik-native IngressClass exists for the end state but must not become the default,
   # so it never hijacks Ingresses that omit a class.
   ingressClass:
