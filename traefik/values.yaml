@@ -57,6 +57,8 @@ traefik:
       cpu: 100m
       memory: 256Mi
     limits:
-      # Matches ingress-nginx's limit for the same workload; the analytics
-      # remote-write volume alone was enough to OOMKill at 1Gi.
-      memory: 2Gi
+      # Still OOMKilled once at 2Gi under the full cutover traffic. Bounded
+      # rather than unlimited/near-node-capacity: this node also runs
+      # production parca, argocd, cert-manager, etc, so a real leak here
+      # should get contained rather than starve the whole node.
+      memory: 4Gi
