@@ -196,6 +196,16 @@ local prometheuses = [
         // cluster-wide, which would pull in unrelated apps (parca-agent, pyrra, ...).
         podMonitorNamespaceSelector: { matchLabels: { 'kubernetes.io/metadata.name': p._config.namespace } },
         serviceMonitorNamespaceSelector: { matchLabels: { 'kubernetes.io/metadata.name': p._config.namespace } },
+        resources+: {
+          requests+: { cpu: '500m' },
+        },
+        containers: [
+          {
+            name: 'prometheus',
+            livenessProbe: { timeoutSeconds: 10, periodSeconds: 10, failureThreshold: 12 },
+            readinessProbe: { timeoutSeconds: 10, periodSeconds: 10, failureThreshold: 12 },
+          },
+        ],
         query+: {
           lookbackDelta: '15m',  // Analytics are only sent once every 10m
         },
