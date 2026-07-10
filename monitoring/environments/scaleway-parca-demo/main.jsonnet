@@ -46,7 +46,10 @@ local prometheuses = [
   m.prometheus({
     prometheus+:: {
       name: 'parca',
-      namespaces: ['parca', 'parca-devel'],
+      // RBAC (Role/RoleBinding) to list/watch pods,services,endpoints is only
+      // generated for namespaces listed here, regardless of what the Prometheus
+      // CR's podMonitorNamespaceSelector/serviceMonitorNamespaceSelector match.
+      namespaces: ['parca', 'parca-devel', 'traefik', 'ingress-nginx'],
     },
   }) {
     prometheus+: {
