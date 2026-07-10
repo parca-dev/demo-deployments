@@ -176,6 +176,17 @@ local prometheuses = [
       },
       spec: {
         serverName: 'cloud.polarsignals.com',
+        // Without these, Traefik's HTTP client waits indefinitely for a slow/dead
+        // mirror target. Since mirrorBody buffers each request's full body in memory
+        // until the mirror completes or fails, an unresponsive Polar Signals Cloud
+        // endpoint queues up buffered bodies faster than they're freed at this
+        // request volume (~1.8k req/s) and OOM-kills Traefik within seconds. Failing
+        // fast bounds how long any single request can hold its buffer.
+        forwardingTimeouts: {
+          dialTimeout: '5s',
+          responseHeaderTimeout: '5s',
+          idleConnTimeout: '30s',
+        },
       },
     },
 
