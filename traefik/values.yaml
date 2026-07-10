@@ -3,6 +3,19 @@ traefik:
   # the nginx.ingress.kubernetes.io/* annotations natively, running in parallel with
   # ingress-nginx until the DNS cutover.
   # https://doc.traefik.io/traefik/migrate/nginx-to-traefik/
+  deployment:
+    replicas: 2
+
+  affinity:
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: traefik
+          topologyKey: kubernetes.io/hostname
+
   providers:
     kubernetesIngressNGINX:
       enabled: true
@@ -54,7 +67,7 @@ traefik:
 
   resources:
     requests:
-      cpu: 2
+      cpu: 1
       memory: 256Mi
     limits:
       memory: 4Gi
