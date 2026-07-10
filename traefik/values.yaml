@@ -29,10 +29,6 @@ traefik:
     kubernetesCRD:
       # Needed for the native Middleware/IngressRoute CRDs we switch to in the final phase.
       enabled: true
-      # Required for the parca-analytics remote-write mirror to Polar Signals Cloud,
-      # whose upstream Service is an ExternalName. Off by default in Traefik v3;
-      # without it, a mirror to an ExternalName Service is silently dropped.
-      allowExternalNameServices: true
 
   # Dashboard/API only bind to the "traefik" entrypoint (port 8080), which the
   # LoadBalancer Service never exposes (only web/websecure are published) — so
