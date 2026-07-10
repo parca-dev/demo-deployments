@@ -49,7 +49,7 @@ local prometheuses = [
       // RBAC (Role/RoleBinding) to list/watch pods,services,endpoints is only
       // generated for namespaces listed here, regardless of what the Prometheus
       // CR's podMonitorNamespaceSelector/serviceMonitorNamespaceSelector match.
-      namespaces: ['parca', 'parca-devel', 'traefik', 'ingress-nginx'],
+      namespaces: ['parca', 'parca-devel', 'traefik', 'ingress-nginx', 'monitoring', 'parca-analytics'],
     },
   }) {
     prometheus+: {
