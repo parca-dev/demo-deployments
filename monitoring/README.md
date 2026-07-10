@@ -29,21 +29,23 @@ jq -Rs '{"data": {"thanos.yaml": .|@base64 }}' /tmp/thanos.yaml \
 
 This will unblock the parca-analytics Prometheus Pod and it will start uploading data to the object storage.
 
-## Mirroring parca-analytics remote-write to Polar Signals Cloud
+## Sending parca-analytics data to Polar Signals Cloud
 
-`analytics.parca.dev/api/v1/write` mirrors every remote-write request to Polar
-Signals Cloud in addition to the primary write into the local Prometheus, via a
-Traefik `Mirroring` TraefikService. The `Authorization`/project-ID headers added to
-the mirrored (and, unavoidably, the primary) request are not committed to git —
-the `psc-remote-write-headers` Middleware is committed with an empty
-`customRequestHeaders`, and the ArgoCD `monitoring` Application has an
-`ignoreDifferences` entry for that field so live patches survive future syncs.
+The parca-analytics Prometheus has a second `remoteWrite` target pointing at
+Polar Signals Cloud, alongside the primary write into its own local storage.
+This used to be done via a Traefik `Mirroring` TraefikService duplicating every
+HTTP request, which buffered each request body in memory until the mirror
+completed — at this cluster's request volume, that OOM-killed Traefik outright.
+Using Prometheus's own `remoteWrite` instead avoids that: it has its own
+write-ahead queue with proper batching, backpressure and retries, and requires
+no changes on the agents writing into this Prometheus.
 
-Once you have a Polar Signals Cloud API token and project ID, patch them in:
+The token is not committed to git — the `polarsignals-cloud` Secret is
+committed with no `data` at all, matching the `objectStorageSecret` pattern
+above. Once you have a Polar Signals Cloud API token, patch it in:
 
 ```bash
-kubectl --namespace=parca-analytics patch middleware psc-remote-write-headers \
-  --type=merge -p '{"spec":{"headers":{"customRequestHeaders":{
-    "Authorization":"Bearer <token>","<project-id-header>":"<project-id>"
-  }}}}'
+kubectl --namespace=parca-analytics create secret generic polarsignals-cloud \
+  --from-literal=token=<token> --dry-run=client -o yaml \
+  | kubectl apply -f -
 ```
