@@ -338,11 +338,13 @@ local prometheuses = [
         // job, see monitoring's serviceMonitorParcaAnalytics). The default {}
         // selectors match every PodMonitor/ServiceMonitor cluster-wide, so without
         // this it would also pick up unrelated apps (parca-agent, pyrra, ...) plus
-        // its own Thanos components. `In: []` never matches, regardless of labels.
+        // its own Thanos components. matchLabels on a label nothing carries never
+        // matches; unlike `In: []`, the Kubernetes API accepts this (`In`/`NotIn`
+        // reject empty values sets and fail Prometheus Operator's reconciliation).
         podMonitorNamespaceSelector: { matchLabels: { 'kubernetes.io/metadata.name': p._config.namespace } },
         serviceMonitorNamespaceSelector: { matchLabels: { 'kubernetes.io/metadata.name': p._config.namespace } },
-        podMonitorSelector: { matchExpressions: [{ key: 'prometheus', operator: 'In', values: [] }] },
-        serviceMonitorSelector: { matchExpressions: [{ key: 'prometheus', operator: 'In', values: [] }] },
+        podMonitorSelector: { matchLabels: { 'prometheus-operator-select-nothing': 'true' } },
+        serviceMonitorSelector: { matchLabels: { 'prometheus-operator-select-nothing': 'true' } },
         resources+: {
           requests+: { cpu: '500m' },
         },
