@@ -52,6 +52,8 @@ local prometheuses = [
       namespaces: ['parca', 'parca-devel', 'traefik', 'ingress-nginx', 'monitoring', 'parca-analytics'],
     },
   }) {
+    local p = self,
+
     prometheus+: {
       spec+: {
         remoteWrite: [{
@@ -68,12 +70,61 @@ local prometheuses = [
     // We do not monitor k8s metrics with this instance.
     clusterRole:: {},
     clusterRoleBinding:: {},
+
+    // The base library hides self-monitoring for every instance (see
+    // monitoring/lib/prometheus.libsonnet). This instance is the one that
+    // should scrape itself, so re-add it explicitly.
+    serviceMonitorSelf: {
+      apiVersion: 'monitoring.coreos.com/v1',
+      kind: 'ServiceMonitor',
+      metadata: {
+        name: 'prometheus-parca',
+        namespace: p._config.namespace,
+        labels: p._config.commonLabels,
+      },
+      spec: {
+        selector: { matchLabels: p.service.spec.selector },
+        endpoints: [
+          { port: 'web', interval: '30s' },
+          { port: 'reloader-web', interval: '30s' },
+        ],
+      },
+    },
+
+    // parca-analytics does not scrape itself (see below), so this instance
+    // scrapes it instead. Lives here, in this namespace, rather than in
+    // parca-analytics, so parca-analytics' own namespace-scoped
+    // serviceMonitorNamespaceSelector never discovers it.
+    serviceMonitorParcaAnalytics: {
+      apiVersion: 'monitoring.coreos.com/v1',
+      kind: 'ServiceMonitor',
+      metadata: {
+        name: 'prometheus-parca-analytics',
+        namespace: p._config.namespace,
+        labels: p._config.commonLabels,
+      },
+      spec: {
+        namespaceSelector: { matchNames: ['parca-analytics'] },
+        selector: {
+          matchLabels: {
+            'app.kubernetes.io/component': 'prometheus',
+            'app.kubernetes.io/instance': 'parca-analytics',
+            'app.kubernetes.io/name': 'prometheus',
+            'app.kubernetes.io/part-of': 'kube-prometheus',
+          },
+        },
+        endpoints: [
+          { port: 'web', interval: '30s' },
+          { port: 'reloader-web', interval: '30s' },
+        ],
+      },
+    },
   },
   m.prometheus({
     prometheus+:: {
       name: 'parca-analytics',
       namespace: 'parca-analytics',
-      namespaces: [],
+      namespaces: ['parca-analytics'],
       ingress: {
         class: 'nginx',
         hosts: ['analytics.parca.dev'],
@@ -341,6 +392,20 @@ local prometheuses = [
             namespaceSelector: { matchLabels: { 'kubernetes.io/metadata.name': p._config.namespace } },
             podSelector: { matchLabels: { 'app.kubernetes.io/name': 'thanos-query' } },
           }],
+        }, {
+          // Scraped by the parca Prometheus (parca-analytics does not scrape itself).
+          from: [{
+            namespaceSelector: { matchLabels: { 'kubernetes.io/metadata.name': 'monitoring' } },
+            podSelector: {
+              matchLabels: {
+                'app.kubernetes.io/component': 'prometheus',
+                'app.kubernetes.io/instance': 'parca',
+                'app.kubernetes.io/name': 'prometheus',
+                'app.kubernetes.io/part-of': 'kube-prometheus',
+              },
+            },
+          }],
+          ports: [{ port: 'web' }, { port: 'reloader-web' }],
         }],
       },
     },
