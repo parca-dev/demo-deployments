@@ -327,7 +327,11 @@ local prometheuses = [
         remoteWrite: [{
           url: 'https://api.polarsignals.com/api/v1/write',
           authorization: {
-            credentials: { name: p.polarSignalsCloudSecret.metadata.name, key: 'token' },
+            // Deliberately not the polarSignalsCloudSecret object it once was: this
+            // Secret is created directly in the cluster, untracked by ArgoCD (see
+            // monitoring/README.md), so nothing ever prunes or resyncs its token
+            // away. Referencing it by name here is the only coupling left.
+            credentials: { name: 'polarsignals-cloud', key: 'token' },
           },
           headers: {
             projectID: '5a755043-1fb8-48fd-a2c8-2787498ec59d',
@@ -376,16 +380,6 @@ local prometheuses = [
             },
           },
         },
-      },
-    },
-
-    polarSignalsCloudSecret: {
-      apiVersion: 'v1',
-      kind: 'Secret',
-      metadata: {
-        name: 'polarsignals-cloud',
-        namespace: p._config.namespace,
-        labels: p._config.commonLabels,
       },
     },
 
