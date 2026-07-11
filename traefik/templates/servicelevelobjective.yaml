@@ -1,0 +1,22 @@
+apiVersion: pyrra.dev/v1alpha1
+kind: ServiceLevelObjective
+metadata:
+  name: {{ .Release.Name }}-requests
+  labels:
+    app.kubernetes.io/name: traefik
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/part-of: traefik
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: slo
+spec:
+  target: '99.9'
+  window: '4w'
+  description: Traefik serves requests without a 5xx response, per backend service.
+  indicator:
+    ratio:
+      errors:
+        metric: traefik_service_requests_total{code=~"5.."}
+      total:
+        metric: traefik_service_requests_total
+      grouping:
+      - service

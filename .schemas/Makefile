@@ -21,6 +21,7 @@ CRDS := \
 	https://raw.githubusercontent.com/traefik/traefik-helm-chart/v41.0.0/traefik/crds/traefik.io_middlewares.yaml \
 	https://raw.githubusercontent.com/traefik/traefik-helm-chart/v41.0.0/traefik/crds/traefik.io_traefikservices.yaml \
 	https://raw.githubusercontent.com/traefik/traefik-helm-chart/v41.0.0/traefik/crds/traefik.io_serverstransports.yaml \
+	https://raw.githubusercontent.com/pyrra-dev/pyrra/a876a72a31bb1aabdbd361e221228c06fd7bfae1/jsonnet/controller-gen/pyrra.dev_servicelevelobjectives.json \
 
 all: schemas
 
