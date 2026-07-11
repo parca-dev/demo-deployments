@@ -36,7 +36,43 @@ local kubeThanos = m.kubeThanos({
             }],
             ports: [{ port: 'http', protocol: 'TCP' }],
           },
+          {
+            // Scraped by the parca Prometheus (parca-analytics does not scrape itself).
+            from: [{
+              namespaceSelector: { matchLabels: { 'kubernetes.io/metadata.name': 'monitoring' } },
+              podSelector: {
+                matchLabels: {
+                  'app.kubernetes.io/component': 'prometheus',
+                  'app.kubernetes.io/instance': 'parca',
+                  'app.kubernetes.io/name': 'prometheus',
+                  'app.kubernetes.io/part-of': 'kube-prometheus',
+                },
+              },
+            }],
+            ports: [{ port: 'http', protocol: 'TCP' }],
+          },
         ],
+      },
+    },
+  },
+  store+: {
+    networkPolicy+: {
+      spec+: {
+        ingress+: [{
+          // Scraped by the parca Prometheus (parca-analytics does not scrape itself).
+          from: [{
+            namespaceSelector: { matchLabels: { 'kubernetes.io/metadata.name': 'monitoring' } },
+            podSelector: {
+              matchLabels: {
+                'app.kubernetes.io/component': 'prometheus',
+                'app.kubernetes.io/instance': 'parca',
+                'app.kubernetes.io/name': 'prometheus',
+                'app.kubernetes.io/part-of': 'kube-prometheus',
+              },
+            },
+          }],
+          ports: [{ port: 'http' }],
+        }],
       },
     },
   },
@@ -434,7 +470,9 @@ local prometheuses = [
               },
             },
           }],
-          ports: [{ port: 'web' }, { port: 'reloader-web' }],
+          // web/reloader-web are this Prometheus' own metrics; http is the
+          // Thanos sidecar's, which runs as a container on the same pod.
+          ports: [{ port: 'web' }, { port: 'reloader-web' }, { port: 'http' }],
         }],
       },
     },
