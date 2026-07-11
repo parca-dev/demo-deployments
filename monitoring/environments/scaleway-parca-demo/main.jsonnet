@@ -375,6 +375,27 @@ local prometheuses = [
       },
     },
 
+    polarSignalsCloudRemoteWriteSLO: {
+      apiVersion: 'pyrra.dev/v1alpha1',
+      kind: 'ServiceLevelObjective',
+      metadata: {
+        name: p._config.name + '-remote-write',
+        namespace: p._config.namespace,
+        labels: p._config.commonLabels { 'app.kubernetes.io/component': 'slo' },
+      },
+      spec: {
+        target: '99',
+        window: '4w',
+        description: 'Samples remote-written to Polar Signals Cloud are not dropped.',
+        indicator: {
+          ratio: {
+            errors: { metric: 'prometheus_remote_storage_samples_failed_total{url="https://api.polarsignals.com/api/v1/write"}' },
+            total: { metric: 'prometheus_remote_storage_samples_total{url="https://api.polarsignals.com/api/v1/write"}' },
+          },
+        },
+      },
+    },
+
     objectStorageSecret: {
       apiVersion: 'v1',
       kind: 'Secret',
