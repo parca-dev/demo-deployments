@@ -345,6 +345,13 @@ local prometheuses = [
         serviceMonitorNamespaceSelector: { matchLabels: { 'kubernetes.io/metadata.name': p._config.namespace } },
         podMonitorSelector: { matchLabels: { 'prometheus-operator-select-nothing': 'true' } },
         serviceMonitorSelector: { matchLabels: { 'prometheus-operator-select-nothing': 'true' } },
+        // Same reasoning as the PodMonitor/ServiceMonitor selectors above: this
+        // instance shouldn't evaluate any rules either. The default {} ruleSelector
+        // was loading every PrometheusRule it has RBAC for, including its own
+        // thanos-sidecar-rules, which populated ALERTS/ALERTS_FOR_STATE series that
+        // then got swept up by remote-write to Polar Signals Cloud.
+        ruleNamespaceSelector: { matchLabels: { 'prometheus-operator-select-nothing': 'true' } },
+        ruleSelector: { matchLabels: { 'prometheus-operator-select-nothing': 'true' } },
         resources+: {
           requests+: { cpu: '500m' },
         },
