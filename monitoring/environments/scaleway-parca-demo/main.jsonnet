@@ -333,11 +333,16 @@ local prometheuses = [
             projectID: '5a755043-1fb8-48fd-a2c8-2787498ec59d',
           },
         }],
-        // This instance only ingests via remote-write and monitors its own Thanos
-        // components. The default {} selectors match every PodMonitor/ServiceMonitor
-        // cluster-wide, which would pull in unrelated apps (parca-agent, pyrra, ...).
+        // This instance only ingests via remote-write; it does not scrape anything,
+        // including its own Thanos sidecar/query/store (that's the parca instance's
+        // job, see monitoring's serviceMonitorParcaAnalytics). The default {}
+        // selectors match every PodMonitor/ServiceMonitor cluster-wide, so without
+        // this it would also pick up unrelated apps (parca-agent, pyrra, ...) plus
+        // its own Thanos components. `In: []` never matches, regardless of labels.
         podMonitorNamespaceSelector: { matchLabels: { 'kubernetes.io/metadata.name': p._config.namespace } },
         serviceMonitorNamespaceSelector: { matchLabels: { 'kubernetes.io/metadata.name': p._config.namespace } },
+        podMonitorSelector: { matchExpressions: [{ key: 'prometheus', operator: 'In', values: [] }] },
+        serviceMonitorSelector: { matchExpressions: [{ key: 'prometheus', operator: 'In', values: [] }] },
         resources+: {
           requests+: { cpu: '500m' },
         },
