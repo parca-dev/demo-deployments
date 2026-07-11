@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/component: slo
 spec:
-  target: '99.9'
+  target: '99'
   window: '4w'
   description: Traefik serves requests without a 5xx response, per backend service.
   indicator:
