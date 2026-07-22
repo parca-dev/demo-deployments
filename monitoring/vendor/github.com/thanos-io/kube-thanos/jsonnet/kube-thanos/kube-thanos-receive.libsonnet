@@ -53,9 +53,8 @@ function(params) {
   },
 
   statefulSet:
-    local localEndpointFlag = '--receive.local-endpoint=$(NAME).%s.$(NAMESPACE).svc.%s:%d' % [
+    local localEndpointFlag = '--receive.local-endpoint=$(NAME).%s.$(NAMESPACE):%d' % [
       tr.config.name,
-      tr.config.clusterDomain,
       tr.config.ports.grpc,
     ];
 
@@ -228,7 +227,6 @@ function(params) {
               preferredDuringSchedulingIgnoredDuringExecution: [
                 {
                   podAffinityTerm: {
-                    namespaces: [tr.config.namespace],
                     topologyKey: 'kubernetes.io/hostname',
                     labelSelector: labelSelector,
                   },
@@ -236,7 +234,6 @@ function(params) {
                 },
                 {
                   podAffinityTerm: {
-                    namespaces: [tr.config.namespace],
                     topologyKey: 'topology.kubernetes.io/zone',
                     labelSelector: labelSelector,
                   },
