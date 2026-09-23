@@ -202,7 +202,6 @@ function(params) {
             affinity: { podAntiAffinity: {
               preferredDuringSchedulingIgnoredDuringExecution: [{
                 podAffinityTerm: {
-                  namespaces: [ts.config.namespace],
                   topologyKey: 'kubernetes.io/hostname',
                   labelSelector: { matchExpressions: [{
                     key: 'app.kubernetes.io/name',
@@ -253,5 +252,5 @@ function(params) {
       ],
     },
   },
-  storeEndpoint:: 'dnssrv+_grpc._tcp.%s.%s.svc.cluster.local:%d' % [ts.service.metadata.name, ts.config.namespace, ts.config.ports.grpc],
+  storeEndpoint:: 'dnssrv+_grpc._tcp.%s.%s:%d' % [ts.service.metadata.name, ts.config.namespace, ts.config.ports.grpc],
 }
