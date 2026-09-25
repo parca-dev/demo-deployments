@@ -144,12 +144,34 @@
     {
       "source": {
         "git": {
+          "remote": "https://github.com/perses/community-mixins.git",
+          "subdir": "jsonnet"
+        }
+      },
+      "version": "d4e23ad64ea8087c74b94ffc4bd2aae1122f2386",
+      "sum": "gWu0CUxmciusXNPKXTioVK/4Ij/Y0o6ayohdZyeNZ3Q=",
+      "name": "community-mixins"
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/perses/perses-operator.git",
+          "subdir": "jsonnet"
+        }
+      },
+      "version": "d6eeb23301c9ec60c31ba0a6eb9b1ddc9bc391f7",
+      "sum": "F9dRxMazayrNHBzXAhysvF5fy45K4l+MCmdavprhsb8=",
+      "name": "perses-operator"
+    },
+    {
+      "source": {
+        "git": {
           "remote": "https://github.com/prometheus-operator/kube-prometheus.git",
           "subdir": "jsonnet/kube-prometheus"
         }
       },
-      "version": "7cf9c66d984c5f332e9ee22d03a7b09949dc8b20",
-      "sum": "egn2O/YjB3cC21ad0NTmW8MGQT9ertM0FhV1gv0SbTs="
+      "version": "799f3d73b5adf5758c3119c9201d9f417accb6d0",
+      "sum": "Yq0aVcSu8o9i0hJneabSTs6b28S1tDvfbtvQP6x7pW8="
     },
     {
       "source": {
