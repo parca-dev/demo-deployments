@@ -168,7 +168,7 @@ local prometheuses = [
       thanos: {
         image: 'quay.io/thanos/thanos:%s' % self.version,
         // renovate: datasource=docker depName=quay.io/thanos/thanos
-        version: 'v0.42.0',
+        version: 'v0.42.4',
         objectStorageConfig: {
           key: 'thanos.yaml',
           name: 'parca-analytics-objectstorage',
